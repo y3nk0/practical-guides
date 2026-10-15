@@ -1,0 +1,306 @@
+%==============================================================================
+%  Starting a PhD in ML / NLP -- one-page cheat sheet
+%  Konstantinos Skianis, University of Ioannina
+%  Compile: latexmk -pdf phd-ml-nlp-onepager.tex
+%==============================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=0.8cm,top=0.8cm,bottom=0.6cm]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{array,tabularx,colortbl}
+\usepackage{framed}
+\usepackage{hyperref}
+
+\definecolor{brand}{HTML}{1F4E79}
+\definecolor{brandlight}{HTML}{2E7BB8}
+\definecolor{accent}{HTML}{B5451B}
+\definecolor{ink}{HTML}{22262B}
+\definecolor{mutegray}{HTML}{5A6472}
+\definecolor{rowtint}{HTML}{EFF4F9}
+
+\hypersetup{colorlinks=true,urlcolor=brandlight,linkcolor=brand,
+  pdftitle={Starting a PhD in ML/NLP - one-page cheat sheet},
+  pdfauthor={Konstantinos Skianis}}
+\urlstyle{sf}
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\/\do\-\do\.\do\_\do\?\do\&\do\=\do\:\do\,}
+\makeatother
+\Urlmuskip=0mu plus 2mu\relax
+
+\pagestyle{empty}
+\setlength{\columnsep}{0.62cm}
+\setlength{\columnseprule}{0.3pt}
+\def\columnseprulecolor{\color{brandlight!40}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.2pt}
+\setlist[itemize]{leftmargin=0.85em,topsep=1pt,itemsep=1.1pt,parsep=0pt,
+                  label=\textcolor{brandlight}{\tiny$\bullet$}}
+\setlist[enumerate]{leftmargin=1.1em,topsep=1pt,itemsep=1.1pt,parsep=0pt}
+
+\newcommand{\head}[1]{%
+  \vspace{4.5pt}{\color{brand}\rule{\linewidth}{0.9pt}}\par\vspace{1.5pt}%
+  {\bfseries\color{brand}\MakeUppercase{#1}}\par\vspace{2pt}}
+\newcommand{\sub}[1]{\par\addvspace{2.6pt}\noindent{\bfseries\color{ink}#1}\ \ignorespaces}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\lnk}[2]{\href{#1}{\color{brandlight}#2}}
+\newcommand{\dt}{\,\textperiodcentered\,\allowbreak}
+
+\newenvironment{flag}
+ {\par\addvspace{2pt}\setlength{\FrameSep}{3pt}%
+  \def\FrameCommand{{\color{accent}\vrule width 1.4pt}\hspace{4pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}\parindent=0pt\ignorespaces}
+ {\par\endMakeFramed\addvspace{2pt}}
+
+\begin{document}
+\fontsize{6.75}{7.9}\selectfont
+
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
+\begin{minipage}[b]{0.63\textwidth}
+{\fontsize{17}{18}\selectfont\bfseries\color{brand} Starting a PhD in ML / NLP}\\[2pt]
+{\fontsize{8}{9}\selectfont\color{ink} The one-page version --- venues, deadlines, tools, habits}
+\end{minipage}%
+\hfill
+\begin{minipage}[b]{0.36\textwidth}\raggedleft
+{\fontsize{8}{9}\selectfont\bfseries\color{ink} Konstantinos Skianis}\\[1pt]
+{\color{mutegray} Assistant Professor of NLP\dt Dept.\ of Computer Science \& Engineering\\
+University of Ioannina\dt \lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+\end{minipage}\\[2pt]
+{\color{brandlight}\rule{\textwidth}{2pt}}
+
+\vspace{2pt}
+\begin{multicols}{3}
+\raggedright
+
+
+%============================================================== COLUMN 1 ======
+\head{Week 1 setup}
+\textbf{Zotero} + connector + \textbf{Better BibTeX} (pinned keys, auto-export
+to \code{paper/refs.bib})\dt \textbf{Scholar profile} + 3 alerts\dt accounts:
+Overleaf, Prism, OpenReview, GitHub, HuggingFace, arXiv, \textbf{ORCID}\dt
+deadlines in calendar\dt AI assistant + project memory file\dt one git repo
+per project with \code{notes/}.
+
+\head{Venues --- conference-first field}
+\sub{ML}\textbf{NeurIPS} (abs $\sim$May, Dec)\dt \textbf{ICML} ($\sim$Jan,
+Jul)\dt \textbf{ICLR} ($\sim$Sep, Apr; open reviews)\dt AISTATS ($\sim$Oct)\dt
+AAAI ($\sim$Aug)\dt IJCAI ($\sim$Jan)\dt \textbf{COLM} ($\sim$Mar, Oct)\dt
+COLT, UAI, MLSys, LoG.
+
+\sub{NLP}\textbf{ACL}\dt \textbf{EMNLP}\dt \textbf{NAACL}\dt\textbf{EACL}\dt\textbf{AACL}\dt COLING\dt LREC\dt CoNLL, *SEM, SemEval\dt \textbf{TACL} (journal, rolling)\dt
+\textbf{Findings} (archival, citable)\dt Interspeech/ICASSP.
+
+\sub{Adjacent}KDD, WSDM, CIKM, SIGIR, WebConf, ECML-PKDD\dt CVPR/ICCV/ECCV.
+\sub{Journals}JMLR\dt \textbf{TMLR} (rolling, correctness over novelty)\dt CL,
+TPAMI.
+
+\sub{ARR (NLP)}Submit to ACL Rolling Review $\to$ reviews + meta-review $\to$
+\textbf{commit} to a venue, which decides accept/Findings/reject. Track
+\emph{two} deadlines. \textbf{Limitations section mandatory} (free pages) +
+Responsible NLP checklist.
+
+\sub{Lifecycle}preprint $\to$ submission $\to$ reviews $\to$ \textbf{rebuttal}
+$\to$ decision $\to$ camera-ready $\to$ poster/talk $\to$ citations. Budget
+6--12 months from idea to published.
+
+\sub{Judge a venue}Scholar h5\dt
+\lnk{https://portal.core.edu.au/conf-ranks/}{CORE}\dt
+\lnk{https://csrankings.org}{CSRankings}\dt where the work you admire appears.
+Invitation email + 2-week acceptance + big fee = scam.
+
+\begin{flag}
+\textbf{Aim your first submission at a good workshop.} Full pipeline ---
+writing, review, rebuttal, poster --- at a fraction of the risk.
+\end{flag}
+
+\head{Deadlines}
+\textbf{Start:} \lnk{https://paperswithcode.co/ai-deadlines}{\textbf{paperswithcode.co/ai-deadlines}}
+(Hugging Face) --- filter by subfield or \emph{top tier only}; tracks
+\emph{every} milestone (abstract, reviews out, rebuttal, commitment,
+notification, camera-ready) with live countdowns, dates and locations; has an
+API + MCP endpoint.
+\textbf{Then:} \lnk{http://aideadlines.org/?sub=ML,CV,NLP}{aideadlines.org/?sub=ML,CV,NLP}
+--- the \code{sub=} tags \emph{are} your board; edit as interests change
+(\lnk{https://huggingface.co/spaces/huggingface/ai-deadlines}{HF mirror}).
+Cross-check \lnk{https://ccfddl.com}{ccfddl.com} and always the venue page.
+\begin{itemize}
+  \item Calendar each venue \textbf{3$\times$}: deadline, $-7$d (freeze
+        results), $-21$d (experiments running).
+  \item Also: abstract deadlines, ARR commitment, supplementary,
+        \textbf{rebuttal window} (don't travel), camera-ready.
+  \item AoE $=$ UTC$-$12. Ablations always run late.
+  \item Missing venue $=$ a YAML pull request: easy first OSS contribution.
+\end{itemize}
+
+\head{Writing \& sharing}
+\sub{\lnk{https://www.overleaf.com}{Overleaf}}real-time co-editing, official
+venue templates, comments; check for an institutional licence.
+\sub{\lnk{https://prism.openai.com}{Prism}}OpenAI's AI-native LaTeX workspace
+(2026): free, unlimited projects/collaborators/compile; the model sees the
+whole manuscript --- prose, tables, LaTeX errors.
+\sub{Local too}\code{git} + \code{latexmk -pdf -pvc} + VS Code\dt
+\textbf{one sentence per line} (readable diffs)\dt \code{\textbackslash input}
+per section\dt figures regenerated by script.
+\sub{Before posting}\lnk{https://github.com/google-research/arxiv-latex-cleaner}{arxiv-latex-cleaner}
+(names hide in LaTeX comments)\dt anonymise code
+(\lnk{https://anonymous.4open.science}{anonymous.4open.science}) + PDF
+metadata\dt ACL venues enforce an \textbf{anonymity window} --- check before
+arXiving.
+\sub{arXiv}cs.CL (NLP), cs.LG (ML), cs.AI, stat.ML\dt the first submission
+needs endorsement --- your advisor handles it\dt preprints are the norm and
+accelerate citations.
+\sub{Release}code with a \textbf{LICENSE}, checkpoints and data on Hugging
+Face, an exact environment spec --- papers with runnable code get cited more,
+and your future self is the main beneficiary.
+
+%============================================================== COLUMN 2 ======
+\head{Zotero --- never lose a reference}
+\begin{itemize}
+  \item Connector: metadata \emph{and} PDF in one click.
+  \item \textbf{Better BibTeX}: pin keys (\code{devlin2019bert}), auto-export
+        the \code{.bib} into your repo. Commit it.
+  \item Collections per project, tags per theme, saved searches, lab
+        \textbf{group library}, annotate in the built-in reader.
+  \item \textbf{Cite the published version}, not the preprint. Clean BibTeX
+        from \lnk{https://dblp.org}{DBLP} /
+        \lnk{https://aclanthology.org}{ACL Anthology}, not Scholar.
+  \item Monthly duplicate merge; one-line ``why I care'' on every save.
+\end{itemize}
+
+\head{First project: a focused survey}
+Buys you: vocabulary in weeks\dt a taxonomy (gaps live in the empty boxes)\dt
+the bibliography you reuse forever\dt the baselines/datasets/metrics you must
+match\dt a publishable artefact and your related-work chapter.
+\begin{enumerate}
+  \item One-sentence question, agreed in writing.
+  \item 5--10 seed papers from your advisor; steal their vocabulary.
+  \item Inclusion/exclusion criteria written \emph{before} screening.
+  \item Same queries across Scholar, Semantic Scholar, Anthology, OpenReview,
+        DBLP --- \textbf{log query, date, hit count}.
+  \item Snowball \textbf{backward} (references) + \textbf{forward} (cited-by);
+        forward finds the last 6 months.
+  \item Screen title+abstract, then full text: $\sim$500 $\to$ 60--120 kept.
+  \item \textbf{Extract into a table}, one row per paper: key \textbar{}
+        venue/year \textbar{} problem \textbar{} method family \textbar{} data
+        \textbar{} metrics \textbar{} headline result \textbar{}
+        \textbf{compute} \textbar{} code + does it reproduce \textbar{}
+        limitations \textbar{} relevance 1--5.
+  \item Cluster rows $\to$ taxonomy figure. Can't draw it $=$ don't understand
+        it yet.
+  \item Write 10--15 pages \emph{as you go}; end each section with ``what's
+        missing''.
+  \item Deliver \textbf{3 gaps} as testable questions + the experiment that
+        answers each. That meeting starts your first paper.
+\end{enumerate}
+\begin{flag}
+\textbf{Read in 3 passes} (Keshav): 5 min skim $\to$ 1 h (figures, method)
+$\to$ hours (re-derive). Pass 3 for $\sim$20 papers, pass 1 for hundreds.
+\textbf{Freeze the search date and ship.}
+\end{flag}
+
+\head{Search like an instrument}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}@{\hspace{3pt}}X@{}}
+\rowcolor{rowtint}\code{"exact phrase"} & quote technical terms \\
+\code{a OR b} & must be capitalised \\
+\rowcolor{rowtint}\code{-survey} & exclude a term \\
+\code{author:"K Skianis"} & author search \\
+\rowcolor{rowtint}\code{source:"EMNLP"} & search within a venue \\
+\code{intitle:x} & precision filter \\
+\rowcolor{rowtint}\textbf{Custom range} & + \textbf{Sort by date} \\
+\textbf{Cited by} $\to$ \textbf{search within citing articles} & the most
+under-used feature in academia \\
+\rowcolor{rowtint}\textbf{All N versions} & free PDF + published version \\
+\end{tabularx}
+\sub{Alerts today}2--3 topic queries\dt \textbf{citation alerts on 5 anchor
+papers} $\approx$ a feed of your subfield\dt your own profile\dt a fixed
+30-min weekly triage into Zotero.
+\sub{Beyond Scholar}\lnk{https://www.semanticscholar.org}{Semantic Scholar}
+(TLDR, citation intent, API)\dt \lnk{https://openalex.org}{OpenAlex} (open
+graph)\dt \lnk{https://aclanthology.org}{ACL Anthology}\dt
+\lnk{https://openreview.net}{OpenReview} --- read the \emph{reviews}\dt
+\lnk{https://dblp.org}{DBLP}\dt Connected Papers\dt
+\lnk{https://huggingface.co/papers}{HF papers}\dt
+\lnk{https://paperswithcode.co}{paperswithcode.co} (the revived Papers with
+Code: trending papers, following feed, API + MCP --- the old \code{.com} is
+dead).
+
+%============================================================== COLUMN 3 ======
+\head{Attention signals}
+\sub{Citations}Normalise by age (per year; last 12 months)\dt watch
+\emph{acceleration} in Scholar's bar chart\dt \textbf{who} cites $>$ how
+many\dt cited-as-method $>$ cited-as-background\dt beware survey piles and
+citation rings\dt count papers per year using a term (Anthology/OpenReview are
+scriptable).
+\sub{GitHub}\lnk{https://star-history.com}{star-history.com}: launch spike vs
+steady slope\dt last commit, contributors, who answers issues\dt
+\textbf{search issues for ``reproduce''} before trusting a baseline\dt
+releases, pinned deps, checkpoints, \textbf{LICENSE}\dt cross-check HF
+downloads, PyPI, and use as others' baseline\dt
+\code{stars:>500 pushed:>2026-01-01}\dt watch releases on repos you depend on.
+\begin{flag}
+Stars measure marketing; citations measure positioning. Neither measures
+correctness --- reproduce one baseline yourself.
+\end{flag}
+
+\head{AI assistant: setup \& rules}
+Coding agent in the repo\dt project memory file with your conventions\dt
+connect filesystem + Zotero + arXiv/S2 via MCP\dt saved prompts (triage,
+extraction, hostile-reviewer pass)\dt dated \code{notes/} notebook.
+Use for: abstract triage, PDF$\to$table extraction, unfamiliar maths, getting
+baselines to run, eval harnesses, plots, Slurm, LaTeX, pre-review, rebuttal
+prose from \emph{your} arguments.
+\begin{flag}
+\textbf{1} Never cite a paper you haven't opened --- models invent references.
+\textbf{2} Verify every number at the source. \textbf{3} Never paste NDA'd data
+or papers you're reviewing (LLM-written reviews are banned). \textbf{4} Know
+your venue's disclosure policy. \textbf{5} Outsource mechanics, never thinking.
+\end{flag}
+
+\head{Your page: \code{username.github.io}}
+Repo named \emph{exactly} \code{username.github.io} $\to$ free HTTPS site. Use
+\lnk{https://github.com/academicpages/academicpages.github.io}{\textbf{AcademicPages}}
+(\emph{Use this template}) $\to$ edit \code{\_config.yml} $\to$ fill
+\code{\_pages/}, \code{\_publications/}, \code{\_talks/}, \code{\_teaching/},
+\code{files/}, \code{images/} $\to$ generate publications from your \code{.bib}
+with \code{markdown\_generator/} $\to$ push (Actions builds it). Optional
+\code{CNAME} for a custom domain. Alternatives: al-folio, Minimal Mistakes,
+Hugo Blox, Quarto.
+\sub{Example}\lnk{https://y3nk0.github.io}{y3nk0.github.io} --- About, News,
+Research, Publications, Talks, Teaching, CV (PDF + HTML). Source is public:
+copy the structure. \textbf{Update after every acceptance}; a stale site reads
+worse than none.
+
+\head{Experiments}
+One repo per project\dt pinned env (uv/conda/Docker) incl.\ CUDA\dt configs
+(Hydra/YAML) --- every run reconstructible from config + commit hash\dt
+\textbf{3+ seeds, mean $\pm$ std} (single-seed $+0.3$ is noise)\dt track runs
+(W\&B/MLflow) with configs, metrics, commit\dt tables and figures regenerate
+from logged results\dt learn Slurm: job arrays, checkpoint-and-resume\dt
+``can I actually run this?'' is a design constraint.
+
+\head{Habits that compound}
+Weekly advisor meeting, 5 written bullets (did\,/\,found\,/\,blocked\,/\,propose\,/\,need)\dt
+dated lab notebook \emph{including} negative results\dt 20 min reading
+daily + a reading group\dt write continuously --- it exposes holes in the
+story\dt review papers once you've published one\dt talk at posters you only
+half understand\dt summer schools, doctoral consortia, volunteering\dt
+rejection is the default outcome, not a verdict on you.
+
+\head{Milestones}
+\textbf{M1} question agreed, criteria written, search log running, meeting slot
+fixed. \textbf{M2--3} survey done, taxonomy drawn, 3 gaps, one baseline
+reproduced, site live, venue chosen. \textbf{Y1} one submission out
+(submitted beats perfect), one rebuttal written, one talk given, code +
+checkpoints released, a one-page research statement.
+
+\vspace{2pt}
+{\color{mutegray}Companion to the full guide \emph{Starting a PhD in Machine Learning or
+NLP: A Practical Starter Guide}\dt October 2026.}
+
+\end{multicols}
+\end{document}

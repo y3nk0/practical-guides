@@ -1,0 +1,1272 @@
+%==============================================================================
+%  Starting a PhD in ML / NLP -- a practical starter guide
+%  Compile:  latexmk -pdf phd-ml-nlp-starter-guide.tex
+%==============================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=2.3cm,top=2.4cm,bottom=2.4cm]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,tabularx,longtable,colortbl}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+%------------------------------------------------------------------ colours ---
+\definecolor{brand}{HTML}{1F4E79}      % deep blue
+\definecolor{brandlight}{HTML}{2E7BB8}
+\definecolor{accent}{HTML}{B5451B}     % rust
+\definecolor{ink}{HTML}{22262B}
+\definecolor{mutegray}{HTML}{5A6472}
+\definecolor{rowtint}{HTML}{EFF4F9}
+\definecolor{boxtint}{HTML}{F6F8FA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=brand,
+  urlcolor=brandlight,
+  citecolor=brand,
+  pdftitle={Starting a PhD in Machine Learning or NLP: A Practical Starter Guide},
+  pdfauthor={Konstantinos Skianis},
+  pdfsubject={PhD onboarding, ML/NLP research practice},
+  bookmarksnumbered=true
+}
+\urlstyle{sf}
+% allow long URLs to break at punctuation instead of running into the margin
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\/\do\-\do\.\do\_\do\?\do\&\do\=\do\:}
+\makeatother
+\Urlmuskip=0mu plus 2mu\relax
+
+%----------------------------------------------------------------- headings ---
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.2ex \@plus -1ex \@minus -.2ex}{1.6ex \@plus.2ex}%
+  {\normalfont\Large\bfseries\color{brand}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-2.6ex\@plus -1ex \@minus -.2ex}{0.9ex \@plus .2ex}%
+  {\normalfont\large\bfseries\color{brandlight}}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-2.0ex\@plus -1ex \@minus -.2ex}{0.6ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries\color{ink}}}
+\makeatother
+
+%-------------------------------------------------------------------- boxes ---
+\newenvironment{cbox}[1]
+ {\par\addvspace{\medskipamount}%
+  \setlength{\FrameSep}{7pt}%
+  \def\FrameCommand{{\color{brandlight}\vrule width 2.2pt}\hspace{9pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}%
+  \small\parindent=0pt\noindent{\bfseries\color{brand}#1}\par\nobreak\smallskip
+  \normalcolor\ignorespaces}
+ {\par\endMakeFramed\addvspace{\medskipamount}}
+
+\newenvironment{wbox}[1]
+ {\par\addvspace{\medskipamount}%
+  \setlength{\FrameSep}{7pt}%
+  \def\FrameCommand{{\color{accent}\vrule width 2.2pt}\hspace{9pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}%
+  \small\parindent=0pt\noindent{\bfseries\color{accent}#1}\par\nobreak\smallskip
+  \normalcolor\ignorespaces}
+ {\par\endMakeFramed\addvspace{\medskipamount}}
+
+%------------------------------------------------------------------- tables ---
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.22}
+\newcommand{\thead}[1]{\textbf{\color{brand}#1}}
+
+%-------------------------------------------------------------------- lists ---
+\setlist[itemize]{leftmargin=1.25em,topsep=3pt,itemsep=2.5pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.5em,topsep=3pt,itemsep=2.5pt,parsep=0pt}
+\setlist[description]{leftmargin=1.25em,topsep=3pt,itemsep=3pt,style=unboxed,
+                      font=\normalfont\bfseries\color{ink}}
+
+%------------------------------------------------------------------ headers ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[L]{\footnotesize\color{mutegray}Starting a PhD in ML / NLP \quad\textbullet\quad K. Skianis}
+\fancyhead[R]{\footnotesize\color{mutegray}\thepage}
+
+\newcommand{\tool}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{\small #1}}
+
+\begin{document}
+
+%==============================================================================
+\begin{titlepage}
+\centering
+\vspace*{2.2cm}
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[0.8cm]
+{\Huge\bfseries\color{brand} Starting a PhD in\\[0.25cm] Machine Learning or NLP\par}
+\vspace{0.7cm}
+{\LARGE\color{ink} A Practical Starter Guide\par}
+\vspace{0.5cm}
+{\large\color{mutegray} Venues, deadlines, tools, and the habits that compound\par}
+\vspace{0.6cm}
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[1.1cm]
+
+{\large\bfseries\color{ink} Konstantinos Skianis\par}
+\vspace{0.18cm}
+{\normalsize\color{mutegray} Assistant Professor of Natural Language Processing\\[2pt]
+Department of Computer Science and Engineering\\[2pt]
+University of Ioannina\par}
+\vspace{0.25cm}
+{\footnotesize\color{brandlight}\url{https://y3nk0.github.io}\par}
+\vspace{1.1cm}
+
+\begin{minipage}{0.85\textwidth}
+\small\color{ink}
+Everything here is operational: what to set up in your first week, which venues
+your work will target, how to find and judge related work, how to keep a
+library that never loses a reference, how to use an AI assistant without
+damaging your scholarship, and how to put a durable identity on the web.
+Treat it as a checklist to work through, not an essay to read once.
+\end{minipage}
+
+\vfill
+{\color{mutegray} October 2026}\\[0.3cm]
+{\footnotesize\color{mutegray} Deadlines, prices, and tool features change.
+Verify dates at the source before you plan around them.}
+\end{titlepage}
+
+%==============================================================================
+\tableofcontents
+\thispagestyle{fancy}
+\clearpage
+
+%==============================================================================
+\section{How to use this guide}
+
+A PhD is won on compounding habits, not on heroic sprints. The first three
+months decide how much friction every later month carries: whether you can find
+a paper you read in March when you need it in November, whether your experiments
+are reproducible, whether your name is findable, whether a deadline surprises you.
+
+Work through this document in order the first time. Section~\ref{sec:90days}
+is the short version.
+
+\subsection{The first 90 days, condensed}
+\label{sec:90days}
+
+\begin{cbox}{Week 1 --- infrastructure}
+\begin{itemize}
+  \item Install \tool{Zotero} + the browser connector + the \tool{Better BibTeX}
+        plugin (\S\ref{sec:zotero}).
+  \item Create a \tool{Google Scholar} profile and set up three alerts
+        (\S\ref{sec:scholar}).
+  \item Create accounts: \tool{Overleaf}, \tool{Prism}, \tool{OpenReview},
+        \tool{GitHub}, \tool{Hugging Face}, \tool{arXiv}, \tool{ORCID}
+        (\S\ref{sec:writing}).
+  \item Bookmark the AI deadlines countdown and subscribe the relevant
+        deadlines to your calendar (\S\ref{sec:deadlines}).
+  \item Set up your AI assistant with a project memory file
+        (\S\ref{sec:assistant}).
+  \item Create one git repository per project, with a \code{notes/} lab
+        notebook from day one (\S\ref{sec:infra}).
+\end{itemize}
+\end{cbox}
+
+\begin{cbox}{Weeks 2--10 --- a focused survey}
+Pick a narrow question with your advisor and run a small systematic survey
+(\S\ref{sec:survey}). Output: a 60--120 paper annotated bibliography, an
+extraction spreadsheet, a taxonomy figure, 10--15 pages of writing, and a
+shortlist of three gaps that could become your first paper. This is the single
+highest-return thing you can do in your first term.
+\end{cbox}
+
+\begin{cbox}{Weeks 10--13 --- identity and first experiments}
+\begin{itemize}
+  \item Publish \code{username.github.io} with the AcademicPages template
+        (\S\ref{sec:website}).
+  \item Reproduce one baseline from the survey end to end, on your own
+        hardware, with tracked runs (\S\ref{sec:infra}).
+  \item Pick a target venue and work backwards from its deadline
+        (\S\ref{sec:deadlines}).
+\end{itemize}
+\end{cbox}
+
+%==============================================================================
+\section{The publication landscape}
+\label{sec:venues}
+
+ML and NLP are \emph{conference-first} fields. Unlike most of science, the
+top-tier results appear at conferences with full peer review and archival
+proceedings; journals play a secondary (though rising) role. Your CV will be
+read as a list of venue acronyms, so learn them early.
+
+Three things to internalise:
+
+\begin{enumerate}
+  \item \textbf{Cycles, not rolling submissions.} Most venues have one or two
+        hard deadlines per year. Miss by an hour and you wait months.
+  \item \textbf{Reviewing is public-ish.} ICLR and many workshops review on
+        OpenReview, where reviews and rebuttals stay online. Read them --- they
+        are the best free writing lesson available.
+  \item \textbf{A paper has a lifecycle:} preprint $\rightarrow$ submission
+        $\rightarrow$ reviews $\rightarrow$ rebuttal $\rightarrow$ decision
+        $\rightarrow$ camera-ready $\rightarrow$ talk/poster $\rightarrow$
+        citations. Plan for 6--12 months from idea to published.
+\end{enumerate}
+
+\subsection{Core machine learning venues}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.4cm} X L{3.5cm}}
+\toprule
+\thead{Venue} & \thead{Scope} & \thead{Rhythm (verify yearly)} \\
+\midrule
+\rowcolor{rowtint}
+\textbf{NeurIPS} & Broadest ML venue: theory, deep learning, datasets \&
+benchmarks track, many workshops & Abstract $\sim$May, full $\sim$May;
+conference December \\
+\textbf{ICML} & Core ML, strong on methods and theory &
+Deadline $\sim$Jan--Feb; conference July \\
+\rowcolor{rowtint}
+\textbf{ICLR} & Representation learning, deep learning, LLMs; fully open
+review on OpenReview & Deadline $\sim$Sept; conference April--May \\
+\textbf{AISTATS} & Statistics $\times$ ML, principled methods &
+Deadline $\sim$Oct; conference April--May \\
+\rowcolor{rowtint}
+\textbf{COLT / UAI} & Learning theory / probabilistic and causal reasoning &
+Winter--spring deadlines \\
+\textbf{AAAI / IJCAI} & Broad AI, including applications and multi-agent &
+AAAI $\sim$Aug; IJCAI $\sim$Jan \\
+\rowcolor{rowtint}
+\textbf{COLM} & Dedicated to language modelling: data, training, evaluation,
+science of LMs & Deadline $\sim$March; conference October \\
+\textbf{MLSys / LoG} & Systems for ML / learning on graphs &
+Autumn deadlines \\
+\bottomrule
+\end{tabularx}
+\caption*{\small\color{mutegray} Dates are indicative patterns, not promises.
+Always confirm on the venue site and the deadline tracker (\S\ref{sec:deadlines}).}
+\end{table}
+
+\subsection{Core NLP venues and the ACL Rolling Review}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.4cm} X L{3.5cm}}
+\toprule
+\thead{Venue} & \thead{Scope} & \thead{Notes} \\
+\midrule
+\rowcolor{rowtint}
+\textbf{ACL} & The flagship: all of computational linguistics and NLP &
+Summer conference; via ARR commitment \\
+\textbf{EMNLP} & Empirical methods --- the other flagship &
+Late-year conference; via ARR \\
+\rowcolor{rowtint}
+\textbf{NAACL / EACL / AACL} & Regional ACL conferences (Americas, Europe,
+Asia-Pacific); same standard & Alternate by year \\
+\textbf{COLING / LREC} & Computational linguistics / language resources and
+evaluation & Historically biennial; check the current cycle \\
+\rowcolor{rowtint}
+\textbf{CoNLL / *SEM / SemEval} & Learning and language, semantics, shared
+tasks & Good first-paper targets \\
+\textbf{Interspeech / ICASSP} & Speech and audio & Speech-specific cycles \\
+\rowcolor{rowtint}
+\textbf{TACL} & Journal of the ACL --- rolling submission, presented at *ACL
+conferences & Slower but prestigious \\
+\textbf{Findings} & Companion archival track of *ACL venues for solid papers
+below the main-conference bar & A real, citable publication \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{cbox}{ARR: the mechanic that confuses every first-year NLP student}
+The ACL family separates \emph{reviewing} from \emph{publishing}. You submit to
+\textbf{ACL Rolling Review} (ARR) in one of its roughly monthly cycles. You
+receive reviews plus a meta-review. Then, in a separate step, you
+\emph{commit} that reviewed paper to a specific venue (ACL, EMNLP, NAACL,
+\ldots), whose chairs decide accept / Findings / reject based on those reviews.
+
+Consequences worth planning around:
+\begin{itemize}
+  \item There are two deadlines to track: the ARR \emph{submission} deadline
+        and the venue \emph{commitment} deadline.
+  \item Reviews are reusable --- a rejected commitment can be revised and
+        committed elsewhere, or resubmitted to ARR with a revision note.
+  \item Mandatory sections: a \textbf{Limitations} section (does not count
+        against the page limit) and the \textbf{Responsible NLP checklist}.
+        Missing limitations is a desk-reject risk.
+\end{itemize}
+\end{cbox}
+
+\subsection{Adjacent venues and journals}
+
+\begin{itemize}
+  \item \textbf{Data mining / web / IR:} KDD, WSDM, CIKM, SIGIR, The Web
+        Conference, ECML-PKDD. Natural homes for applied and graph work.
+  \item \textbf{Vision:} CVPR, ICCV, ECCV --- relevant for multimodal work.
+  \item \textbf{Journals:} JMLR (open access, strong), \textbf{TMLR}
+        (rolling, fast, judged on correctness + interest rather than
+        novelty hype --- an excellent fit for careful work that conference
+        reviewers undervalue), TACL, \emph{Computational Linguistics}, TPAMI.
+  \item \textbf{Workshops:} co-located, non-archival or lightly archival,
+        4--8 pages, fast turnaround, real feedback and real audiences
+        (BlackboxNLP, RepL4NLP, WMT, and dozens more each year). The honest
+        advice for a first-year student: \emph{aim your first submission at a
+        good workshop}. You learn the full pipeline --- writing, reviewing,
+        rebuttal, poster, conversations --- at a fraction of the risk.
+\end{itemize}
+
+\subsection{How to judge a venue without asking around}
+
+\begin{itemize}
+  \item \textbf{Google Scholar Metrics} --- per-venue h5-index
+        (\url{https://scholar.google.com/citations?view_op=top_venues}).
+  \item \textbf{CORE ranking} (\url{https://portal.core.edu.au/conf-ranks/})
+        --- A*/A/B/C tiers; used for evaluation in many countries.
+  \item \textbf{CSRankings} (\url{https://csrankings.org}) --- shows which
+        venues count as top-tier per subarea, which is the useful signal.
+  \item \textbf{Where does the work you admire get published?} The most
+        reliable test. Open the last three papers you loved and look at the
+        venue line.
+\end{itemize}
+
+\begin{wbox}{Predatory venues}
+If a conference emails you an invitation, promises acceptance in two weeks,
+charges a large fee, and spans ``AI, Big Data, Blockchain and IoT'' --- it is a
+scam. Publishing there actively damages your CV. Cross-check every unfamiliar
+venue against the sources above before submitting.
+\end{wbox}
+
+%==============================================================================
+\section{Deadlines: never be surprised again}
+\label{sec:deadlines}
+
+\begin{cbox}{The one page to bookmark}
+Conference deadlines are countdowns, not dates: they are stated in
+\textbf{AoE} (Anywhere on Earth $=$ UTC$-$12), so an ``11:59pm'' deadline is
+later than you think --- and a venue has far more dates than the one everybody
+remembers. Two boards cover this, and they complement each other.
+
+\begin{itemize}
+  \item \textbf{Papers with Code --- AI Deadlines} (start here):\\
+        \url{https://paperswithcode.co/ai-deadlines}\\
+        Run by Hugging Face. Filter by subfield (Machine Learning, NLP,
+        Computer Vision, Data Mining, Robotics, IR, Speech, RL, \ldots), or
+        restrict to \emph{top tier only}. Crucially it tracks \emph{every}
+        milestone, not just the submission date: abstract registration,
+        reviews released, author-feedback and rebuttal windows, commitment
+        dates, notifications, camera-ready --- each with a live countdown,
+        the conference dates, and the location. The same site carries trending
+        papers, a following feed, and an API and MCP endpoint you can wire
+        into your assistant (\S\ref{sec:assistant}).
+  \item \textbf{AI Deadlines}, pre-filtered for your subfields:\\
+        \url{http://aideadlines.org/?sub=ML,CV,NLP}\\
+        The \code{sub=} parameter carries the filter, so the link itself is
+        your personalised board --- bookmark it and edit the tags
+        (\code{ML}, \code{CV}, \code{NLP}, \code{SP}, \code{DM}, \code{RO},
+        \ldots) as your interests change. A mirror runs as a Hugging Face
+        Space (\url{https://huggingface.co/spaces/huggingface/ai-deadlines}),
+        and the data is an open repository of YAML files
+        (\url{https://github.com/huggingface/ai-deadlines}) --- so a missing
+        deadline is a deadline you can add by pull request, a trivially easy
+        first open-source contribution.
+\end{itemize}
+Cross-check both against the official venue page before you plan around a
+date. Aggregators lag; call-for-papers pages do not.
+\end{cbox}
+
+A workflow that actually holds:
+
+\begin{enumerate}
+  \item Filter the board to your subfields (NLP, ML, maybe IR/CV) and list the
+        4--6 venues you could plausibly target in the next 18 months.
+  \item Put each into your calendar \emph{three times}: the deadline itself,
+        minus 7 days (``results frozen, writing only''), and minus 21 days
+        (``experiments must be running'').
+  \item Add the secondary dates people forget: abstract deadlines (NeurIPS),
+        ARR commitment dates, supplementary-material deadlines, rebuttal
+        windows (often a hard 5--7 day window --- do not travel then),
+        camera-ready dates, and early-registration dates.
+  \item Backward-plan on paper: camera-ready $\leftarrow$ decision $\leftarrow$
+        rebuttal $\leftarrow$ submission $\leftarrow$ freeze $\leftarrow$ final
+        experiments $\leftarrow$ ablations $\leftarrow$ main result.
+        Ablations always take longer than the main result.
+  \item Alternative trackers to cross-check: \url{https://ccfddl.com} and the
+        official venue pages. Trust the venue page over any aggregator.
+\end{enumerate}
+
+\begin{wbox}{Deadline-driven research is a trap, in moderation}
+Deadlines are useful forcing functions and terrible research strategies. Keep
+one long-horizon question alive alongside the deadline work --- it is where
+your thesis contribution will come from.
+\end{wbox}
+
+%==============================================================================
+\section{Writing and sharing: LaTeX, Overleaf, Prism}
+\label{sec:writing}
+
+Every paper you write in this field will be LaTeX. Learn it properly once ---
+a weekend --- and it will never cost you again. What differs is \emph{where}
+you edit and \emph{how} you collaborate.
+
+\subsection{Overleaf --- the default collaborative editor}
+
+\url{https://www.overleaf.com}
+
+\begin{itemize}
+  \item Browser-based, nothing to install, compiles server-side. Co-authors
+        type in the same document in real time, which is what you want in the
+        48 hours before a deadline.
+  \item Template gallery contains the official style files for most venues
+        --- search ``NeurIPS'', ``ACL'', ``ICML'' before you start a paper and
+        begin from the official template, never from last year's copy.
+  \item Rich comments and a chat panel; useful for advisor feedback.
+  \item Many universities have institutional licences --- check before paying.
+        The free tier is limited on collaborator count, compile time, full
+        version history, Git/Dropbox sync, and track changes.
+  \item Share with a link (view or edit), which is how most advisors want to
+        receive a draft.
+\end{itemize}
+
+\subsection{Prism --- an AI-native LaTeX workspace}
+
+\url{https://prism.openai.com} \quad (OpenAI, launched January 2026)
+
+\begin{itemize}
+  \item A LaTeX-native collaborative workspace with a frontier model wired
+        into the manuscript: it sees the whole document --- sections,
+        equations, citations, the argument --- rather than isolated snippets.
+  \item Currently free with unlimited projects, collaborators, and compile
+        time, which makes it an attractive alternative to Overleaf's free
+        tier.
+  \item Genuinely good at: tightening prose, fixing LaTeX errors you cannot
+        find, reformatting tables, restructuring a paragraph that reviewers
+        will stumble over, and helping non-native English writers put the
+        emphasis where the science is.
+\end{itemize}
+
+\begin{wbox}{Two cautions before you move your thesis into any AI editor}
+\textbf{Policy:} most venues now have an explicit policy on AI-assisted
+writing (disclosure requirements, and a hard ban on using LLMs to write
+\emph{reviews}). You remain fully responsible for every sentence, citation,
+and number. Read your venue's policy once, now.\\[4pt]
+\textbf{Confidentiality:} do not upload data, text, or results covered by an
+NDA, an industry collaboration, or someone else's unpublished work into a
+cloud tool without checking. This is a real way for PhD students to get into
+real trouble.
+\end{wbox}
+
+\subsection{The local workflow you should also have}
+
+Cloud editors are for collaboration; a local copy is for control. Keep both.
+
+\begin{itemize}
+  \item \code{git} + \code{latexmk -pdf -pvc} + VS Code with the LaTeX
+        Workshop extension (or your editor's equivalent).
+  \item \textbf{One sentence per line} in your \code{.tex} files. This single
+        convention turns git diffs from useless to invaluable.
+  \item Split by section (\code{\textbackslash input\{sections/method\}}) so
+        two people can work without conflicts.
+  \item Keep figures as generated artefacts: a script in the repo produces
+        every PDF figure from logged results. No hand-edited plots.
+  \item For arXiv submission, \code{arxiv-latex-cleaner}
+        (\,\url{https://github.com/google-research/arxiv-latex-cleaner}\,)
+        strips comments, removes unused files, and shrinks images --- run it
+        every time, not least because \emph{reviewers have found deanonymising
+        information in LaTeX comments}.
+\end{itemize}
+
+\subsection{Preprints, anonymity, and sharing}
+
+\begin{itemize}
+  \item \textbf{arXiv} (\url{https://arxiv.org}) --- cs.CL for NLP, cs.LG for
+        ML, cs.AI, stat.ML. Your first submission needs endorsement; your
+        advisor or a co-author handles it. Preprints are the norm and
+        accelerate citations.
+  \item \textbf{Anonymity periods:} ACL-family venues enforce an anonymity
+        window around the review cycle --- posting or publicising a new
+        preprint during it can invalidate your submission. ML venues
+        (NeurIPS/ICML/ICLR) are double-blind but generally permit preprints.
+        \emph{Check the current policy for your target venue before you post.}
+  \item For double-blind submissions, anonymise your code too:
+        \url{https://anonymous.4open.science}. Also strip author names from
+        PDF metadata and acknowledgements.
+  \item \textbf{Reproducibility artefacts:} release code on GitHub with a
+        licence, checkpoints and datasets on Hugging Face, and an
+        exact environment spec. Papers with runnable code get cited more ---
+        and your future self is the main beneficiary.
+  \item Get an \textbf{ORCID} (\url{https://orcid.org}) in week one and put it
+        on everything; it disambiguates you from everyone who shares your name.
+\end{itemize}
+
+%==============================================================================
+\section{Your reference library: Zotero}
+\label{sec:zotero}
+
+You will read a few thousand papers during a PhD. Without a system you will
+re-find the same paper five times and mis-cite it once in print. Set this up
+before you read paper number ten.
+
+\url{https://www.zotero.org} --- free, open source, no lock-in.
+
+\subsection{The setup, in order}
+
+\begin{enumerate}
+  \item Install \textbf{Zotero} (desktop) and the \textbf{Zotero Connector}
+        browser extension. The connector is the whole point: one click on an
+        arXiv, ACL Anthology, OpenReview, or Scholar page saves the metadata
+        \emph{and} the PDF.
+  \item Install \textbf{Better BibTeX} (\url{https://retorque.re/zotero-better-bibtex/}).
+        This is non-optional for LaTeX users. It gives you:
+        \begin{itemize}
+          \item stable, readable citation keys (\code{devlin2019bert}) that you
+                \textbf{pin} so they never change under you;
+          \item \textbf{auto-export}: point it at \code{paper/refs.bib} in your
+                git repo and it rewrites that file whenever your library
+                changes. Your bibliography is then always current and you never
+                hand-edit BibTeX again.
+        \end{itemize}
+  \item Turn on sync (free account; 300\,MB of free file storage, paid tiers or
+        your own WebDAV/cloud folder beyond that). Attachments can also be
+        stored in a linked folder you back up yourself.
+  \item Create a \textbf{group library} with your lab or co-authors --- shared
+        reading lists, shared annotations, one source of truth per project.
+  \item Organise with \textbf{collections} per project and \textbf{tags} per
+        theme (\code{method:retrieval}, \code{status:to-read},
+        \code{baseline}). Saved searches then do the filing for you.
+  \item Read inside Zotero: its built-in PDF reader keeps highlights and
+        notes attached to the item, so your annotations are searchable years
+        later.
+\end{enumerate}
+
+\subsection{Habits that keep a library trustworthy}
+
+\begin{itemize}
+  \item \textbf{Cite the published version, not the preprint}, once one
+        exists. Reviewers notice; it is a cheap signal of care. Keep both
+        entries if you must, but cite the proceedings.
+  \item \textbf{Get clean BibTeX from the right source.} For CS, the ACL
+        Anthology (\url{https://aclanthology.org}) and
+        \textbf{DBLP} (\url{https://dblp.org}) produce correct proceedings
+        entries; Google Scholar's BibTeX is often sloppy about venue names,
+        pages, and editors. Zotero + Add Item by Identifier (DOI / arXiv ID /
+        ISBN) is the fastest clean path.
+  \item Run \emph{Duplicate Items} monthly. Merge, do not delete.
+  \item Add one-sentence notes on save: ``what it does / why I care''. In
+        month 14 this is the difference between a library and a junkyard.
+  \item Subscribe to feeds inside Zotero (arXiv category RSS, journal feeds) so
+        new work arrives where you already work.
+\end{itemize}
+
+\begin{cbox}{Zotero $\times$ Overleaf / Prism}
+Overleaf's paid tiers can link a Zotero library directly. On a free plan, the
+Better BibTeX auto-export route is better anyway: your \code{.bib} lives in
+git, so it is versioned, diffable, and identical for every co-author. Commit it.
+\end{cbox}
+
+%==============================================================================
+\section{Your first real move: a focused survey}
+\label{sec:survey}
+
+Before you can contribute, you need to know what exists --- and the fastest
+honest way to learn a field is to survey it systematically. Not reading
+``around'' the topic: producing a structured artefact.
+
+\begin{cbox}{Why this is the right first project}
+\begin{itemize}
+  \item It gives you the \textbf{vocabulary} to talk to your advisor as a peer
+        within weeks.
+  \item It produces a \textbf{taxonomy} --- and a taxonomy is the thing that
+        reveals gaps. Your first paper usually lives in a box you drew that
+        has nothing in it.
+  \item It builds your \textbf{bibliography}, which you will reuse in every
+        paper and in your thesis introduction.
+  \item It identifies the \textbf{baselines} you will have to beat, and the
+        datasets and metrics everyone uses, before you waste a month on a
+        non-standard setup.
+  \item It is \textbf{publishable}: as a survey, a position paper, or a
+        workshop paper --- and it is the natural core of your thesis'
+        related-work chapter.
+\end{itemize}
+\end{cbox}
+
+\subsection{A protocol you can run in 8--12 weeks}
+
+\begin{description}
+  \item[1. Write the question down.] One sentence, narrow enough to be
+        answerable: not ``LLM reasoning'' but ``methods for verifying
+        intermediate reasoning steps in LLMs, 2022--2026, and how they are
+        evaluated''. Agree it with your advisor in writing.
+  \item[2. Seed set.] Ask your advisor for 5--10 anchor papers. Read them
+        properly. Note their shared vocabulary --- those terms become your
+        search queries.
+  \item[3. Define inclusion / exclusion criteria.] E.g.\ include: peer-reviewed
+        or arXiv, 2022+, English, proposes or evaluates a verification method.
+        Exclude: pure position pieces, no empirical evaluation. Write the
+        criteria down \emph{before} screening, or you will rationalise.
+  \item[4. Search systematically.] Run the same queries across Google Scholar,
+        Semantic Scholar, the ACL Anthology, OpenReview, and DBLP
+        (\S\ref{sec:scholar}). \textbf{Log every query, the date, and the
+        number of hits} in a spreadsheet tab. This is what makes a survey
+        reproducible rather than anecdotal --- and it is the discipline the
+        PRISMA standard formalises in other fields.
+  \item[5. Snowball in both directions.] \emph{Backward:} mine the reference
+        lists of your seed papers. \emph{Forward:} for each seed, open
+        ``Cited by'' and search \emph{within} the citing articles. Forward
+        snowballing is how you find the last six months, which no survey
+        covers yet.
+  \item[6. Screen in two passes.] Title + abstract first (fast, ruthless,
+        keep a ``maybe'' pile), then full text for survivors. Expect to screen
+        400--600 to keep 60--120.
+  \item[7. Extract into a table, not prose.] One row per paper, fixed columns
+        (Table~\ref{tab:extract}). Fill it as you read. The table \emph{is}
+        your survey; the prose comes from reading down its columns.
+  \item[8. Build the taxonomy.] Cluster rows until the groups stop changing.
+        Draw it as one figure. If you cannot draw it, you do not understand
+        the field yet --- which is useful information.
+  \item[9. Write 10--15 pages as you go,] not at the end. Each section
+        summarises one branch of the taxonomy and ends with ``what is missing
+        here''.
+  \item[10. Finish with three candidate gaps,] each stated as a testable
+        question plus the experiment that would answer it. Take those to your
+        advisor. That meeting is where your first paper starts.
+\end{description}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{3.1cm} X}
+\toprule
+\thead{Column} & \thead{What goes in it} \\
+\midrule
+\rowcolor{rowtint}
+Key & Pinned Better BibTeX key (\code{author2026short}) \\
+Venue / year & Published venue, not ``arXiv'' if it has one \\
+\rowcolor{rowtint}
+Problem & The task, in your words, in one line \\
+Method family & Your taxonomy label (fill this last, revise often) \\
+\rowcolor{rowtint}
+Data & Datasets and sizes used \\
+Metrics & How success is measured; is it comparable across papers? \\
+\rowcolor{rowtint}
+Headline result & The number they lead with, plus the baseline it beats \\
+Compute & GPUs, hours, model sizes --- can \emph{you} run this? \\
+\rowcolor{rowtint}
+Code & Link + does it reproduce the paper's numbers? (\S\ref{sec:signals}) \\
+Limitations & Stated and unstated \\
+\rowcolor{rowtint}
+Relevance & Your 1--5 score and a one-line ``why I care'' \\
+\bottomrule
+\end{tabularx}
+\caption{Extraction schema. A spreadsheet with these columns, 100 rows deep, is
+worth more than 100 pages of highlighted PDFs.}
+\label{tab:extract}
+\end{table}
+
+\begin{cbox}{Read efficiently: the three-pass method}
+Keshav's \emph{How to Read a Paper} is two pages and will save you months.
+Pass 1 (5~min): title, abstract, intro, section headings, conclusions,
+references --- decide whether to continue. Pass 2 (1~h): figures, tables,
+method at a level where you could summarise it. Pass 3 (several hours, rare):
+re-derive the work, assumption by assumption. Give pass~3 to about 20 papers;
+pass~1 to hundreds.
+\end{cbox}
+
+\begin{wbox}{Scope discipline}
+A survey expands without limit if you let it. Timebox it, freeze the search
+date (``literature up to 15 November 2026''), and ship. You can always write
+version two --- and a frozen, documented cut-off is exactly what a reviewer
+wants to see.
+\end{wbox}
+
+%==============================================================================
+\section{Searching the literature properly}
+\label{sec:scholar}
+
+Most people use Google Scholar as a search box. It is closer to a research
+instrument, and the difference shows up in what you find.
+
+\subsection{Google Scholar: the operators and features that matter}
+
+\url{https://scholar.google.com}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.0cm} X}
+\toprule
+\thead{Query / feature} & \thead{What it does} \\
+\midrule
+\rowcolor{rowtint}
+\code{"contrastive decoding"} & Exact phrase. Always quote multi-word technical
+terms, or Scholar matches them loosely. \\
+\code{retrieval OR retrieve} & \code{OR} must be capitalised. Essential,
+because fields rename themselves constantly. \\
+\rowcolor{rowtint}
+\code{-survey -review} & Excludes a term. Useful once surveys swamp your
+results. \\
+\code{author:"K Skianis"} & Author search; try initial + surname, and
+surname variants. \\
+\rowcolor{rowtint}
+\code{source:"Empirical Methods"} & Restricts to a publication whose name
+contains the phrase --- the way to search within a venue. \\
+\code{intitle:hallucination} & Term must appear in the title. Brutal and
+effective precision filter; \code{allintitle:} for all terms. \\
+\rowcolor{rowtint}
+\textbf{Custom range} (left panel) & Year filtering. Combine with
+\textbf{Sort by date} to see this month's work rather than the most-cited work
+of 2019. \\
+\textbf{Cited by $N$} & Forward citations --- who built on this paper. \\
+\rowcolor{rowtint}
+\textbf{Search within citing articles} & The most under-used feature in
+academia: search \emph{inside} the set of papers citing a key work. ``Who cited
+BERT \emph{and} talks about Greek?'' is one query. \\
+\textbf{Related articles} & Scholar's similarity graph. Good for escaping your
+own vocabulary. \\
+\rowcolor{rowtint}
+\textbf{All $N$ versions} & Finds the free PDF and the published version of the
+same work. \\
+\textbf{Cite $\rightarrow$ BibTeX} & Enable it once: Settings $\rightarrow$
+Bibliography manager $\rightarrow$ Show links to import citations into BibTeX.
+(Still prefer DBLP/ACL Anthology for final entries.) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection*{Alerts --- set these up today}
+
+\begin{itemize}
+  \item \textbf{Query alerts} for your 2--3 core topics (use quoted phrases, or
+        you will drown).
+  \item \textbf{Citation alerts} on the 5 anchor papers of your area --- new
+        work almost always cites them, so this is a near-complete feed of your
+        subfield.
+  \item \textbf{An alert on your own profile}, so you learn who is citing you.
+  \item Set a weekly slot (30 minutes, same time) to triage the alert emails
+        into Zotero. Alerts you never read are worse than no alerts.
+\end{itemize}
+
+\subsubsection*{Your Scholar profile}
+
+Create it in week one, even with zero papers. Use your institutional email so
+it gets verified, add a photo, list your interests, keep the publication list
+clean (merge duplicates, delete the garbage Scholar attributes to you). Decide
+whether to make it public --- for a researcher, public is almost always right.
+It is how programme chairs, reviewers, and future employers check who you are.
+
+\begin{wbox}{On h-index and citation counts}
+They are age-dependent, field-dependent, and gameable. A first-year student
+with $h=0$ is exactly on schedule. Use these numbers as \emph{navigation aids
+for finding influential work}, never as a measure of your worth or anyone
+else's.
+\end{wbox}
+
+\subsection{The rest of the toolkit}
+
+\begin{description}
+  \item[Semantic Scholar] (\url{https://www.semanticscholar.org}) --- better
+        structured than Scholar: TLDR summaries, ``highly influential
+        citations'', citation \emph{intent} (background vs.\ method vs.\
+        result), and a genuinely good free API for building your own tooling.
+  \item[OpenAlex] (\url{https://openalex.org}) --- fully open bibliographic
+        graph with a free API. The right tool if you want to compute anything
+        over the literature (growth curves, co-authorship, venue trends).
+  \item[ACL Anthology] (\url{https://aclanthology.org}) --- every *ACL paper
+        ever, free, full-text searchable, with correct BibTeX. For NLP it
+        beats Scholar for precision.
+  \item[OpenReview] (\url{https://openreview.net}) --- submissions,
+        \emph{reviews}, rebuttals, and decisions for ICLR, NeurIPS and many
+        workshops. Read the reviews of papers adjacent to yours before you
+        write your own. Nothing else teaches you the standard this quickly.
+  \item[DBLP] (\url{https://dblp.org}) --- authoritative CS metadata. Use it
+        to enumerate everything a person or venue published, and for clean
+        BibTeX.
+  \item[Connected Papers] (\url{https://www.connectedpapers.com}),
+        \textbf{ResearchRabbit}, \textbf{Litmaps} --- visual citation
+        neighbourhoods from one seed paper. Excellent for the first week of a
+        survey, when you do not yet know the right words.
+  \item[Hugging Face] (\url{https://huggingface.co/papers}) --- daily papers,
+        plus models and datasets with download counts: a usage signal that
+        citation counts miss entirely.
+  \item[alphaXiv / arXiv listings] --- discussion layers and raw daily feeds
+        for cs.CL and cs.LG. Skim titles daily, 10 minutes, no guilt about
+        what you skip.
+\end{description}
+
+\begin{cbox}{Papers with Code, then and now}
+The original \code{paperswithcode.com} was shut down in 2025, so old links to
+it are dead. The name now lives on at
+\url{https://paperswithcode.co} (run by Hugging Face): trending papers, a
+following feed for tasks, authors and organisations, a paper archive, the
+deadline board of \S\ref{sec:deadlines}, and an API plus MCP endpoint. Update
+any bookmark that still points at the \code{.com}.
+\end{cbox}
+
+%==============================================================================
+\section{Reading the signals: citations, stars, and attention}
+\label{sec:signals}
+
+Part of research taste is judging, quickly, whether a line of work is gaining
+momentum or quietly dying. Two cheap signals do most of the work --- as long as
+you know what each actually measures.
+
+\subsection{Citations: measure velocity, not volume}
+
+\begin{itemize}
+  \item \textbf{Normalise by age.} A 2019 paper with 400 citations and a 2026
+        paper with 60 are not comparable. Compute citations per year since
+        publication; for recent work, citations in the \emph{last} 12 months
+        is the sharper signal.
+  \item \textbf{Look at the second derivative.} A paper whose citations are
+        accelerating marks a live area. One with a flat tail marks a closed
+        one. Scholar's per-year bar chart on a paper's page shows this at a
+        glance.
+  \item \textbf{Read \emph{who} cites, not how many.} Ten citations from the
+        three strongest groups in the area beat 200 from unrelated surveys.
+        Semantic Scholar's citation-intent labels help: being cited as a
+        \emph{method} others use is worth far more than a background mention.
+  \item \textbf{Watch for inflation:} large author lists citing each other,
+        survey-driven citation piles, and benchmark papers that collect
+        citations for existing rather than for being good ideas.
+  \item \textbf{Venue trend as a field signal.} Count submissions or accepted
+        papers mentioning a term per year (OpenReview and the ACL Anthology
+        make this scriptable). A term going from 5 to 300 papers in two years
+        tells you both that it is hot and that you are probably late.
+\end{itemize}
+
+\subsection{GitHub: stars, and the signals that matter more}
+
+Stars are the field's informal applause. They are a real signal of attention
+--- and a poor signal of quality.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{4.6cm} X}
+\toprule
+\thead{What to check} & \thead{What it tells you} \\
+\midrule
+\rowcolor{rowtint}
+\textbf{Star history} (\url{https://star-history.com}) & The \emph{shape}
+matters: a vertical launch-day spike then flat means one viral post; a steady
+upward slope means real adoption. \\
+\textbf{Last commit / commit frequency} & 3k stars and nothing pushed in
+14 months is an abandoned repo. Check the default branch, not the releases
+page. \\
+\rowcolor{rowtint}
+\textbf{Contributors} & One author vs.\ thirty. Thirty means a community will
+keep it alive --- and that bugs get found. \\
+\textbf{Open vs.\ closed issues, and who answers} & Authors replying within
+days is the strongest health signal there is. \\
+\rowcolor{rowtint}
+\textbf{Issues searched for ``reproduce''} & Do other people get the paper's
+numbers? Search the issue tracker for \code{reproduce}, \code{results},
+\code{mismatch} before you trust a baseline. \emph{Do this every time.} \\
+\textbf{Forks, ``Used by'', dependents} & Forks are often bookmarks; genuine
+downstream dependents are the stronger signal. \\
+\rowcolor{rowtint}
+\textbf{Releases, tests, CI, pinned deps} & Signals that running it will cost
+you a day, not a fortnight. A lockfile is a gift. \\
+\textbf{Checkpoints provided} & Can you evaluate without retraining? Often the
+difference between a usable and a theoretical baseline. \\
+\rowcolor{rowtint}
+\textbf{LICENSE} & Research-only, non-commercial, or custom model licences
+restrict what you may publish or build on. Check \emph{before} you invest. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{itemize}
+  \item Useful GitHub search syntax:
+        \code{transformers stars:>500 pushed:>2026-01-01 language:python}, and
+        \code{path:} / \code{in:readme} to find code inside repositories.
+  \item \textbf{Watch $\rightarrow$ Custom $\rightarrow$ Releases} on the 5--10
+        repositories you depend on. Far better than re-checking manually.
+  \item Cross-check with other attention signals: Hugging Face model downloads
+        and likes, PyPI download counts, and whether the method appears in
+        other people's baselines --- the last one is the ground truth.
+\end{itemize}
+
+\begin{wbox}{The trap, stated plainly}
+Stars measure how well a project was marketed. Citations measure how well a
+paper was positioned. Neither measures whether the idea is correct. The only
+test that counts is running it yourself on a task you understand --- which is
+why reproducing one baseline (\S\ref{sec:90days}) is in your first 90 days.
+\end{wbox}
+
+%==============================================================================
+\section{Set up an AI assistant --- and the rules for using it}
+\label{sec:assistant}
+
+An AI coding and reading assistant is now part of a competent research setup,
+in the same way a reference manager is. Used well, it removes weeks of
+mechanical work per year. Used badly, it fabricates citations into your
+literature review and hollows out the understanding your thesis is supposed to
+demonstrate.
+
+\subsection{The setup}
+
+\begin{enumerate}
+  \item \textbf{A terminal/IDE coding agent} in each project repository
+        (Claude Code, or your preferred equivalent). This is where the leverage
+        is: it reads your code, runs your tests, and edits files.
+  \item \textbf{A project memory file} (e.g.\ \code{CLAUDE.md} at the repo
+        root) stating your conventions: Python version and env manager, how to
+        launch training, where data lives, plotting style, ``never commit
+        checkpoints'', ``one sentence per line in .tex''. Written once, it
+        stops you re-explaining your project every session.
+  \item \textbf{Connect your sources.} Via connectors/MCP servers, give the
+        assistant access to your filesystem, your Zotero library, and
+        literature APIs (arXiv, Semantic Scholar). An assistant that can read
+        the actual PDFs in your library is a different tool from one that
+        guesses.
+  \item \textbf{Saved prompts for repeated jobs} --- paper triage, extraction
+        into your survey schema, ``review this draft as a hostile ARR
+        reviewer''. Keep them in the repo so they improve over time.
+  \item \textbf{A lab notebook it can read and write:} \code{notes/} with one
+        dated Markdown file per week. Decisions, failed runs and why,
+        hyperparameters, links. This is also what your assistant needs in
+        order to be useful in month six.
+\end{enumerate}
+
+\subsection{What to use it for}
+
+\begin{multicols}{2}
+\begin{itemize}
+  \item Triaging abstracts against your inclusion criteria.
+  \item Pulling tables/numbers out of PDFs into your extraction sheet.
+  \item Explaining unfamiliar notation; walking a derivation step by step.
+  \item Getting an unfamiliar baseline repo to run; writing eval harnesses.
+  \item Data pipelines, plotting code, Slurm scripts, boilerplate.
+  \item Refactoring research code before it becomes unmaintainable.
+  \item LaTeX debugging, table formatting, prose tightening.
+  \item Adversarial pre-review of your own draft against the venue's form.
+  \item Drafting rebuttal \emph{prose} from \emph{your} arguments.
+  \item Turning notes into a first draft you then rewrite.
+\end{itemize}
+\end{multicols}
+
+\subsection{Non-negotiable guardrails}
+
+\begin{wbox}{Five rules}
+\begin{enumerate}
+  \item \textbf{Never cite a paper you have not opened.} Models invent
+        plausible references --- correct-looking authors, venue, year, all
+        fabricated. Every entry in your \code{.bib} must come from Zotero,
+        DBLP, or the Anthology, after you read at least the abstract.
+  \item \textbf{Verify every number and every claim} against the source.
+        Treat assistant output as a competent draft from a stranger, not as a
+        result.
+  \item \textbf{Never paste confidential data} --- NDA'd industry data,
+        unpublished third-party manuscripts, papers you are reviewing --- into
+        a cloud assistant. Reviewing material is confidential; using an LLM to
+        write reviews is banned at most venues.
+  \item \textbf{Know your venue's disclosure policy} and follow it. You are
+        the author and you are responsible for every word.
+  \item \textbf{Keep the core yours.} Derive your own proofs, design your own
+        experiments, form your own judgements. The point of a PhD is that
+        \emph{you} become the expert; outsource the mechanics, never the
+        thinking.
+\end{enumerate}
+\end{wbox}
+
+%==============================================================================
+\section{Your personal site: \texttt{username.github.io}}
+\label{sec:website}
+
+You need one web page that you own, that outlives every institution you will
+work at, and that answers ``who is this person and what have they done?'' in
+ten seconds. GitHub Pages makes it free and permanent-ish; a Jekyll template
+makes it take an afternoon.
+
+\begin{cbox}{Why it matters more than it looks}
+Programme chairs, reviewers who found your paper, internship recruiters,
+postdoc hosts, and students looking for a supervisor all search your name. If
+the first hit is a stale institutional directory page, you lose the
+introduction. Your site is also where your PDFs, code links, slides, and CV
+actually stay reachable after you change jobs.
+\end{cbox}
+
+\subsection{How GitHub Pages works}
+
+Create a repository named \textbf{exactly} \code{username.github.io} (your own
+GitHub username). Its contents are served at
+\code{https://username.github.io}. One such \emph{user site} per account; free;
+HTTPS included; custom domains supported. Jekyll is built in, so a template of
+Markdown files becomes a site with no build pipeline of your own.
+
+\subsection{Use the AcademicPages template}
+
+\textbf{AcademicPages} --- \url{https://github.com/academicpages/academicpages.github.io}
+--- is the standard academic Jekyll template (built on Minimal Mistakes). It
+ships exactly the pages an ML/NLP researcher needs: publications, talks,
+teaching, CV, blog posts, and a portfolio.
+
+\begin{enumerate}
+  \item On the AcademicPages repository, click \textbf{Use this template}
+        $\rightarrow$ \textbf{Create a new repository}; name it
+        \code{username.github.io}. (Cleaner than forking, which complicates
+        pull requests and search.)
+  \item Edit \code{\_config.yml}: your name, title, email, bio, location,
+        GitHub, Scholar, ORCID, LinkedIn, and the site URL. This file alone
+        controls most of what visitors see.
+  \item Replace the content, which is all Markdown with YAML front matter:
+        \begin{itemize}
+          \item \code{\_pages/about.md} --- the landing page. Three paragraphs
+                maximum: who you are, what you work on, what you are looking
+                for.
+          \item \code{\_publications/} --- one file per paper (title, venue,
+                date, links to PDF / arXiv / code / BibTeX).
+          \item \code{\_talks/}, \code{\_teaching/}, \code{\_posts/},
+                \code{\_portfolio/} --- same pattern.
+          \item \code{files/} --- your CV PDF and paper PDFs;
+                \code{images/} --- your profile photo.
+        \end{itemize}
+  \item Generating publications from BibTeX: the scripts in
+        \code{markdown\_generator/} turn a \code{.bib} or TSV export into the
+        per-publication Markdown files. Export from Zotero, run the script,
+        commit --- your site then updates from the same library that feeds
+        your papers.
+  \item Commit and push. GitHub builds and publishes within a minute or two;
+        check the Actions tab if it does not appear. Optional local preview:
+        \code{bundle install \&\& bundle exec jekyll serve}.
+  \item Optional: a custom domain --- add a \code{CNAME} file and point your
+        DNS at GitHub Pages. Worth it if you own \code{firstname-lastname.com},
+        but \code{username.github.io} is perfectly respectable.
+\end{enumerate}
+
+\begin{cbox}{A worked example: \url{https://y3nk0.github.io}}
+My own site is built on AcademicPages. Copy its structure rather than its
+content:
+
+\begin{itemize}
+  \item \textbf{About} --- short bio with research interests (NLP, ML,
+        robustness, reasoning, interpretability, trustworthy models), plus
+        background and affiliations.
+  \item \textbf{News} --- a running list of accepted papers, talks, and grants.
+        The cheapest way to look active, and the first thing returning
+        visitors read.
+  \item \textbf{Research} --- themes rather than a paper dump, so a visitor
+        learns what you \emph{work on}, not just what you published.
+  \item \textbf{Publications} --- venue, year, and links out to PDF and code.
+  \item \textbf{Talks} and \textbf{Teaching} --- separate pages, which matter
+        for academic job applications.
+  \item \textbf{CV} --- both a downloadable PDF and an HTML version.
+\end{itemize}
+Because AcademicPages sites are public repositories, you can inspect the
+source of any site you like --- mine included
+(\code{github.com/y3nk0/y3nk0.github.io}) --- and borrow its structure
+directly.
+\end{cbox}
+
+\begin{itemize}
+  \item \textbf{Alternatives:} \textbf{al-folio} (Jekyll, very popular in ML,
+        BibTeX-driven publications page), \textbf{Minimal Mistakes} (the base
+        theme, if you want full control), \textbf{Hugo Blox} (formerly
+        Wowchemy), or a \textbf{Quarto} website if you already write in Quarto.
+        Any of them beats having no site.
+  \item \textbf{Keep it current.} Update after every acceptance, every talk,
+        and every CV change. A site last touched three years ago reads as
+        worse than no site.
+\end{itemize}
+
+%==============================================================================
+\section{Research infrastructure and habits}
+\label{sec:infra}
+
+The tools above handle literature and writing. These handle the part that
+actually consumes your time: experiments.
+
+\subsection{Make experiments reproducible from day one}
+
+\begin{itemize}
+  \item \textbf{One git repository per project.} Code, configs, notes,
+        the paper. Never ``final\_v3\_real.py''.
+  \item \textbf{Deterministic environments:} \code{uv} or conda with a
+        lockfile, or Docker/Apptainer if your cluster supports it. Record
+        versions of everything, including CUDA.
+  \item \textbf{Config files, not command-line archaeology} (Hydra,
+        or plain YAML). Every run must be reconstructible from a committed
+        config plus a commit hash.
+  \item \textbf{Seeds and variance.} Report mean $\pm$ std over at least 3
+        seeds. A single-seed improvement of 0.3 points is noise, and a
+        reviewer will say so --- correctly.
+  \item \textbf{Experiment tracking} from your first run: Weights \& Biases,
+        MLflow, or TensorBoard. Log configs, metrics, and the commit hash.
+        ``Which run produced Table 3?'' must have an answer in month nine.
+  \item \textbf{A results file, not screenshots.} Your tables and figures
+        should regenerate from logged results with one script.
+  \item \textbf{Compute:} learn your lab's cluster and Slurm early (job arrays,
+        checkpoint-and-resume, time limits); know what free or national
+        resources you can apply for; and treat ``can I actually run this?'' as
+        a design constraint when choosing problems.
+\end{itemize}
+
+\subsection{Habits that compound}
+
+\begin{description}
+  \item[Weekly advisor meeting with a written agenda.] Send 5 bullets
+        beforehand: what I did, what I found, what is blocked, what I propose,
+        what I need from you. Keep a shared running document. This one habit
+        separates students who progress from students who drift.
+  \item[A dated lab notebook.] Including negative results --- especially
+        negative results, since you will otherwise repeat them.
+  \item[Read daily, 20 minutes.] Titles and abstracts from the arXiv feed,
+        then one paper properly. Join or start a reading group; explaining a
+        paper out loud exposes exactly what you did not understand.
+  \item[Write continuously.] Keep a living draft of the current paper from
+        week one; writing is how you discover that your story has a hole.
+  \item[Say yes to reviewing] (workshops first, then ARR) once you have a
+        paper or two. Nothing teaches you what makes a paper acceptable faster
+        than reviewing eight of them.
+  \item[Be present in the community.] Follow researchers in your area, go to
+        your local ML/NLP meetups, apply to summer schools and doctoral
+        consortia, volunteer at a conference you cannot otherwise afford, and
+        talk to people at posters --- including, especially, posters you only
+        half understand.
+  \item[Protect your mind.] Impostor feelings are near-universal and peak in
+        year one; rejection is the default outcome of submission, not a verdict
+        on you. Keep interests outside the PhD, keep a list of things that have
+        worked, and talk to people when it gets heavy.
+\end{description}
+
+%==============================================================================
+\section{Checklists}
+
+\subsection*{Week 1}
+\begin{multicols}{2}
+\begin{itemize}
+  \item Zotero + connector + Better BibTeX installed; auto-export configured.
+  \item Google Scholar profile created; 3 alerts live.
+  \item ORCID, arXiv, OpenReview, GitHub, Hugging Face accounts.
+  \item Overleaf and Prism accounts; institutional licence checked.
+  \item Deadline tracker bookmarked; target venues in the calendar.
+  \item AI assistant set up with a project memory file.
+  \item Project repository created with \code{notes/} and a README.
+  \item Cluster access working; a trivial job submitted successfully.
+\end{itemize}
+\end{multicols}
+
+\subsection*{Month 1}
+\begin{itemize}
+  \item Survey question agreed in writing with your advisor; criteria written
+        down.
+  \item Seed papers read with the three-pass method; extraction sheet started.
+  \item Search log running (queries, dates, hit counts).
+  \item Weekly advisor meeting slot fixed, with the 5-bullet agenda format.
+  \item Reading group joined.
+\end{itemize}
+
+\subsection*{Months 2--3}
+\begin{itemize}
+  \item 60--120 papers screened and extracted; taxonomy drawn.
+  \item 10--15 pages of survey written; three candidate gaps written as
+        testable questions.
+  \item One baseline reproduced end to end, tracked, with numbers you trust.
+  \item \code{username.github.io} live, with About, Publications (even if
+        empty), CV.
+  \item A target venue chosen and backward-planned from its deadline.
+\end{itemize}
+
+\subsection*{Year 1}
+\begin{itemize}
+  \item One submission out --- workshop or main conference. Submitted beats
+        perfect.
+  \item A rebuttal written (your first one will teach you more than the paper
+        did).
+  \item A talk given somewhere: lab seminar, reading group, local meetup.
+  \item Code and checkpoints released for at least one project.
+  \item A one-page research statement you can hand to anyone who asks what you
+        work on.
+\end{itemize}
+
+%==============================================================================
+\appendix
+\section{Link directory}
+
+\begin{longtable}{L{4.3cm} L{10.5cm}}
+\toprule
+\thead{What} & \thead{Where} \\
+\midrule
+\endfirsthead
+\toprule
+\thead{What} & \thead{Where} \\
+\midrule
+\endhead
+\multicolumn{2}{l}{\textbf{\color{brand}Deadlines and venues}}\\
+\textbf{PwC AI deadlines} & \url{https://paperswithcode.co/ai-deadlines} \\
+\textbf{AI deadlines (ML/CV/NLP)} & \url{http://aideadlines.org/?sub=ML,CV,NLP} \\
+AI deadlines (mirror) & \url{https://huggingface.co/spaces/huggingface/ai-deadlines} \\
+Deadline source repo & \url{https://github.com/huggingface/ai-deadlines} \\
+CCF deadlines & \url{https://ccfddl.com} \\
+CORE conference ranks & \url{https://portal.core.edu.au/conf-ranks/} \\
+CSRankings & \url{https://csrankings.org} \\
+Scholar venue metrics & \url{https://scholar.google.com/citations?view_op=top_venues} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}Writing and sharing}}\\
+Overleaf & \url{https://www.overleaf.com} \\
+Prism (AI LaTeX editor) & \url{https://prism.openai.com} \\
+arXiv & \url{https://arxiv.org} \\
+arxiv-latex-cleaner & \url{https://github.com/google-research/arxiv-latex-cleaner} \\
+Anonymous code sharing & \url{https://anonymous.4open.science} \\
+ORCID & \url{https://orcid.org} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}References and search}}\\
+Zotero & \url{https://www.zotero.org} \\
+Better BibTeX & \url{https://retorque.re/zotero-better-bibtex/} \\
+Google Scholar & \url{https://scholar.google.com} \\
+Semantic Scholar & \url{https://www.semanticscholar.org} \\
+OpenAlex & \url{https://openalex.org} \\
+ACL Anthology & \url{https://aclanthology.org} \\
+OpenReview & \url{https://openreview.net} \\
+DBLP & \url{https://dblp.org} \\
+Connected Papers & \url{https://www.connectedpapers.com} \\
+HF Daily Papers & \url{https://huggingface.co/papers} \\
+Papers with Code & \url{https://paperswithcode.co} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}Attention signals}}\\
+Star history & \url{https://star-history.com} \\
+Hugging Face hub & \url{https://huggingface.co/models} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}Personal site}}\\
+AcademicPages template & \url{https://github.com/academicpages/academicpages.github.io} \\
+GitHub Pages docs & \url{https://docs.github.com/pages} \\
+Example site & \url{https://y3nk0.github.io} \\
+al-folio & \url{https://github.com/alshedivat/al-folio} \\
+\bottomrule
+\end{longtable}
+
+\section{A minimal paper repository}
+
+\begin{quote}\small\ttfamily
+project/\\
+\hspace*{1em}README.md\\
+\hspace*{1em}CLAUDE.md\hfill \rmfamily\textit{conventions for your AI assistant}\ttfamily\\
+\hspace*{1em}pyproject.toml / environment.yml\hfill \rmfamily\textit{pinned}\ttfamily\\
+\hspace*{1em}configs/\hfill \rmfamily\textit{one YAML per experiment}\ttfamily\\
+\hspace*{1em}src/\\
+\hspace*{1em}scripts/\hfill \rmfamily\textit{train.sh, eval.sh, slurm/}\ttfamily\\
+\hspace*{1em}notes/\hfill \rmfamily\textit{2026-10-15.md, dated lab notebook}\ttfamily\\
+\hspace*{1em}results/\hfill \rmfamily\textit{logged metrics, committed}\ttfamily\\
+\hspace*{1em}figures/make\_figures.py\hfill \rmfamily\textit{results $\rightarrow$ PDF}\ttfamily\\
+\hspace*{1em}paper/\\
+\hspace*{2em}main.tex, sections/, refs.bib\hfill \rmfamily\textit{BBT auto-export target}\ttfamily
+\end{quote}
+
+\vspace{0.6cm}
+\begin{cbox}{The shortest version of all of this}
+Keep a clean library, know your deadlines, read forward from the anchor papers,
+reproduce before you innovate, write every week, publish a page with your name
+on it, use the assistant for the mechanics and never for the thinking --- and
+ask your advisor the question you are embarrassed to ask. Good luck.
+\end{cbox}
+
+\end{document}
