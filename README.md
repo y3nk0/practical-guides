@@ -1,6 +1,6 @@
 # Practical guides
 
-Practical, no-nonsense guides for research students — written to be handed out,
+Practical, no-nonsense guides for students — written to be handed out,
 printed, and worked through rather than read once.
 
 Everything is LaTeX; the compiled PDFs are committed, so you can download a PDF
@@ -64,6 +64,41 @@ content at three levels of detail.
 
 ---
 
+## Doing an Undergraduate Thesis in Machine Learning or NLP
+
+A guide for final-year students, written to be handed out at the first
+supervision meeting.
+
+| | File | Format |
+|---|---|---|
+| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 14 pages, A4 |
+
+### What it covers
+
+- **What a thesis is and is not** — what examiners actually look for, and a
+  three-question test for whether your scope is realistic.
+- **Finding a topic by three routes** — a **shared task or challenge**
+  (SemEval, workshop tasks at \*ACL venues, WMT, CoNLL, BabyLM, CLEF labs,
+  TREC tracks, Kaggle and the competition platforms), an **application thesis**
+  (a working method taken carefully to a new language, domain or deployment
+  constraint), or an **analysis / theoretical thesis** (reproduction, ablation,
+  robustness, probing, efficiency, or a critique of the metric itself).
+- **Six places where gaps are written down explicitly** — limitations sections,
+  future work, survey taxonomies, workshop calls for papers, task overview
+  papers, and leaderboards that have plateaued.
+- **The one-page proposal** to agree with your supervisor before writing code.
+- **The toolkit** — Zotero, LaTeX and Overleaf, git, free GPUs, experiment
+  tracking, data licensing and GDPR.
+- **Using an AI assistant honestly** — five rules, starting with the one that
+  decides the defence: you must be able to explain every line you submit.
+- **Doing the work** — baselines first, the mistakes that cost marks (test-set
+  leakage, one seed, unfair comparisons), and why negative results are results.
+- **Writing and defending** — a chapter-by-chapter structure with sizes,
+  writing advice, likely defence questions, a six-month timetable, and
+  checklists for week 1, before freezing results, and before submission.
+
+---
+
 ## Building
 
 Needs a TeX distribution (TeX Live, MacTeX or TinyTeX) with `latexmk`.
@@ -73,6 +108,7 @@ The deck uses `beamer` and `tikz`; everything else is standard.
 latexmk -pdf phd-ml-nlp-starter-guide.tex
 latexmk -pdf phd-ml-nlp-onepager.tex
 latexmk -pdf phd-ml-nlp-slides.tex
+latexmk -pdf undergrad-thesis-ml-nlp-guide.tex
 ```
 
 Clean up intermediates with `latexmk -c`.
