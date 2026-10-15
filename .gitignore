@@ -1,0 +1,48 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon?
+
+# Windows / Linux desktop cruft
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*~
+.directory
+
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.xdv
+
+# beamer
+*.nav
+*.snm
+*.vrb
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# keep the compiled PDFs: they are the deliverable
