@@ -127,3 +127,11 @@ Department of Computer Science and Engineering, University of Ioannina
 
 Corrections and additions are welcome — venues, deadlines and tools move fast,
 so open an issue or a pull request if something here has gone stale.
+
+## A note on how these were written
+
+The content, structure and editorial decisions in these guides are mine. I
+wrote them with the help of an AI assistant (Claude), working under my
+specific directions — drafting from my outlines, typesetting the LaTeX, and
+checking that links and references resolve. I reviewed and edited everything
+that appears here, and any errors are my own.
