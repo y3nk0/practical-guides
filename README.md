@@ -110,15 +110,23 @@ Needs a TeX distribution (TeX Live, MacTeX or TinyTeX) with `latexmk`.
 The deck uses `beamer` and `tikz`; everything else is standard.
 
 ```bash
-latexmk -pdf phd-ml-nlp-starter-guide.tex
-latexmk -pdf phd-ml-nlp-onepager.tex
-latexmk -pdf phd-ml-nlp-slides.tex
-latexmk -pdf undergrad-thesis-ml-nlp-guide.tex
-latexmk -pdf undergrad-thesis-onepager.tex
-latexmk -pdf undergrad-thesis-slides.tex
+make            # build any PDF whose source changed
+make check      # build, then verify the one-pagers still fit on one page
+make publish    # check, then copy all six PDFs into the website repository
+make clean      # remove build artefacts (the PDFs are kept)
 ```
 
-Clean up intermediates with `latexmk -c`.
+`make publish` assumes the website is a sibling checkout
+(`../y3nk0.github.io/files/guides`); point it elsewhere with
+`make publish SITE=/path/to/files/guides`. It refuses to copy anything if a
+one-pager has grown to two pages, and warns about any line that runs past the
+margin.
+
+Builds are reproducible — the PDF timestamp comes from the source file's mtime
+(`SOURCE_DATE_EPOCH`), so rebuilding an unchanged document gives a
+byte-identical file and `make publish` only touches what actually changed.
+
+To build a single document by hand: `latexmk -pdf <file>.tex`.
 
 > **Note on the one-pagers:** both are tuned to fill exactly one A4 page. If you
 > add material, drop the base font size at the top of the document body
