@@ -69,9 +69,11 @@ content at three levels of detail.
 A guide for final-year students, written to be handed out at the first
 supervision meeting.
 
-| | File | Format |
-|---|---|---|
-| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 14 pages, A4 |
+| | File | Format | Use it for |
+|---|---|---|---|
+| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 14 pages, A4 | The full guide — hand it out at the first supervision meeting |
+| 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 28 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
 
 ### What it covers
 
@@ -109,13 +111,16 @@ latexmk -pdf phd-ml-nlp-starter-guide.tex
 latexmk -pdf phd-ml-nlp-onepager.tex
 latexmk -pdf phd-ml-nlp-slides.tex
 latexmk -pdf undergrad-thesis-ml-nlp-guide.tex
+latexmk -pdf undergrad-thesis-onepager.tex
+latexmk -pdf undergrad-thesis-slides.tex
 ```
 
 Clean up intermediates with `latexmk -c`.
 
-> **Note on the one-pager:** it is tuned to fill exactly one A4 page. If you add
-> material, drop the base font size in `phd-ml-nlp-onepager.tex`
-> (`\fontsize{6.75}{7.9}`) by a tenth of a point or two and recompile.
+> **Note on the one-pagers:** both are tuned to fill exactly one A4 page. If you
+> add material, drop the base font size at the top of the document body
+> (`\fontsize{6.75}{7.9}` for the PhD sheet, `\fontsize{6.55}{7.65}` for the
+> thesis sheet) by a tenth of a point or two and recompile.
 
 ---
 

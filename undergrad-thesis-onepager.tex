@@ -1,0 +1,307 @@
+%==============================================================================
+%  Undergraduate thesis in ML / NLP -- one-page cheat sheet
+%  Konstantinos Skianis, University of Ioannina
+%  Compile: latexmk -pdf undergrad-thesis-onepager.tex
+%==============================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,margin=0.8cm,top=0.8cm,bottom=0.6cm]{geometry}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{array,tabularx,colortbl}
+\usepackage{framed}
+\usepackage{hyperref}
+
+\definecolor{brand}{HTML}{1F4E79}
+\definecolor{brandlight}{HTML}{2E7BB8}
+\definecolor{accent}{HTML}{B5451B}
+\definecolor{ink}{HTML}{22262B}
+\definecolor{mutegray}{HTML}{5A6472}
+\definecolor{rowtint}{HTML}{EFF4F9}
+
+\hypersetup{colorlinks=true,urlcolor=brandlight,linkcolor=brand,
+  pdftitle={Undergraduate thesis in ML/NLP - one-page cheat sheet},
+  pdfauthor={Konstantinos Skianis}}
+\urlstyle{sf}
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\/\do\-\do\.\do\_\do\?\do\&\do\=\do\:\do\,}
+\makeatother
+\Urlmuskip=0mu plus 2mu\relax
+
+\pagestyle{empty}
+\setlength{\columnsep}{0.62cm}
+\setlength{\columnseprule}{0.3pt}
+\def\columnseprulecolor{\color{brandlight!40}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.2pt}
+\setlist[itemize]{leftmargin=0.85em,topsep=1pt,itemsep=1.1pt,parsep=0pt,
+                  label=\textcolor{brandlight}{\tiny$\bullet$}}
+\setlist[enumerate]{leftmargin=1.1em,topsep=1pt,itemsep=1.1pt,parsep=0pt}
+
+\newcommand{\head}[1]{%
+  \vspace{4.5pt}{\color{brand}\rule{\linewidth}{0.9pt}}\par\vspace{1.5pt}%
+  {\bfseries\color{brand}\MakeUppercase{#1}}\par\vspace{2pt}}
+\newcommand{\sub}[1]{\par\addvspace{2.6pt}\noindent{\bfseries\color{ink}#1}\ \ignorespaces}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\lnk}[2]{\href{#1}{\color{brandlight}#2}}
+\newcommand{\dt}{\,\textperiodcentered\,\allowbreak}
+
+\newenvironment{flag}
+ {\par\addvspace{2pt}\setlength{\FrameSep}{3pt}%
+  \def\FrameCommand{{\color{accent}\vrule width 1.4pt}\hspace{4pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}\parindent=0pt\ignorespaces}
+ {\par\endMakeFramed\addvspace{2pt}}
+
+\begin{document}
+\fontsize{6.55}{7.65}\selectfont
+
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
+\begin{minipage}[b]{0.63\textwidth}
+{\fontsize{17}{18}\selectfont\bfseries\color{brand} Undergraduate Thesis in ML / NLP}\\[2pt]
+{\fontsize{8}{9}\selectfont\color{ink} The one-page version --- topic, tools, experiments, writing, defence}
+\end{minipage}%
+\hfill
+\begin{minipage}[b]{0.36\textwidth}\raggedleft
+{\fontsize{8}{9}\selectfont\bfseries\color{ink} Konstantinos Skianis}\\[1pt]
+{\color{mutegray} Assistant Professor of NLP\dt Dept.\ of Computer Science \& Engineering\\
+University of Ioannina\dt \lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+\end{minipage}\\[2pt]
+{\color{brandlight}\rule{\textwidth}{2pt}}
+
+\vspace{2pt}
+\begin{multicols}{3}
+\raggedright
+
+%============================================================== COLUMN 1 ======
+\head{What a thesis is}
+A supervised project, 4--9 months, that shows you can take a research-level
+problem, work methodically, and explain the result.
+\sub{Examiners look for}a clear question\dt correct methodology (sane
+baselines, honest evaluation, no leakage)\dt \textbf{understanding} --- you
+must explain every design decision and every line you submit\dt clear
+writing\dt honest limitations.
+\sub{Not required}beating the state of the art, a new architecture, or
+training a big model from scratch. A careful reproduction with analysis is a
+good thesis; a record chase ending in one unexplained number is not.
+\begin{flag}
+\textbf{Scope test --- the usual failure.} Can you name the \textbf{dataset}
+and \textbf{metric} today? Can you run \textbf{one baseline} within
+\textbf{two weeks}? If your main idea fails completely, is there still a
+thesis? Any ``no'' $=$ narrow it with your supervisor before writing code.
+\end{flag}
+
+\head{Finding a topic: three routes}
+You do not need an original idea --- you need a well-defined problem with data
+and a way to measure success.
+\sub{A. Shared task / challenge}Enter an organised competition: data, metric,
+baseline, leaderboard and deadline already exist. \textbf{The strongest
+default.}
+\sub{B. Application thesis}Take a method that works to a new language (Greek),
+domain (legal, medical, financial, code), or constraint (runs on a laptop,
+$<$100\,ms, 50 labels, no cloud API).
+\sub{C. Analysis / theory}Reproduction and stress-testing\dt ablation: which of
+the five components actually matters\dt robustness (typos, dialect, domain
+shift, long inputs)\dt probing and interpretability\dt efficiency
+(distillation, quantisation, pruning)\dt critique of the metric with a small
+human evaluation\dt a small, complete theoretical result.
+
+\head{Why a shared task fits so well}
+\begin{itemize}
+  \item The hardest parts --- problem definition, data, annotation, evaluation
+        protocol --- are settled.
+  \item A hidden test set means you cannot fool yourself.
+  \item Organisers publish a baseline; past editions give a whole comparison
+        table free.
+  \item A deadline: the best project-management tool ever invented.
+  \item A \textbf{system description paper} is peer-reviewed, archival and
+        achievable --- often your first paper.
+  \item ``4th of 31 teams'' is concrete on a CV.
+\end{itemize}
+\sub{Where to find them}\lnk{https://semeval.github.io}{SemEval} (dozens of
+tasks a year)\dt workshop shared tasks at *ACL venues --- WMT, CoNLL, BabyLM,
+BioNLP, WNUT, CheckThat! (see \lnk{https://aclanthology.org}{ACL Anthology} +
+each conference's workshop list)\dt
+\lnk{https://www.clef-initiative.eu}{CLEF} labs and
+\lnk{https://trec.nist.gov}{TREC} tracks (BioASQ)\dt NeurIPS competition
+track\dt \lnk{https://www.kaggle.com}{Kaggle},
+\lnk{https://www.codabench.org}{CodaBench},
+\lnk{https://eval.ai}{EvalAI}, \lnk{https://www.aicrowd.com}{AIcrowd},
+\lnk{https://www.drivendata.org}{DrivenData}\dt
+\lnk{https://huggingface.co}{Hugging Face} leaderboards.
+\begin{flag}
+\textbf{Check the dates first.} Registration $\to$ data release $\to$ dev phase
+$\to$ a short evaluation window $\to$ system paper. Dates change every edition:
+read the task page and confirm they fit your thesis deadline.
+\textbf{Window closed?} Run it retrospectively --- past data, metrics and the
+published participant table are usually public.
+\end{flag}
+\sub{Running it as a thesis}Read last year's \emph{task overview} + 3--4 system
+papers (30 min each)\dt reproduce the organisers' baseline \emph{first}\dt
+build your own validation split and trust it\dt log every run\dt submit
+something weak early --- pipelines always break\dt the thesis is the long
+version of the system paper.
+
+%============================================================== COLUMN 2 ======
+\head{Where gaps are written down}
+\begin{enumerate}
+  \item \textbf{Limitations sections} --- mandatory at ACL venues: authors list
+        what their method cannot do. A topic menu.
+  \item \textbf{Future work} in recent papers and surveys.
+  \item \textbf{Survey taxonomies} --- find the boxes with one or two entries.
+  \item \textbf{Workshop calls for papers} --- this year's open problems, in
+        bullet form.
+  \item \textbf{Task overview papers} --- the closing section says what nobody
+        solved.
+  \item \textbf{Plateaued leaderboards}, or a simple baseline suspiciously
+        close to the top.
+\end{enumerate}
+Also: GitHub issues (``cannot reproduce Table 2'', ``does not work for language
+X'') and failed reproducibility reports.
+
+\head{The one-page proposal}
+Write it before any code; send it to your supervisor.
+\textbf{Question} (one sentence, with a verb)\dt \textbf{why it matters} (two
+sentences, no hype)\dt \textbf{data} (name, size, licence)\dt \textbf{metric}
+(official + what else you report)\dt \textbf{baselines} (trivial + strong)\dt
+\textbf{method} (three bullets)\dt \textbf{compute} (and whether it
+suffices)\dt \textbf{milestones} (baseline, first result, freeze, draft)\dt
+\textbf{risks + fallback} (the thesis you still have if it fails).
+
+\head{Toolkit, week one}
+\sub{References}\lnk{https://www.zotero.org}{Zotero} + connector +
+\lnk{https://retorque.re/zotero-better-bibtex/}{Better BibTeX}: pinned keys
+(\code{devlin2019bert}), auto-export into your thesis \code{refs.bib}. One-line
+note on every save. Cite the \textbf{published} version; clean BibTeX from
+\lnk{https://dblp.org}{DBLP} / \lnk{https://aclanthology.org}{Anthology}.
+\sub{Writing}\lnk{https://www.overleaf.com}{Overleaf} (co-editing + comments
+with your supervisor; check for a university licence)\dt
+\lnk{https://prism.openai.com}{Prism} (free AI-native LaTeX)\dt locally
+\code{git} + \code{latexmk -pdf -pvc}, \textbf{one sentence per line}\dt start
+from your department's template.
+\sub{Code \& compute}one git repo for everything, commit daily\dt free GPUs:
+Colab, Kaggle Notebooks (longer sessions)\dt ask about lab machines in week one
+--- accounts take time\dt track runs (W\&B/MLflow) with config, metrics, commit
+hash\dt check model/dataset \textbf{licences}\dt personal data $\Rightarrow$
+talk to your supervisor before collecting (GDPR is not optional).
+
+\head{Search \& judge the literature}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}@{\hspace{3pt}}X@{}}
+\rowcolor{rowtint}\code{"exact phrase"} & quote technical terms \\
+\code{a OR b} & must be capitalised \\
+\rowcolor{rowtint}\code{-survey} & exclude a term \\
+\code{source:"SemEval"} & search inside a venue or task \\
+\rowcolor{rowtint}\code{intitle:x} & precision filter \\
+\textbf{Cited by} $\to$ \textbf{search within citing articles} & who applied it
+to \emph{your} setting \\
+\end{tabularx}
+Set 2--3 alerts; triage into Zotero weekly. Also
+\lnk{https://aclanthology.org}{ACL Anthology}\dt
+\lnk{https://www.semanticscholar.org}{Semantic Scholar}\dt
+\lnk{https://www.connectedpapers.com}{Connected Papers} (week one)\dt
+\lnk{https://openreview.net}{OpenReview} (read the reviews)\dt
+\lnk{https://paperswithcode.co}{paperswithcode.co}.
+\sub{Read in 3 passes}5 min skim and decide $\to$ 1 h (figures, method) $\to$
+hours (re-derive). Pass 3 for the five papers your thesis depends on.
+\sub{Is this repo worth it?}last commit, contributors, who answers issues\dt
+\textbf{search issues for ``reproduce''} before trusting its numbers\dt
+checkpoints, pinned deps, \textbf{LICENSE}\dt stars measure marketing, not
+correctness\dt citations per year $>$ raw totals.
+
+%============================================================== COLUMN 3 ======
+\head{AI assistant: honest use}
+Assistant in the repo + a short memory file of your conventions\dt connect it
+to your files and Zotero\dt dated \code{notes/}. Use for: unfamiliar notation,
+getting someone's repo to run, boilerplate and plots, refactoring, LaTeX
+errors, tightening prose you wrote, acting as a hostile examiner.
+\begin{flag}
+\textbf{1 You must explain every line you submit} --- the defence tests exactly
+this. \textbf{2} Never cite a paper you have not opened: fabricated references
+fail theses. \textbf{3} Never let it write your results or your analysis.
+\textbf{4} Follow your university's policy and declare use if required --- ask,
+do not guess. \textbf{5} No confidential or personal data in a cloud tool.
+\end{flag}
+
+\head{Doing the work}
+\begin{enumerate}
+  \item Get the data; read \textbf{50 examples by hand}; count labels, find
+        duplicates.
+  \item Dumbest possible baseline (majority class, TF-IDF + logistic
+        regression, a rule) --- this anchors everything.
+  \item Reproduce the strong baseline.
+  \item Only then your idea --- \textbf{one change at a time}, each measured.
+  \item Ablate: remove each piece, show what it was worth. Start early.
+  \item Error analysis: categorise 50--100 mistakes by hand.
+\end{enumerate}
+\begin{flag}
+\textbf{Mistakes that cost marks:} test-set leakage (tuning on test,
+duplicates, preprocessing fitted before the split)\dt one seed ($+0.4$ is
+noise --- report mean $\pm$ std over 3+)\dt unfair comparison (your method
+tuned a week, baseline on defaults)\dt accuracy on imbalanced data (use
+macro-F1 / per class)\dt results you cannot regenerate\dt plots without axis
+labels or a caption that states the conclusion.
+\end{flag}
+\sub{Results table from day one}date, commit, config, seed, dev score, note on
+what changed. The results chapter is then formatting, not archaeology.
+\textbf{Negative results are results} --- ``I tried X, it did not help, here is
+the evidence and why'' is a legitimate finding.
+
+\head{Writing the thesis}
+Start in month one. Writing is how you find the hole in the story.
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.75cm}@{\hspace{3pt}}X@{\hspace{3pt}}>{\raggedleft\arraybackslash}p{0.72cm}@{}}
+\rowcolor{rowtint}Abstract & problem, what you did, result & 1 \\
+Introduction & question + contributions list & 3--5 \\
+\rowcolor{rowtint}Background & only what the reader needs & 5--10 \\
+Related work & by \emph{theme}, not one para per paper & 5--8 \\
+\rowcolor{rowtint}Method & precise enough to reimplement & 5--10 \\
+Experiments & data, splits, metrics, baselines & 8--15 \\
+\rowcolor{rowtint}Analysis & ablations, errors, surprises & 4--8 \\
+Conclusion & findings, limitations, future work & 2--3 \\
+\end{tabularx}
+\emph{Pages are a sane default --- your department's rules win.}
+\sub{Advice}figures and tables first, then the text\dt each chapter opens with
+what it does and closes with what it showed\dt past tense, active voice\dt
+captions self-contained\dt cite properly, quote almost never --- copying
+without quotes and a citation is plagiarism, and it is checked\dt give your
+supervisor a \textbf{complete} draft 3 weeks before the deadline.
+
+\head{The defence}
+15--25 min + questions. Problem (2 slides) $\to$ why hard (1) $\to$ what you
+did (3--5) $\to$ results (3--4) $\to$ analysis and limits (2) $\to$ conclusion.
+Rehearse out loud, timed, twice\dt a 60-second demo, recorded as a fallback\dt
+know your numbers (data sizes, your score, the baseline, training time).
+\textbf{Expect:} why this baseline? what if the data changes? why does it fail
+on class X? what with six more months? is the improvement significant?
+``I do not know, but here is how I would find out'' is a fine answer.
+
+\head{Six-month timetable}
+\textbf{M1} topic + proposal signed off, tools installed, data inspected,
+10--15 papers, trivial baseline. \textbf{M2} strong baseline reproduced,
+logging, background + related work drafted. \textbf{M3} your method, first
+results, method chapter. \textbf{M4} ablations and seeds, tables generated by
+script. \textbf{M5} error analysis, \textbf{complete draft}, results frozen.
+\textbf{M6} revisions, references checked one by one, slides, two rehearsals,
+submit.
+\begin{flag}
+\textbf{Weekly, to your supervisor:} what I did\dt what I found\dt what is
+blocked\dt what I propose\dt what I need from you. ``I am stuck'' sent on
+Tuesday is worth three weeks of silence.
+\end{flag}
+
+\head{After the thesis}
+Publish it if it is good (system paper, workshop, student research
+workshop)\dt clean the repo: README that reproduces your main table, env file,
+licence --- the best entry-level CV item\dt put up
+\code{username.github.io}\dt ask for the reference letter while it is fresh\dt
+thinking about a PhD? see the companion guide.
+
+\vspace{2pt}
+{\color{mutegray}Companion to the full guide \emph{Doing an Undergraduate
+Thesis in Machine Learning or NLP}\dt October 2026.}
+
+\end{multicols}
+\end{document}

@@ -1,0 +1,770 @@
+%==============================================================================
+%  Undergraduate thesis in ML / NLP -- slide deck
+%  Konstantinos Skianis, University of Ioannina
+%  Compile: latexmk -pdf undergrad-thesis-slides.tex
+%==============================================================================
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{booktabs,array,tabularx,colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\usepackage{amsmath,amssymb}
+
+%--------------------------------------------------------------- appearance ---
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{brand}{HTML}{1F4E79}
+\definecolor{brandlight}{HTML}{2E7BB8}
+\definecolor{accent}{HTML}{B5451B}
+\definecolor{ink}{HTML}{22262B}
+\definecolor{mutegray}{HTML}{5A6472}
+\definecolor{rowtint}{HTML}{EFF4F9}
+\definecolor{boxtint}{HTML}{F3F7FB}
+
+\setbeamercolor{structure}{fg=brand}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{frametitle}{fg=brand}
+\setbeamercolor{itemize item}{fg=brandlight}
+\setbeamercolor{itemize subitem}{fg=brandlight}
+\setbeamercolor{enumerate item}{fg=brandlight}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{itemize item}{\small\raise0.5pt\hbox{\textbullet}}
+\setbeamertemplate{itemize subitem}{\footnotesize\raise0.5pt\hbox{--}}
+\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+
+% frame title with rule
+\setbeamertemplate{frametitle}{%
+  \vspace{6pt}%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.9cm,rightskip=0.9cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\empty\else
+      \\[1pt]{\small\normalfont\color{mutegray}\insertframesubtitle}%
+    \fi
+    \par\vspace{3pt}{\color{brandlight}\rule{\dimexpr\paperwidth-1.8cm\relax}{1pt}}%
+  \end{beamercolorbox}%
+}
+
+% footline
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=2.6ex,dp=1.4ex,leftskip=0.9cm,rightskip=0.9cm]{}%
+  \tiny\color{mutegray}Undergraduate thesis in ML / NLP \quad\textbullet\quad K. Skianis, Univ.\ of Ioannina
+  \hfill\insertframenumber/\inserttotalframenumber
+  \end{beamercolorbox}}%
+}
+
+\setbeamercolor{block title}{bg=boxtint,fg=brand}
+\setbeamercolor{block body}{bg=boxtint,fg=ink}
+\setbeamercolor{block title alerted}{bg=accent!10,fg=accent}
+\setbeamercolor{block body alerted}{bg=accent!10,fg=ink}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\lnk}[2]{\href{#1}{\color{brandlight}\underline{#2}}}
+\newcommand{\key}[1]{\textbf{\color{brand}#1}}
+\renewcommand{\arraystretch}{1.15}
+
+% section divider slides
+\AtBeginSection[]{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \begin{center}
+      {\color{brandlight}\rule{0.72\textwidth}{1.4pt}}\\[10pt]
+      {\small\color{mutegray}Part \insertsectionnumber}\\[4pt]
+      {\LARGE\bfseries\color{brand}\insertsectionhead}\\[10pt]
+      {\color{brandlight}\rule{0.72\textwidth}{1.4pt}}
+    \end{center}
+    \vfill
+  \end{frame}}
+
+%------------------------------------------------------------------ titles ----
+\title{\bfseries Doing an Undergraduate Thesis in Machine Learning or NLP}
+\subtitle{Finding a topic, doing the work, writing it up, defending it}
+\author{Konstantinos Skianis}
+\institute{Assistant Professor of Natural Language Processing\\
+Department of Computer Science and Engineering, University of Ioannina\\[2pt]
+\small\lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+\date{October 2026}
+
+\begin{document}
+
+%==============================================================================
+\begin{frame}[plain,noframenumbering]
+  \vspace{0.3cm}
+  {\color{brandlight}\rule{\textwidth}{2pt}}\\[14pt]
+  {\LARGE\bfseries\color{brand}Doing an Undergraduate Thesis\\[4pt] in Machine Learning or NLP}\\[8pt]
+  {\large\color{ink}Finding a topic, doing the work, writing it up, defending it}\\[10pt]
+  {\color{brandlight}\rule{\textwidth}{2pt}}\\[14pt]
+  {\bfseries Konstantinos Skianis}\\[3pt]
+  {\small\color{mutegray}Assistant Professor of Natural Language Processing\\
+  Department of Computer Science and Engineering, University of Ioannina}\\[4pt]
+  {\small\lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+  \vfill
+  {\footnotesize\color{mutegray}October 2026 \quad\textbullet\quad companion to the
+  full guide and the one-page cheat sheet}
+\end{frame}
+
+%==============================================================================
+\begin{frame}{What a thesis is --- and is not}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+A supervised project, 4--9 months, that shows you can take a research-level
+problem, work methodically, and communicate the result.
+
+\medskip
+\begin{block}{What examiners look for}
+\footnotesize
+\begin{itemize}
+  \item A \key{clear question}, in one sentence.
+  \item \key{Correct methodology} --- sane baselines, honest evaluation, no
+        leakage.
+  \item \key{Understanding.} You must explain every design decision and every
+        line you submit.
+  \item \key{Clear writing} and \key{honest limitations}.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.44\textwidth}
+\begin{alertblock}{Not required}
+\footnotesize
+Beating the state of the art. A new architecture. Training a large model from
+scratch.\\[4pt]
+A thesis that carefully reproduces, analyses and extends existing work is a
+\emph{good} thesis. A record chase ending in one unexplained number is not.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Scope: the single most common failure}
+Almost every thesis that goes badly goes badly the same way: the topic was too
+large, six months went into getting a pipeline to run, and there was nothing to
+say about it.
+
+\vspace{4mm}
+\begin{block}{The three-question test}
+\begin{enumerate}
+  \item Can you name the \key{dataset} and the \key{metric} today?
+  \item Can you run \key{one baseline} on your hardware (or free cloud GPUs)
+        within \key{two weeks}?
+  \item If your main idea fails completely, is there \emph{still} a thesis ---
+        a comparison, an analysis, an error study?
+\end{enumerate}
+\end{block}
+\vspace{2mm}
+\centering
+Three yeses: the scope is right. Any no: narrow it with your supervisor
+\emph{before} you write code.
+\end{frame}
+
+%==============================================================================
+\section{Finding a topic}
+
+\begin{frame}{You do not need an original idea}
+You need a \key{well-defined problem} with data and a way to measure success.
+There are three reliable routes to one.
+
+\vspace{4mm}
+\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} X >{\raggedright\arraybackslash}p{3.4cm}}
+\toprule
+\textbf{\color{brand}Route} & \textbf{\color{brand}What you do} & \textbf{\color{brand}Best if} \\
+\midrule
+\rowcolor{rowtint}
+\textbf{A. Shared task or challenge} & Enter an organised competition: the
+data, the metric and the deadline already exist & You want structure and a fast
+start \\
+\textbf{B. Application thesis} & Take a method that works and apply it
+carefully to a new domain, language or setting & You like building systems \\
+\rowcolor{rowtint}
+\textbf{C. Analysis or theory} & Reproduce, probe, compare, measure: explain
+\emph{why} methods behave as they do & You like understanding over building \\
+\bottomrule
+\end{tabularx}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Route A --- why a shared task fits so well}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{The hardest part is done for you:} problem definition, data,
+        annotation and the evaluation protocol --- the parts that sink
+        inexperienced projects.
+  \item \key{You cannot fool yourself.} A hidden test set is an honest measure.
+  \item \key{Real baselines.} Organisers publish one; past editions give you a
+        whole comparison table free.
+  \item \key{A deadline} --- the best project-management tool ever invented.
+\end{itemize}
+\end{column}
+\begin{column}{0.46\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{It can end in a publication.} System description papers are
+        peer-reviewed, archival, and genuinely achievable --- often your first
+        paper, with your supervisor.
+  \item \key{It is a portfolio item.} ``4th of 31 teams'' is concrete in a way
+        that ``did a thesis on sentiment analysis'' is not.
+\end{itemize}
+\medskip
+\begin{block}{A shared task, defined}
+\footnotesize
+Organisers publish a precise problem, training and development data, an
+official metric and an evaluation window. Everyone is scored on the same hidden
+test set.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Where to find them}
+\footnotesize
+\begin{itemize}
+  \item \key{SemEval} (\lnk{https://semeval.github.io}{semeval.github.io}) ---
+        a dozen or more tasks a year: semantic similarity, sentiment and
+        emotion, irony, hate speech, factuality and hallucination detection,
+        clinical and legal NLP, multilingual tasks.
+  \item \key{Workshop shared tasks at *ACL venues} --- most workshops at ACL,
+        EMNLP, NAACL, COLING and EACL run one: \textbf{WMT} (translation),
+        \textbf{CoNLL}, \textbf{BabyLM}, \textbf{BioNLP}, \textbf{WNUT},
+        \textbf{CheckThat!} Check the
+        \lnk{https://aclanthology.org}{ACL Anthology} and each conference's
+        workshop list.
+  \item \key{CLEF labs} (\lnk{https://www.clef-initiative.eu}{clef-initiative.eu})
+        and \key{TREC tracks} (\lnk{https://trec.nist.gov}{trec.nist.gov}) ---
+        retrieval, biomedical QA (\textbf{BioASQ}), argument mining,
+        authorship, misinformation.
+  \item \key{Competition tracks at ML conferences} --- the NeurIPS competition
+        track and similar programmes.
+  \item \key{Platforms} --- \lnk{https://www.kaggle.com}{Kaggle},
+        \lnk{https://www.codabench.org}{CodaBench},
+        \lnk{https://eval.ai}{EvalAI},
+        \lnk{https://www.aicrowd.com}{AIcrowd},
+        \lnk{https://www.drivendata.org}{DrivenData}. Kaggle alone is usually
+        not a thesis --- you still need a question and an analysis chapter.
+  \item \key{Leaderboard hubs} --- \lnk{https://huggingface.co}{Hugging Face}
+        hosts datasets, models and evaluations; many leaderboards stay open
+        after the official window.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Running a shared task as a thesis}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\footnotesize
+\begin{enumerate}
+  \item \key{Shortlist two or three tasks} and read last year's \emph{task
+        overview paper} plus three or four system papers --- 30 minutes each.
+  \item \key{Reproduce the organisers' baseline first.} If you cannot match it,
+        nothing else is interpretable.
+  \item \key{Build your own validation split} and trust it; leaderboard
+        submissions are limited.
+  \item \key{Log every run} --- config, seed, score, what changed. The log
+        becomes your results chapter.
+  \item \key{Submit something early}, even weak. Pipelines always break.
+  \item \key{Write the system paper}; the thesis is its long version.
+\end{enumerate}
+\end{column}
+\begin{column}{0.46\textwidth}
+\begin{alertblock}{Check the dates before you commit}
+\footnotesize
+Registration $\rightarrow$ data release $\rightarrow$ development phase
+$\rightarrow$ a short evaluation window $\rightarrow$ system paper deadline.
+Dates change every edition. An evaluation window that opens after your
+submission date is a thesis you cannot finish.
+\end{alertblock}
+\begin{block}{Window already closed?}
+\footnotesize
+Use it anyway. Past data, metrics and leaderboards are usually public: run it
+retrospectively and report where you \emph{would} have ranked.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Route B --- an application thesis}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textbf{Where to point it}
+\footnotesize
+\begin{itemize}
+  \item \key{A language with few resources.} Most results are reported on
+        English; Greek has far fewer evaluated baselines.
+  \item \key{A domain with its own vocabulary:} legal, medical, financial,
+        educational, archival text; code; logs.
+  \item \key{A deployment constraint:} runs on a laptop or a phone, answers in
+        under 100\,ms, works with 50 labels, never leaves the building.
+  \item \key{A real user with a real problem} --- another department, a
+        university service, a local company.
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{block}{What makes it rigorous, not a demo}
+\footnotesize
+\begin{itemize}
+  \item Two baselines, one embarrassingly simple. If the simple one wins, that
+        \emph{is} your finding.
+  \item A split fixed \emph{before} you look at results; the test set touched
+        once.
+  \item Several seeds, with mean and spread.
+  \item An error analysis: 50--100 mistakes categorised by hand --- the chapter
+        examiners remember.
+  \item A cost column: parameters, training time, latency, hardware.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Route C --- analysis or theory}
+You do not have to build something new to contribute. Explaining \emph{why}
+existing methods behave as they do is harder, and often more valuable.
+
+\vspace{3mm}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Reproduction and stress-testing} --- other seeds, datasets,
+        languages, hyperparameters.
+  \item \key{Ablation and attribution} --- five components, one number: which
+        one actually matters? Often not the one in the title.
+  \item \key{Robustness} --- typos, dialect, code-switching, domain shift,
+        longer inputs, class imbalance.
+\end{itemize}
+\end{column}
+\begin{column}{0.49\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Probing and interpretability} --- what does the representation
+        encode, and does the explanation match the mechanism?
+  \item \key{Efficiency} --- distillation, quantisation, pruning, measured
+        honestly on the same hardware.
+  \item \key{Evaluation itself} --- does the metric measure what everyone
+        assumes? Build a small human evaluation.
+  \item \key{Genuine theory} --- a bound, a convergence proof, an equivalence.
+        Small and complete beats grand and sketched.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Six places where gaps are written down}
+\begin{columns}[T]
+\begin{column}{0.56\textwidth}
+\footnotesize
+\begin{enumerate}
+  \item \key{Limitations sections.} Mandatory at ACL venues --- authors list,
+        in their own words, what their method cannot do. A topic menu.
+  \item \key{Future work} in recent papers and surveys.
+  \item \key{Survey taxonomies} --- look for the boxes with one or two
+        entries; that is where the field is thin.
+  \item \key{Workshop calls for papers} --- this year's open problems, in
+        bullet form.
+  \item \key{Task overview papers} --- the closing section says exactly what
+        nobody solved.
+  \item \key{Plateaued leaderboards}, or a simple baseline suspiciously close
+        to the top.
+\end{enumerate}
+\end{column}
+\begin{column}{0.42\textwidth}
+\begin{block}{Two more}
+\footnotesize
+\key{GitHub issues} on popular repositories: ``does not work for language X'',
+``cannot reproduce Table 2''.\\[4pt]
+\key{Failed reproductions} --- a reproducibility report that did not work out
+is a thesis-sized question.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{The one-page proposal}{Write it before any code --- one hour, saves months}
+\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.4cm} X}
+\toprule
+\textbf{\color{brand}Field} & \textbf{\color{brand}What to write} \\
+\midrule
+\rowcolor{rowtint} Question & One sentence, answerable, with a verb \\
+Why it matters & Two sentences, no hype \\
+\rowcolor{rowtint} Data & Name, size, licence, where it lives \\
+Metric & The official one, plus what else you will report \\
+\rowcolor{rowtint} Baselines & The trivial one and the strong one \\
+Method & What you will try, in three bullets \\
+\rowcolor{rowtint} Compute & Laptop / lab GPU / Colab --- and whether it suffices \\
+Milestones & Four dates: baseline, first result, freeze, draft \\
+\rowcolor{rowtint} Risks \& fallback & What could fail, and the thesis you still have if it does \\
+\bottomrule
+\end{tabularx}
+\end{frame}
+
+%==============================================================================
+\section{Tools, literature, assistants}
+
+\begin{frame}{Your toolkit, week one}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+\begin{block}{References and writing}
+\footnotesize
+\key{Zotero} + browser connector + \key{Better BibTeX}: pinned keys and
+auto-export into your thesis \code{refs.bib}. A one-line note on every save.
+Cite the \emph{published} version; clean BibTeX from DBLP or the ACL
+Anthology.\\[4pt]
+\key{Overleaf} for co-editing and supervisor comments; \key{Prism} as a free
+AI-native LaTeX workspace; \code{git} + \code{latexmk} locally, one sentence
+per line. Ask for your department's template early.
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{Code, data, compute}
+\footnotesize
+One git repository for everything, committed daily.\\[3pt]
+Free GPUs: Colab and Kaggle Notebooks (longer sessions). Ask about lab machines
+in week one --- accounts take time.\\[3pt]
+Track runs (W\&B / MLflow) with config, metrics and commit hash.\\[3pt]
+Check model and dataset \key{licences}. If your data involves people, raise it
+with your supervisor \emph{before} collecting --- GDPR is not optional.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Finding and judging related work}
+\begin{columns}[T]
+\begin{column}{0.54\textwidth}
+\footnotesize
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.0cm} X}
+\toprule
+\rowcolor{rowtint} \code{"exact phrase"} & quote technical terms \\
+\code{a OR b} & must be capitalised \\
+\rowcolor{rowtint} \code{-survey} & exclude a term \\
+\code{source:"SemEval"} & search inside a venue or task \\
+\rowcolor{rowtint} \code{intitle:x} & precision filter \\
+\textbf{Cited by} $\rightarrow$ \textbf{search within citing articles} & who
+applied it to \emph{your} setting \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+Also: ACL Anthology, Semantic Scholar, Connected Papers (week one), OpenReview
+--- where you can read the actual reviews.
+\end{column}
+\begin{column}{0.44\textwidth}
+\begin{block}{Read in three passes}
+\footnotesize
+5 min (skim, decide) $\rightarrow$ 1 h (figures, method) $\rightarrow$ hours
+(re-derive). Pass 3 for the five papers your thesis depends on.
+\end{block}
+\begin{alertblock}{Is this repository worth it?}
+\footnotesize\sloppy
+Last commit, contributors, who answers issues. \key{Search the issues for
+``reproduce''} before trusting its numbers. Checkpoints, pinned deps, a
+LICENSE. Stars measure marketing, not correctness.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Using an AI assistant honestly}
+\begin{columns}[T]
+\begin{column}{0.44\textwidth}
+\textbf{Use it for}
+\footnotesize
+\begin{itemize}
+  \item Explaining unfamiliar notation; walking a derivation.
+  \item Getting someone else's repository to run.
+  \item Boilerplate: loaders, plots, evaluation scripts, Colab setup.
+  \item Refactoring before the code becomes unmaintainable.
+  \item LaTeX debugging; tightening prose \emph{you} wrote.
+  \item Acting as a hostile examiner on your draft.
+\end{itemize}
+\end{column}
+\begin{column}{0.54\textwidth}
+\begin{alertblock}{Five rules}
+\footnotesize
+\begin{enumerate}
+  \item \key{You must be able to explain every line you submit.} The defence
+        tests exactly this.
+  \item \key{Never cite a paper you have not opened.} Models invent references
+        that look right. Fabricated citations fail theses.
+  \item \key{Never let it write your results or your analysis.}
+  \item \key{Follow your university's policy} and declare use if required ---
+        ask, do not guess.
+  \item \key{No confidential or personal data} in a cloud tool.
+\end{enumerate}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+%==============================================================================
+\section{Doing the work}
+
+\begin{frame}{The order that works}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{enumerate}
+  \item \key{Get the data and look at it by hand.} Fifty examples. Count the
+        labels, find the duplicates.
+  \item \key{Build the dumbest baseline} and measure it --- majority class,
+        TF-IDF + logistic regression, a rule.
+  \item \key{Reproduce the strong baseline.}
+  \item \key{Only then} try your idea --- one change at a time, each measured.
+  \item \key{Ablate.} Start early; ablations always take longer than the main
+        result.
+  \item \key{Analyse the errors} by hand, and categorise them.
+\end{enumerate}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{A results table from day one}
+\footnotesize
+Date, commit, config, seed, dev score, and one line on what changed and why.
+Your results chapter becomes a formatting exercise rather than an archaeology
+project.
+\end{block}
+\begin{block}{Negative results are results}
+\footnotesize
+``I tried X, it did not help, here is the evidence and here is why'' is a
+legitimate finding --- provided the experiment was fair. Keep the failures in
+your log.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Mistakes that cost marks}
+\begin{alertblock}{}
+\begin{itemize}
+  \item \key{Test-set leakage} --- tuning on test, duplicates shared between
+        train and test, preprocessing fitted before the split.
+  \item \key{One seed.} A single run with $+0.4$ is noise. Report mean $\pm$
+        standard deviation over at least three seeds.
+  \item \key{Unfair comparison} --- your method tuned for a week, the baseline
+        run with defaults for an hour. Examiners spot this immediately.
+  \item \key{Accuracy on imbalanced data.} Report macro-F1, per-class results,
+        or a confusion matrix.
+  \item \key{Results that cannot be regenerated} because the configuration
+        lived in your shell history.
+  \item \key{Plots without axis labels, units, or a caption} that says what the
+        reader should conclude.
+\end{itemize}
+\end{alertblock}
+\end{frame}
+
+%==============================================================================
+\section{Writing and defending}
+
+\begin{frame}{A structure that works}{Start writing in month one, not month six}
+\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.0cm} X >{\raggedleft\arraybackslash}p{1.6cm}}
+\toprule
+\textbf{\color{brand}Chapter} & \textbf{\color{brand}What goes in it} & \textbf{\color{brand}Pages} \\
+\midrule
+\rowcolor{rowtint} Abstract & Problem, what you did, headline result & 1 \\
+Introduction & Context, the question, contributions as a list & 3--5 \\
+\rowcolor{rowtint} Background & Only the concepts your chapters need & 5--10 \\
+Related work & By \emph{theme}, not one paragraph per paper & 5--8 \\
+\rowcolor{rowtint} Method / system & Precise enough to reimplement & 5--10 \\
+Experiments & Data, splits, metrics, baselines, results & 8--15 \\
+\rowcolor{rowtint} Analysis & Ablations, error analysis, surprises & 4--8 \\
+Conclusion & Findings, limitations, future work & 2--3 \\
+\bottomrule
+\end{tabularx}
+\vspace{2mm}
+\centering\footnotesize
+\emph{Your department's required length and format always win.}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Writing advice that actually helps}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Write the figures and tables first}, then the text that explains
+        them. If a table needs three paragraphs of excuses, the experiment is
+        wrong, not the prose.
+  \item \key{Every chapter opens} with one sentence saying what it does and
+        closes with one saying what it showed.
+  \item \key{Say what you did}, past tense, active voice, short sentences.
+  \item \key{Define every symbol} the first time, and keep notation consistent.
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Captions are self-contained.} A reader who looks only at your
+        figures should still follow the thesis.
+  \item \key{Cite properly, quote almost never.} Copying sentences --- from
+        papers, websites or a model --- without quotation marks and a citation
+        is plagiarism, and it is checked.
+  \item \key{Give your supervisor a complete draft} at least three weeks before
+        the deadline. Feedback on an incomplete draft is feedback on the wrong
+        problem.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{The defence}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Structure:} problem (2 slides) $\rightarrow$ why it is hard (1)
+        $\rightarrow$ what you did (3--5) $\rightarrow$ results (3--4)
+        $\rightarrow$ analysis and limitations (2) $\rightarrow$ conclusion
+        (1). One idea per slide.
+  \item \key{Rehearse out loud, timed, twice} --- once alone, once in front of
+        a person.
+  \item \key{A 60-second demo}, recorded as a fallback. Never rely on live
+        internet.
+  \item \key{Know your numbers:} dataset sizes, your best score, the baseline,
+        training time.
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Expect these questions}
+\footnotesize
+Why this baseline? What happens if the data changes? Why does it fail on class
+X? What would you do with six more months? What did you find hardest? Is the
+improvement significant?
+\end{block}
+\begin{alertblock}{}
+\footnotesize
+``I do not know'' is an acceptable answer when followed by ``but here is how I
+would find out''. Guessing is not.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+%==============================================================================
+\section{Timetable and afterwards}
+
+\begin{frame}{Six months}
+\footnotesize
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{1.6cm} X}
+\toprule
+\textbf{\color{brand}Month} & \textbf{\color{brand}Done by the end of it} \\
+\midrule
+\rowcolor{rowtint} \textbf{1} & Topic agreed and proposal signed off; tools installed; data downloaded and inspected; 10--15 papers read; trivial baseline running \\
+\textbf{2} & Strong baseline reproduced; experiment logging in place; background and related work drafted; task dates in the calendar \\
+\rowcolor{rowtint} \textbf{3} & Your method implemented; first real results; method chapter drafted \\
+\textbf{4} & Ablations and seeds; results tables generated by script; experiments chapter drafted \\
+\rowcolor{rowtint} \textbf{5} & Error analysis; analysis chapter; \textbf{complete draft} to your supervisor; results frozen \\
+\textbf{6} & Revisions; references checked one by one; defence slides; two rehearsals; submission \\
+\bottomrule
+\end{tabularx}
+\vspace{2mm}
+\begin{block}{Weekly rhythm}
+\footnotesize
+Send five bullets the evening before every meeting: \textbf{what I did}
+$\cdot$ \textbf{what I found} $\cdot$ \textbf{what is blocked} $\cdot$
+\textbf{what I propose} $\cdot$ \textbf{what I need from you}. ``I am stuck''
+sent on Tuesday is worth three weeks of silence.
+\end{block}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{After the thesis}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Publish it if it is good} --- a shared-task system paper, a
+        workshop paper, or a student research workshop submission. A paper
+        turns coursework into a credential.
+  \item \key{Clean the repository} and make it public: a README that
+        reproduces your main table, the environment file, a licence. The best
+        item on an entry-level CV.
+  \item \key{Put up a page} --- \code{username.github.io} with AcademicPages
+        takes an afternoon.
+\end{itemize}
+\end{column}
+\begin{column}{0.46\textwidth}
+\footnotesize
+\begin{itemize}
+  \item \key{Ask for a reference letter while it is fresh}, and give your
+        supervisor your abstract, results and plans to write from.
+  \item \key{Considering a PhD?} The companion guide --- \emph{Starting a PhD
+        in Machine Learning or NLP} --- covers venues, deadlines and the
+        research habits that follow from here.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}{Checklists}
+\begin{columns}[T]
+\begin{column}{0.33\textwidth}
+\begin{block}{Week 1}
+\scriptsize
+Supervisor slot fixed $\cdot$ proposal agreed $\cdot$ Zotero + Better BibTeX
+$\cdot$ git repo with \code{notes/} $\cdot$ LaTeX project started $\cdot$ data
+downloaded, licence checked, 50 examples read $\cdot$ compute sorted $\cdot$
+deadlines in the calendar
+\end{block}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{block}{Before freezing results}
+\scriptsize
+Trivial + strong baseline + your method on the same splits $\cdot$ 3+ seeds,
+mean $\pm$ std $\cdot$ test set used once $\cdot$ every table and figure
+regenerated by script $\cdot$ ablations done $\cdot$ errors categorised $\cdot$
+code runs from a clean clone
+\end{block}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{block}{Before submitting}
+\scriptsize
+Every citation checked against the real paper $\cdot$ department format met
+$\cdot$ figures legible in greyscale $\cdot$ limitations written honestly
+$\cdot$ read-aloud pass $\cdot$ complete draft seen 3 weeks earlier $\cdot$
+slides rehearsed twice with a recorded demo
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
+\begin{frame}[plain,noframenumbering]
+\vfill
+\centering
+{\color{brandlight}\rule{0.8\textwidth}{1.4pt}}\\[10pt]
+{\large\bfseries\color{brand}The shortest version}\\[10pt]
+\begin{minipage}{0.82\textwidth}\centering
+Pick a problem that already has data and a metric --- a shared task is the
+easiest way to get one. Run the dumb baseline first. Change one thing at a time
+and write down what happened. Understand everything you submit. Write from
+month one, show your supervisor a complete draft early, and be honest about
+what did not work.\\[6pt]
+That is a good thesis.
+\end{minipage}\\[12pt]
+{\color{brandlight}\rule{0.8\textwidth}{1.4pt}}\\[14pt]
+{\footnotesize\color{mutegray}Konstantinos Skianis \quad\textbullet\quad
+University of Ioannina \quad\textbullet\quad
+\lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+\vfill
+\end{frame}
+
+\end{document}
