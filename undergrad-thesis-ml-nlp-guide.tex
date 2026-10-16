@@ -475,6 +475,44 @@ five times and mis-cite one in your thesis.
         venue names and pages.
 \end{itemize}
 
+\subsubsection*{Getting a reference into your \code{.bib}}
+
+The easiest route needs no setup at all:
+
+\begin{enumerate}
+  \item In Google Scholar, open \emph{Settings} $\rightarrow$
+        \emph{Bibliography manager} and tick \emph{Show links to import
+        citations into BibTeX}. One time only.
+  \item A \textbf{Cite} link now appears under every result. Click it, then
+        \textbf{BibTeX}, and copy the entry.
+  \item Paste it into your \code{refs.bib} --- or into Zotero with
+        \emph{File $\rightarrow$ Import from clipboard}, which keeps your
+        library and your bibliography in step. Scholar can also export in
+        bulk: star papers into \emph{My library}, select them, then
+        \emph{Export} $\rightarrow$ \emph{BibTeX}.
+\end{enumerate}
+
+\begin{wbox}{Check whatever Scholar gives you}
+Scholar's entries are often sloppy: \code{arXiv preprint arXiv:1810.04805} for
+a paper published at NAACL, missing pages and editors, venue names that differ
+between entries, mangled accents. A bibliography full of ``arXiv preprint'' is
+the clearest sign that nobody checked. Cleaner sources, each one click away:
+\begin{itemize}
+  \item \textbf{ACL Anthology} --- a BibTeX box on every paper page, and a
+        full \code{.bib} for each volume.
+  \item \textbf{DBLP} --- per-paper BibTeX and a whole-author export.
+  \item \textbf{arXiv} --- ``Export BibTeX citation'' on the abstract page.
+  \item \textbf{Semantic Scholar}, ACM, IEEE and Springer pages all have a
+        cite or export button.
+  \item \textbf{Any DOI, from the terminal:}
+        \code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}
+        returns the publisher's own entry.
+\end{itemize}
+\end{wbox}
+
+Past twenty or so references, stop copy-pasting: the Zotero connector plus
+Better BibTeX auto-export does all of this for you and keeps your keys stable.
+
 \subsection{Writing: LaTeX, Overleaf, Prism}
 
 Write the thesis in LaTeX unless your department requires otherwise. Learn it

@@ -33,7 +33,9 @@ content at three levels of detail.
   periods, and releasing code and checkpoints.
 - **Zotero** — the connector, Better BibTeX with pinned keys and auto-export
   into your paper repo, group libraries, and the habits that keep a library
-  trustworthy.
+  trustworthy. Includes the quickest way to get an entry into your `.bib`
+  (Google Scholar's BibTeX links), what to check in it, and cleaner sources —
+  the ACL Anthology, DBLP, or any DOI straight from the terminal.
 - **A focused survey as the first project** — a 10-step protocol, inclusion
   criteria, forward and backward snowballing, an extraction schema, and
   finishing with three gaps stated as testable questions.
@@ -90,7 +92,8 @@ supervision meeting.
   papers, and leaderboards that have plateaued.
 - **The one-page proposal** to agree with your supervisor before writing code.
 - **The toolkit** — Zotero, LaTeX and Overleaf, git, free GPUs, experiment
-  tracking, data licensing and GDPR.
+  tracking, data licensing and GDPR — plus the quickest way to get a reference
+  into your `.bib` and how to check it.
 - **Using an AI assistant honestly** — five rules, starting with the one that
   decides the defence: you must be able to explain every line you submit.
 - **Doing the work** — baselines first, the mistakes that cost marks (test-set

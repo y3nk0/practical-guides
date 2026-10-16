@@ -547,6 +547,53 @@ before you read paper number ten.
         later.
 \end{enumerate}
 
+\subsection{Getting a reference into your \code{.bib}}
+
+\begin{cbox}{The easiest route, and it needs no setup}
+\begin{enumerate}
+  \item In Google Scholar: \emph{Settings} $\rightarrow$ \emph{Bibliography
+        manager} $\rightarrow$ tick \emph{Show links to import citations into
+        BibTeX}. One time only.
+  \item A \textbf{Cite} link now appears under every search result. Click it,
+        then \textbf{BibTeX}, and copy the entry.
+  \item Paste it into your \code{refs.bib} --- or, better, into Zotero with
+        \emph{File $\rightarrow$ Import from clipboard}, so your library and
+        your bibliography stay in step.
+\end{enumerate}
+Scholar also exports in bulk: save papers to \emph{My library} with the star
+as you find them, then select them and \emph{Export} $\rightarrow$
+\emph{BibTeX}.
+\end{cbox}
+
+\begin{wbox}{Whatever Scholar gives you, check it}
+Expect \code{arXiv preprint arXiv:1810.04805} for a paper that was published
+at NAACL, missing pages and editors, venue names that differ between entries,
+and mangled accents in author names. Check \code{booktitle}/\code{journal},
+year and pages before you trust an entry --- a bibliography full of ``arXiv
+preprint'' is the clearest signal that nobody looked.
+\end{wbox}
+
+Cleaner sources, each one click away:
+
+\begin{itemize}
+  \item \textbf{ACL Anthology} --- every paper page has a BibTeX box, and
+        every volume offers one \code{.bib} for the entire proceedings.
+  \item \textbf{DBLP} --- per-paper BibTeX, plus a one-click export of
+        everything an author has published.
+  \item \textbf{arXiv} --- ``Export BibTeX citation'' on the abstract page
+        (fine for genuinely unpublished work).
+  \item \textbf{Semantic Scholar}, the ACM Digital Library, IEEE Xplore and
+        Springer all have a cite or export button.
+  \item \textbf{Any DOI, straight from the terminal:}\\
+        \code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}\\
+        returns the publisher's own entry --- correct venue, pages and year.
+        Ideal in a script, or when a site buries its export button.
+\end{itemize}
+
+Past twenty or so references, stop copy-pasting entirely: the Zotero connector
+plus Better BibTeX auto-export does all of the above for you and keeps your
+keys stable.
+
 \subsection{Habits that keep a library trustworthy}
 
 \begin{itemize}

@@ -58,7 +58,7 @@
  {\par\endMakeFramed\addvspace{2pt}}
 
 \begin{document}
-\fontsize{6.75}{7.9}\selectfont
+\fontsize{6.55}{7.65}\selectfont
 
 {\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
 \begin{minipage}[b]{0.63\textwidth}
@@ -166,9 +166,17 @@ and your future self is the main beneficiary.
         the \code{.bib} into your repo. Commit it.
   \item Collections per project, tags per theme, saved searches, lab
         \textbf{group library}, annotate in the built-in reader.
-  \item \textbf{Cite the published version}, not the preprint. Clean BibTeX
-        from \lnk{https://dblp.org}{DBLP} /
-        \lnk{https://aclanthology.org}{ACL Anthology}, not Scholar.
+  \item \textbf{Fastest entry:} Scholar \emph{Settings} $\to$
+        \emph{Bibliography manager} $\to$ show BibTeX links; then
+        \textbf{Cite} $\to$ \textbf{BibTeX} $\to$ paste into \code{refs.bib}
+        (or Zotero \emph{File $\to$ Import from clipboard}). Bulk: star into
+        \emph{My library} $\to$ Export.
+  \item \textbf{Cite the published version}, not the preprint, and check what
+        Scholar gave you --- ``arXiv preprint'' for a NAACL paper is the usual
+        error. Cleaner: \lnk{https://aclanthology.org}{Anthology} /
+        \lnk{https://dblp.org}{DBLP} per-paper BibTeX, or any DOI from the
+        terminal:\\ \code{curl -LH "Accept: application/x-bibtex"}
+        \code{https://doi.org/<DOI>}
   \item Monthly duplicate merge; one-line ``why I care'' on every save.
 \end{itemize}
 

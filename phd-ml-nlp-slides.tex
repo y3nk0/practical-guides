@@ -529,6 +529,44 @@ better anyway: versioned, diffable, identical for every co-author.
 \end{columns}
 \end{frame}
 
+%------------------------------------------------------------------------------
+\begin{frame}{Getting a reference into your \code{.bib}}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{block}{The easiest route --- no setup}
+\footnotesize
+\begin{enumerate}
+  \item Google Scholar: \emph{Settings} $\rightarrow$ \emph{Bibliography
+        manager} $\rightarrow$ tick \emph{Show links to import citations into
+        BibTeX}. Once, ever.
+  \item A \key{Cite} link appears under every result $\rightarrow$
+        \key{BibTeX} $\rightarrow$ copy.
+  \item Paste into \code{refs.bib}, or into Zotero with \emph{File
+        $\rightarrow$ Import from clipboard}.
+\end{enumerate}
+Bulk: star papers into \emph{My library}, select, \emph{Export} $\rightarrow$
+\emph{BibTeX}.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Check what it gives you}
+\footnotesize
+``arXiv preprint arXiv:1810.04805'' for a paper published at NAACL, missing
+pages, inconsistent venue names, mangled accents. A bibliography full of
+``arXiv preprint'' says nobody looked.
+\end{alertblock}
+\footnotesize
+\textbf{Cleaner, one click each:} \key{ACL Anthology} (per paper, and a
+\code{.bib} per volume) $\cdot$ \key{DBLP} $\cdot$ \key{arXiv} ``Export
+BibTeX'' $\cdot$ Semantic Scholar, ACM, IEEE, Springer.\\[3pt]
+\textbf{Any DOI, from the terminal:}\\
+\code{curl -LH "Accept: application/x-bibtex"}\\
+\code{https://doi.org/<DOI>}\\[3pt]
+Past $\sim$20 refs: connector + Better BibTeX auto-export does it all.
+\end{column}
+\end{columns}
+\end{frame}
+
 %==============================================================================
 \section{Your first project: a focused survey}
 

@@ -444,6 +444,43 @@ with your supervisor \emph{before} collecting --- GDPR is not optional.
 \end{frame}
 
 %------------------------------------------------------------------------------
+\begin{frame}{Getting a reference into your \code{.bib}}
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{block}{The easiest route --- no setup}
+\footnotesize
+\begin{enumerate}
+  \item Google Scholar: \emph{Settings} $\rightarrow$ \emph{Bibliography
+        manager} $\rightarrow$ tick \emph{Show links to import citations into
+        BibTeX}. Once, ever.
+  \item A \key{Cite} link appears under every result $\rightarrow$
+        \key{BibTeX} $\rightarrow$ copy.
+  \item Paste into \code{refs.bib}, or into Zotero with \emph{File
+        $\rightarrow$ Import from clipboard}.
+\end{enumerate}
+Bulk: star papers into \emph{My library}, select, \emph{Export} $\rightarrow$
+\emph{BibTeX}.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Check what it gives you}
+\footnotesize
+``arXiv preprint'' for a paper that appeared at a conference, missing pages,
+inconsistent venue names. Examiners read the bibliography.
+\end{alertblock}
+\footnotesize
+\textbf{Cleaner, one click each:} \key{ACL Anthology} $\cdot$ \key{DBLP}
+$\cdot$ \key{arXiv} ``Export BibTeX'' $\cdot$ Semantic Scholar, ACM, IEEE,
+Springer.\\[3pt]
+\textbf{Any DOI, from the terminal:}\\
+\code{curl -LH "Accept: application/x-bibtex"}\\
+\code{https://doi.org/<DOI>}\\[3pt]
+Past $\sim$20 references: connector + Better BibTeX auto-export does it all.
+\end{column}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------------------------
 \begin{frame}{Finding and judging related work}
 \begin{columns}[T]
 \begin{column}{0.54\textwidth}

@@ -58,7 +58,7 @@
  {\par\endMakeFramed\addvspace{2pt}}
 
 \begin{document}
-\fontsize{6.55}{7.65}\selectfont
+\fontsize{6.5}{7.6}\selectfont
 
 {\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
 \begin{minipage}[b]{0.63\textwidth}
@@ -176,8 +176,16 @@ suffices)\dt \textbf{milestones} (baseline, first result, freeze, draft)\dt
 \sub{References}\lnk{https://www.zotero.org}{Zotero} + connector +
 \lnk{https://retorque.re/zotero-better-bibtex/}{Better BibTeX}: pinned keys
 (\code{devlin2019bert}), auto-export into your thesis \code{refs.bib}. One-line
-note on every save. Cite the \textbf{published} version; clean BibTeX from
-\lnk{https://dblp.org}{DBLP} / \lnk{https://aclanthology.org}{Anthology}.
+note on every save.
+\sub{Fastest \code{.bib} entry}Scholar \emph{Settings} $\to$
+\emph{Bibliography manager} $\to$ show BibTeX links; then \textbf{Cite} $\to$
+\textbf{BibTeX} $\to$ paste into \code{refs.bib} (or Zotero \emph{Import from
+clipboard}); bulk-export from \emph{My library}. \textbf{Check it} --- ``arXiv
+preprint'' for a published paper is the usual error. Cleaner:
+\lnk{https://aclanthology.org}{Anthology} / \lnk{https://dblp.org}{DBLP}
+per-paper BibTeX, or any DOI from the terminal:
+\code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}. Always
+cite the \textbf{published} version.
 \sub{Writing}\lnk{https://www.overleaf.com}{Overleaf} (co-editing + comments
 with your supervisor; check for a university licence)\dt
 \lnk{https://prism.openai.com}{Prism} (free AI-native LaTeX)\dt locally
