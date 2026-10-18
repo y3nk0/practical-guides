@@ -8,9 +8,12 @@
 # The website is assumed to be a sibling checkout. Override if yours is
 # elsewhere:  make publish SITE=/path/to/y3nk0.github.io/files/guides
 
-# Builds are reproducible: the PDF timestamp is taken from the source file's
-# mtime (SOURCE_DATE_EPOCH), so rebuilding an unchanged document produces a
-# byte-identical PDF and `make publish` only touches what actually changed.
+# Builds are reproducible: the PDF timestamp is pinned (SOURCE_DATE_EPOCH), so
+# the same sources always produce byte-identical PDFs - on any machine, and
+# after any fresh clone - and `make publish` only touches what really changed.
+# A file mtime would not do: git does not preserve mtimes, so a checkout alone
+# would change every PDF.
+SOURCE_DATE_EPOCH ?= 1767225600   # 2026-01-01T00:00:00Z
 LATEXMK      ?= latexmk
 LATEXMKFLAGS ?= -pdf -interaction=nonstopmode -halt-on-error
 SITE         ?= ../y3nk0.github.io/files/guides
@@ -27,8 +30,7 @@ all: $(PDFS)
 
 %.pdf: %.tex
 	@printf 'building %-34s' '$@'
-	@SOURCE_DATE_EPOCH=$$(date -r $< +%s); export SOURCE_DATE_EPOCH; \
-	export FORCE_SOURCE_DATE=1; \
+	@export SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1; \
 	$(LATEXMK) $(LATEXMKFLAGS) $< >$*.build.log 2>&1 || { echo FAILED; tail -40 $*.build.log; exit 1; }
 	@grep -oE '\([0-9]+ pages?' $*.log | tail -1 | tr -d '(' || echo 'up to date'
 
