@@ -423,9 +423,10 @@ Milestones & Four dates: baseline, first result, freeze, draft \\
 \key{Zotero} + browser connector + \key{Better BibTeX}: pinned keys and
 auto-export into your thesis \code{refs.bib}. A one-line note on every save.
 Cite the \emph{published} version; clean BibTeX from DBLP or the ACL
-Anthology.\\[4pt]
-\key{Overleaf} for co-editing and supervisor comments; \key{Prism} as a free
-AI-native LaTeX workspace; \code{git} + \code{latexmk} locally, one sentence
+Anthology. Zotero flags retracted items; \key{Unpaywall} finds the free copy
+of a paywalled paper.\\[4pt]
+\key{Overleaf} for co-editing and supervisor comments (its AI assistant is
+metered); \key{Prism} as a currently free AI-native LaTeX workspace; \code{git} + \code{latexmk} locally, one sentence
 per line. Ask for your department's template early.
 \end{block}
 \end{column}
@@ -475,7 +476,9 @@ Springer.\\[3pt]
 \textbf{Any DOI, from the terminal:}\\
 \code{curl -LH "Accept: application/x-bibtex"}\\
 \code{https://doi.org/<DOI>}\\[3pt]
-Past $\sim$20 references: connector + Better BibTeX auto-export does it all.
+Past $\sim$20 references: connector + Better BibTeX auto-export does it all.\\[3pt]
+Protect capitals (\code{\{BERT\}}), authors as \code{Last, First}; run
+\code{bibtex-tidy} and check every DOI resolves before submitting.
 \end{column}
 \end{columns}
 \end{frame}
@@ -652,6 +655,9 @@ Conclusion & Findings, limitations, future work & 2--3 \\
   \item \key{Cite properly, quote almost never.} Copying sentences --- from
         papers, websites or a model --- without quotation marks and a citation
         is plagiarism, and it is checked.
+  \item \key{Right citation command:} \code{\textbackslash citet} in the
+        sentence, \code{\textbackslash citep} as an aside (biblatex:
+        \code{\textbackslash textcite} / \code{\textbackslash parencite}).
   \item \key{Give your supervisor a complete draft} at least three weeks before
         the deadline. Feedback on an incomplete draft is feedback on the wrong
         problem.
@@ -774,7 +780,8 @@ code runs from a clean clone
 \begin{column}{0.33\textwidth}
 \begin{block}{Before submitting}
 \scriptsize
-Every citation checked against the real paper $\cdot$ department format met
+Every citation checked and every DOI resolves $\cdot$ \code{bibtex-tidy} run
+$\cdot$ department format met
 $\cdot$ figures legible in greyscale $\cdot$ limitations written honestly
 $\cdot$ read-aloud pass $\cdot$ complete draft seen 3 weeks earlier $\cdot$
 slides rehearsed twice with a recorded demo

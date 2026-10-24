@@ -58,7 +58,7 @@
  {\par\endMakeFramed\addvspace{2pt}}
 
 \begin{document}
-\fontsize{6.5}{7.6}\selectfont
+\fontsize{6.15}{7.25}\selectfont
 
 {\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
 \begin{minipage}[b]{0.63\textwidth}
@@ -75,6 +75,7 @@ University of Ioannina\dt \lnk{https://y3nk0.github.io}{y3nk0.github.io}}
 
 \vspace{2pt}
 \begin{multicols}{3}
+\raggedcolumns
 \raggedright
 
 %============================================================== COLUMN 1 ======
@@ -176,7 +177,9 @@ suffices)\dt \textbf{milestones} (baseline, first result, freeze, draft)\dt
 \sub{References}\lnk{https://www.zotero.org}{Zotero} + connector +
 \lnk{https://retorque.re/zotero-better-bibtex/}{Better BibTeX}: pinned keys
 (\code{devlin2019bert}), auto-export into your thesis \code{refs.bib}. One-line
-note on every save.
+note on every save\dt Zotero flags retracted items\dt
+\lnk{https://unpaywall.org/products/extension}{Unpaywall} finds free copies of
+paywalled PDFs.
 \sub{Fastest \code{.bib} entry}Scholar \emph{Settings} $\to$
 \emph{Bibliography manager} $\to$ show BibTeX links; then \textbf{Cite} $\to$
 \textbf{BibTeX} $\to$ paste into \code{refs.bib} (or Zotero \emph{Import from
@@ -185,11 +188,13 @@ preprint'' for a published paper is the usual error. Cleaner:
 \lnk{https://aclanthology.org}{Anthology} / \lnk{https://dblp.org}{DBLP}
 per-paper BibTeX, or any DOI from the terminal:
 \code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}. Always
-cite the \textbf{published} version.
+cite the \textbf{published} version\dt protect capitals (\code{\{BERT\}})\dt run
+\code{bibtex-tidy} and check every DOI resolves before submitting.
 \sub{Writing}\lnk{https://www.overleaf.com}{Overleaf} (co-editing + comments
-with your supervisor; check for a university licence)\dt
-\lnk{https://prism.openai.com}{Prism} (free AI-native LaTeX)\dt locally
-\code{git} + \code{latexmk -pdf -pvc}, \textbf{one sentence per line}\dt start
+with your supervisor, a metered AI assistant; check for a university
+licence)\dt \lnk{https://prism.openai.com}{Prism} (free for now, AI-native
+LaTeX)\dt locally \code{git} + \code{latexmk -pdf -pvc}, \textbf{one sentence
+per line}, \code{\textbackslash citet} vs \code{\textbackslash citep}\dt start
 from your department's template.
 \sub{Code \& compute}one git repo for everything, commit daily\dt free GPUs:
 Colab, Kaggle Notebooks (longer sessions)\dt ask about lab machines in week one
@@ -234,6 +239,7 @@ fail theses. \textbf{3} Never let it write your results or your analysis.
 do not guess. \textbf{5} No confidential or personal data in a cloud tool.
 \end{flag}
 
+\columnbreak
 \head{Doing the work}
 \begin{enumerate}
   \item Get the data; read \textbf{50 examples by hand}; count labels, find

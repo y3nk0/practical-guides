@@ -473,6 +473,11 @@ five times and mis-cite one in your thesis.
         (\url{https://aclanthology.org}) or \textbf{DBLP}
         (\url{https://dblp.org}) --- Google Scholar's is often sloppy about
         venue names and pages.
+  \item Zotero also checks your library against Retraction Watch: a red
+        banner on an item means it was retracted. Find out why before citing.
+  \item \textbf{Unpaywall} (\url{https://unpaywall.org/products/extension}),
+        a browser extension that finds the legal free copy of a paywalled
+        paper --- essential if your university's access is patchy.
 \end{itemize}
 
 \subsubsection*{Getting a reference into your \code{.bib}}
@@ -513,24 +518,37 @@ the clearest sign that nobody checked. Cleaner sources, each one click away:
 Past twenty or so references, stop copy-pasting: the Zotero connector plus
 Better BibTeX auto-export does all of this for you and keeps your keys stable.
 
+Two things every tool gets wrong unless you tell it: protect capitals in
+titles (\code{\{BERT\}}, \code{\{Greek\}}) or the bibliography style will
+lowercase them, and write authors as \code{Last, First and Last, First}.
+Before you submit, run \code{bibtex-tidy}
+(\url{https://github.com/FlamingTempura/bibtex-tidy}) over \code{refs.bib}
+to format, sort and deduplicate it, and check that every DOI resolves ---
+examiners now look for invented references.
+
 \subsection{Writing: LaTeX, Overleaf, Prism}
 
 Write the thesis in LaTeX unless your department requires otherwise. Learn it
-in a weekend and it never costs you again.
+in a weekend and it never costs you again. Typst is nice, but your
+department's template and every venue's are LaTeX.
 
 \begin{itemize}
   \item \textbf{Overleaf} (\url{https://www.overleaf.com}) --- browser-based,
         nothing to install, real-time co-editing and comments. Your supervisor
         can read and annotate the draft without exchanging files. Check whether
-        your university has an institutional licence before paying.
+        your university has an institutional licence before paying. It now has
+        a built-in, metered AI assistant as well; the rules in \S\ref{sec:ai}
+        apply to it exactly as to Prism.
   \item \textbf{Prism} (\url{https://prism.openai.com}) --- OpenAI's
-        AI-native LaTeX workspace: free, unlimited projects and collaborators,
+        AI-native LaTeX workspace: free at the time of writing, with unlimited
+        projects and collaborators,
         with a model that sees the whole manuscript. Useful for prose,
         tables and LaTeX errors you cannot find. See the rules in
         \S\ref{sec:ai} first.
   \item \textbf{Locally:} \code{git} + \code{latexmk -pdf -pvc} + VS Code.
         Write \textbf{one sentence per line} --- it makes diffs readable and
-        revisions painless.
+        revisions painless; \code{latexdiff} shows your supervisor exactly
+        what changed between drafts.
   \item Start from your department's thesis template if one exists; otherwise
         a clean \code{report} or \code{book} class is fine. Ask early about
         required title-page wording, logos and declarations.
@@ -810,6 +828,13 @@ a sane default, not a rule.}
         from papers, from websites, or from a model --- without quotation
         marks and a citation is plagiarism, and it is checked. Paraphrase in
         your own words and cite the source.
+  \item \textbf{Use the right citation command.}
+        \code{\textbackslash citet\{\}} when the authors are part of the
+        sentence (``Devlin et al.\ (2019) show''),
+        \code{\textbackslash citep\{\}} when the citation is an aside
+        (``(Devlin et al., 2019)''); with biblatex,
+        \code{\textbackslash textcite} and \code{\textbackslash parencite}.
+        Mixing them is the most common formatting slip in student theses.
   \item \textbf{Give your supervisor a complete draft}, not a chapter, at
         least three weeks before the deadline. Feedback on an incomplete draft
         is feedback on the wrong problem.
@@ -939,8 +964,8 @@ three weeks of silence.
 
 \subsection*{Before you submit}
 \begin{itemize}
-  \item Every citation checked against the real paper --- no invented
-        references
+  \item Every citation checked against the real paper and every DOI
+        resolves --- no invented references; \code{bibtex-tidy} run
   \item Department's format, length and declaration requirements met
   \item Figures legible in print and greyscale; captions self-contained
   \item Limitations section written honestly
@@ -978,8 +1003,10 @@ Conference deadlines & \url{https://paperswithcode.co/ai-deadlines} \\
 \multicolumn{2}{l}{\textbf{\color{brand}Tools}}\\
 Zotero & \url{https://www.zotero.org} \\
 Better BibTeX & \url{https://retorque.re/zotero-better-bibtex/} \\
+bibtex-tidy & \url{https://github.com/FlamingTempura/bibtex-tidy} \\
 Overleaf & \url{https://www.overleaf.com} \\
 Prism (AI LaTeX editor) & \url{https://prism.openai.com} \\
+Unpaywall & \url{https://unpaywall.org/products/extension} \\
 Hugging Face & \url{https://huggingface.co} \\
 Google Colab & \url{https://colab.research.google.com} \\
 Kaggle Notebooks & \url{https://www.kaggle.com/code} \\

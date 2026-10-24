@@ -289,7 +289,8 @@ below the main-conference bar & A real, citable publication \\
 
 \begin{cbox}{ARR: the mechanic that confuses every first-year NLP student}
 The ACL family separates \emph{reviewing} from \emph{publishing}. You submit to
-\textbf{ACL Rolling Review} (ARR) in one of its roughly monthly cycles. You
+\textbf{ACL Rolling Review} (ARR) in one of its cycles --- every two to three
+months in 2026, not monthly; check the current calendar. You
 receive reviews plus a meta-review. Then, in a separate step, you
 \emph{commit} that reviewed paper to a specific venue (ACL, EMNLP, NAACL,
 \ldots), whose chairs decide accept / Findings / reject based on those reviews.
@@ -358,7 +359,7 @@ remembers. Two boards cover this, and they complement each other.
 \begin{itemize}
   \item \textbf{Papers with Code --- AI Deadlines} (start here):\\
         \url{https://paperswithcode.co/ai-deadlines}\\
-        Run by Hugging Face. Filter by subfield (Machine Learning, NLP,
+        Filter by subfield (Machine Learning, NLP,
         Computer Vision, Data Mining, Robotics, IR, Speech, RL, \ldots), or
         restrict to \emph{top tier only}. Crucially it tracks \emph{every}
         milestone, not just the submission date: abstract registration,
@@ -415,7 +416,8 @@ your thesis contribution will come from.
 
 Every paper you write in this field will be LaTeX. Learn it properly once ---
 a weekend --- and it will never cost you again. What differs is \emph{where}
-you edit and \emph{how} you collaborate.
+you edit and \emph{how} you collaborate. (Typst is pleasant and growing, but
+no venue template accepts it, so papers stay in LaTeX.)
 
 \subsection{Overleaf --- the default collaborative editor}
 
@@ -429,6 +431,10 @@ you edit and \emph{how} you collaborate.
         --- search ``NeurIPS'', ``ACL'', ``ICML'' before you start a paper and
         begin from the official template, never from last year's copy.
   \item Rich comments and a chat panel; useful for advisor feedback.
+  \item Overleaf now ships its own \textbf{AI Assistant} inside the editor:
+        LaTeX-aware, and metered by plan --- a handful of uses a day on the
+        free tier, more on paid ones, unmetered at the top. The cautions below
+        for Prism apply to it word for word.
   \item Many universities have institutional licences --- check before paying.
         The free tier is limited on collaborator count, compile time, full
         version history, Git/Dropbox sync, and track changes.
@@ -444,7 +450,7 @@ you edit and \emph{how} you collaborate.
   \item A LaTeX-native collaborative workspace with a frontier model wired
         into the manuscript: it sees the whole document --- sections,
         equations, citations, the argument --- rather than isolated snippets.
-  \item Currently free with unlimited projects, collaborators, and compile
+  \item Free at the time of writing, with unlimited projects, collaborators, and compile
         time, which makes it an attractive alternative to Overleaf's free
         tier.
   \item Genuinely good at: tightening prose, fixing LaTeX errors you cannot
@@ -477,6 +483,16 @@ Cloud editors are for collaboration; a local copy is for control. Keep both.
         two people can work without conflicts.
   \item Keep figures as generated artefacts: a script in the repo produces
         every PDF figure from logged results. No hand-edited plots.
+  \item \textbf{Textual vs.\ parenthetical citations.} With natbib (the ACL
+        and NeurIPS templates): \code{\textbackslash citet\{\}} when the
+        authors are part of the sentence (``Devlin et al.\ (2019) show''),
+        \code{\textbackslash citep\{\}} when the citation is an aside
+        (``(Devlin et al., 2019)''). With biblatex: \code{\textbackslash
+        textcite} and \code{\textbackslash parencite}. Mixing them up is the
+        most common formatting error in student drafts.
+  \item \textbf{\code{latexdiff}} (on CTAN) marks up every change between two
+        versions of the source: ideal for a camera-ready, a journal revision,
+        or showing your advisor what moved since last week.
   \item For arXiv submission, \code{arxiv-latex-cleaner}
         (\,\url{https://github.com/google-research/arxiv-latex-cleaner}\,)
         strips comments, removes unused files, and shrinks images --- run it
@@ -503,6 +519,11 @@ Cloud editors are for collaboration; a local copy is for control. Keep both.
         licence, checkpoints and datasets on Hugging Face, and an
         exact environment spec. Papers with runnable code get cited more ---
         and your future self is the main beneficiary.
+  \item \textbf{Make the code citable.} A \code{CITATION.cff} file in the
+        repo (\url{https://citation-file-format.github.io}) gives GitHub a
+        ``Cite this repository'' button, and the Zenodo integration
+        (\url{https://zenodo.org}) mints a DOI for every tagged release, so
+        the code can be cited independently of the paper.
   \item Get an \textbf{ORCID} (\url{https://orcid.org}) in week one and put it
         on everything; it disambiguates you from everyone who shares your name.
 \end{itemize}
@@ -607,11 +628,39 @@ keys stable.
         pages, and editors. Zotero + Add Item by Identifier (DOI / arXiv ID /
         ISBN) is the fastest clean path.
   \item Run \emph{Duplicate Items} monthly. Merge, do not delete.
+  \item \textbf{Retraction alerts are already on.} Zotero checks your library
+        against Retraction Watch and marks retracted items with a red banner;
+        when you see one, find out why before you cite it.
+  \item \textbf{Tidy the file, not the entries.} \code{bibtex-tidy}
+        (\url{https://github.com/FlamingTempura/bibtex-tidy}; there is also a
+        web version) formats, sorts, deduplicates and strips junk fields such
+        as \code{abstract} and \code{file}. One command before every
+        submission --- or a Makefile target.
+  \item \textbf{Audit before you submit.} A reference that does not resolve
+        is a typo or a fabrication, and reviewers now look for both. Wrap the
+        \code{curl} line above in a loop over every DOI in \code{refs.bib}
+        (and the arXiv API for \code{eprint} fields), flag anything that
+        returns no title, and open whatever is flagged. Ten lines of shell or
+        Python; ask your assistant to write them and keep the script in the
+        repo.
   \item Add one-sentence notes on save: ``what it does / why I care''. In
         month 14 this is the difference between a library and a junkyard.
   \item Subscribe to feeds inside Zotero (arXiv category RSS, journal feeds) so
         new work arrives where you already work.
 \end{itemize}
+
+\begin{wbox}{Three BibTeX gotchas that survive every tool}
+\textbf{Capitals vanish.} Most styles lowercase titles, so protect what must
+stay upper-case: \code{title = \{\{BERT\}: Pre-training of ...\}}, and the
+same for \code{\{GPT-4\}}, \code{\{Greek\}}, \code{\{LLM\}}.\\[3pt]
+\textbf{Author format.} \code{author = \{Devlin, Jacob and Chang, Ming-Wei\}}
+--- \code{Last, First}, joined by \code{and}; never a comma-separated list,
+never an ``et al.'' typed by hand.\\[3pt]
+\textbf{arXiv-only work} gets the arXiv fields, not an invented journal:
+\code{@misc\{..., eprint=\{2505.24403\}, archivePrefix=\{arXiv\},
+primaryClass=\{cs.LG\}\}}. And pick \emph{one} source per venue family:
+DBLP's long booktitles next to the Anthology's short ones look careless.
+\end{wbox}
 
 \begin{cbox}{Zotero $\times$ Overleaf / Prism}
 Overleaf's paid tiers can link a Zotero library directly. On a free plan, the
@@ -672,7 +721,11 @@ honest way to learn a field is to survey it systematically. Not reading
         covers yet.
   \item[6. Screen in two passes.] Title + abstract first (fast, ruthless,
         keep a ``maybe'' pile), then full text for survivors. Expect to screen
-        400--600 to keep 60--120.
+        400--600 to keep 60--120. Past a few hundred, \textbf{ASReview}
+        (\url{https://asreview.nl}; free, open source) learns from your first
+        decisions and orders the rest by likely relevance; Rayyan is the
+        lighter, hosted alternative. Neither replaces the criteria you wrote
+        in step 3.
   \item[7. Extract into a table, not prose.] One row per paper, fixed columns
         (Table~\ref{tab:extract}). Fill it as you read. The table \emph{is}
         your survey; the prose comes from reading down its columns.
@@ -840,6 +893,13 @@ else's.
         \textbf{ResearchRabbit}, \textbf{Litmaps} --- visual citation
         neighbourhoods from one seed paper. Excellent for the first week of a
         survey, when you do not yet know the right words.
+  \item[Scite] (\url{https://scite.ai}) --- tags each citation as
+        supporting, mentioning or contrasting the cited claim, which is the
+        question citation \emph{counts} cannot answer. Paid beyond a trial;
+        worth it for a survey.
+  \item[Unpaywall] (\url{https://unpaywall.org/products/extension}) --- a
+        browser extension that finds the legal open-access copy of a paywalled
+        paper. Install it the day your institutional access fails you.
   \item[Hugging Face] (\url{https://huggingface.co/papers}) --- daily papers,
         plus models and datasets with download counts: a usage signal that
         citation counts miss entirely.
@@ -849,12 +909,13 @@ else's.
 \end{description}
 
 \begin{cbox}{Papers with Code, then and now}
-The original \code{paperswithcode.com} was shut down in 2025, so old links to
-it are dead. The name now lives on at
-\url{https://paperswithcode.co} (run by Hugging Face): trending papers, a
-following feed for tasks, authors and organisations, a paper archive, the
-deadline board of \S\ref{sec:deadlines}, and an API plus MCP endpoint. Update
-any bookmark that still points at the \code{.com}.
+The original \code{paperswithcode.com} was discontinued in 2025; its domain
+now redirects to Hugging Face's own Papers hub, so old links still work but
+land there. A separate successor under the Papers with Code name runs at
+\url{https://paperswithcode.co}: trending papers, a following feed for tasks,
+authors and organisations, a paper archive, the deadline board of
+\S\ref{sec:deadlines}, and an API plus MCP endpoint. The site does not say who
+operates it, so treat it as a convenient mirror and cite original sources.
 \end{cbox}
 
 %==============================================================================
@@ -963,7 +1024,8 @@ demonstrate.
 
 \begin{enumerate}
   \item \textbf{A terminal/IDE coding agent} in each project repository
-        (Claude Code, or your preferred equivalent). This is where the leverage
+        (Claude Code, Codex CLI, Cursor, or GitHub Copilot --- any of them).
+        This is where the leverage
         is: it reads your code, runs your tests, and edits files.
   \item \textbf{A project memory file} (e.g.\ \code{CLAUDE.md} at the repo
         root) stating your conventions: Python version and env manager, how to
@@ -1223,6 +1285,25 @@ actually consumes your time: experiments.
   \item A target venue chosen and backward-planned from its deadline.
 \end{itemize}
 
+\subsection*{Before every submission}
+\begin{multicols}{2}
+\begin{itemize}
+  \item Every DOI and arXiv id in \code{refs.bib} resolves; titles match;
+        nothing cited that you have not opened.
+  \item Published versions cited where they exist; \code{bibtex-tidy} run.
+  \item Capitals protected in titles; no ``arXiv preprint'' for published
+        work.
+  \item \code{arxiv-latex-cleaner} run; no names in comments or PDF
+        metadata; code anonymised if the venue is double-blind.
+  \item Limitations section and the venue's checklist completed.
+  \item The venue's AI-assistance disclosure made, if required.
+  \item Every table and figure regenerated by script from logged results;
+        seeds and variance reported.
+  \item Page limit, template and anonymity window checked on the venue
+        page, not the aggregator.
+\end{itemize}
+\end{multicols}
+
 \subsection*{Year 1}
 \begin{itemize}
   \item One submission out --- workshop or main conference. Submitted beats
@@ -1265,10 +1346,14 @@ arXiv & \url{https://arxiv.org} \\
 arxiv-latex-cleaner & \url{https://github.com/google-research/arxiv-latex-cleaner} \\
 Anonymous code sharing & \url{https://anonymous.4open.science} \\
 ORCID & \url{https://orcid.org} \\
+latexdiff & \url{https://ctan.org/pkg/latexdiff} \\
+CITATION.cff & \url{https://citation-file-format.github.io} \\
+Zenodo & \url{https://zenodo.org} \\
 \midrule
 \multicolumn{2}{l}{\textbf{\color{brand}References and search}}\\
 Zotero & \url{https://www.zotero.org} \\
 Better BibTeX & \url{https://retorque.re/zotero-better-bibtex/} \\
+bibtex-tidy & \url{https://github.com/FlamingTempura/bibtex-tidy} \\
 Google Scholar & \url{https://scholar.google.com} \\
 Semantic Scholar & \url{https://www.semanticscholar.org} \\
 OpenAlex & \url{https://openalex.org} \\
@@ -1276,6 +1361,9 @@ ACL Anthology & \url{https://aclanthology.org} \\
 OpenReview & \url{https://openreview.net} \\
 DBLP & \url{https://dblp.org} \\
 Connected Papers & \url{https://www.connectedpapers.com} \\
+ASReview & \url{https://asreview.nl} \\
+Scite & \url{https://scite.ai} \\
+Unpaywall & \url{https://unpaywall.org/products/extension} \\
 HF Daily Papers & \url{https://huggingface.co/papers} \\
 Papers with Code & \url{https://paperswithcode.co} \\
 \midrule
@@ -1296,6 +1384,7 @@ al-folio & \url{https://github.com/alshedivat/al-folio} \\
 \begin{quote}\small\ttfamily
 project/\\
 \hspace*{1em}README.md\\
+\hspace*{1em}CITATION.cff\hfill \rmfamily\textit{citable repo; Zenodo DOI per release}\ttfamily\\
 \hspace*{1em}CLAUDE.md\hfill \rmfamily\textit{conventions for your AI assistant}\ttfamily\\
 \hspace*{1em}pyproject.toml / environment.yml\hfill \rmfamily\textit{pinned}\ttfamily\\
 \hspace*{1em}configs/\hfill \rmfamily\textit{one YAML per experiment}\ttfamily\\
