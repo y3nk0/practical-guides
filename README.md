@@ -15,9 +15,9 @@ content at three levels of detail.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd-ml-nlp-starter-guide.pdf) | 19 pages, A4 | The full guide — read it through in week one |
+| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd-ml-nlp-starter-guide.pdf) | 20 pages, A4 | The full guide — read it through in week one |
 | 📄 | [`phd-ml-nlp-onepager.pdf`](phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`phd-ml-nlp-slides.pdf`](phd-ml-nlp-slides.pdf) | 44 slides, 16:9 | A lab induction talk or a first-year seminar |
+| 🖥️ | [`phd-ml-nlp-slides.pdf`](phd-ml-nlp-slides.pdf) | 45 slides, 16:9 | A lab induction talk or a first-year seminar |
 
 ### What they cover
 
@@ -48,12 +48,13 @@ content at three levels of detail.
 - **Searching the literature** — Google Scholar as an instrument (operators,
   *search within citing articles*, alerts, profile), plus Semantic Scholar,
   OpenAlex, the ACL Anthology, OpenReview, DBLP, Connected Papers, Scite and
-  Unpaywall.
+  Unpaywall, and Scholar Labs for question-level search.
 - **Reading the signals** — citation *velocity* over volume, and what GitHub
   stars, commit history, issues and licences really tell you about a baseline.
 - **Setting up an AI assistant** — project memory, MCP connectors, saved
-  prompts, and five non-negotiable guardrails (starting with: never cite a
-  paper you have not opened).
+  prompts, Google's Deep Review as a free first review of the final PDF, and
+  five non-negotiable guardrails (starting with: never cite a paper you have
+  not opened).
 - **Your personal site** — GitHub Pages plus the AcademicPages template, step
   by step, with <https://y3nk0.github.io> as a worked example.
 - **Infrastructure and habits** — reproducible experiments, seeds and variance,
@@ -83,7 +84,7 @@ supervision meeting.
 |---|---|---|---|
 | 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
 | 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 29 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
+| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 30 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
 
 ### What it covers
 
@@ -103,10 +104,11 @@ supervision meeting.
 - **The one-page proposal** to agree with your supervisor before writing code.
 - **The toolkit** — Zotero, LaTeX and Overleaf, git, free GPUs, experiment
   tracking, data licensing and GDPR — plus the quickest way to get a reference
-  into your `.bib`, how to check it, `bibtex-tidy`, Unpaywall, and the right
-  citation commands.
+  into your `.bib`, how to check it, `bibtex-tidy`, Unpaywall, the right
+  citation commands, and Scholar Labs for question-level search.
 - **Using an AI assistant honestly** — five rules, starting with the one that
-  decides the defence: you must be able to explain every line you submit.
+  decides the defence: you must be able to explain every line you submit, plus
+  Google's Deep Review as a free first review of the draft.
 - **Doing the work** — baselines first, the mistakes that cost marks (test-set
   leakage, one seed, unfair comparisons), and why negative results are results.
 - **Writing and defending** — a chapter-by-chapter structure with sizes,
@@ -141,7 +143,7 @@ To build a single document by hand: `latexmk -pdf <file>.tex`.
 
 > **Note on the one-pagers:** both are tuned to fill exactly one A4 page. If you
 > add material, drop the base font size at the top of the document body
-> (`\fontsize{6.35}{7.45}` for the PhD sheet, `\fontsize{6.10}{7.20}` for the
+> (`\fontsize{6.35}{7.45}` for the PhD sheet, `\fontsize{6.05}{7.15}` for the
 > thesis sheet) by a tenth of a point or two and recompile.
 
 ---
