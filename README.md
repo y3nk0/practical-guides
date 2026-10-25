@@ -15,7 +15,7 @@ content at three levels of detail.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd-ml-nlp-starter-guide.pdf) | 18 pages, A4 | The full guide — read it through in week one |
+| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd-ml-nlp-starter-guide.pdf) | 19 pages, A4 | The full guide — read it through in week one |
 | 📄 | [`phd-ml-nlp-onepager.pdf`](phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
 | 🖥️ | [`phd-ml-nlp-slides.pdf`](phd-ml-nlp-slides.pdf) | 44 slides, 16:9 | A lab induction talk or a first-year seminar |
 
@@ -81,15 +81,17 @@ supervision meeting.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 14 pages, A4 | The full guide — hand it out at the first supervision meeting |
+| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
 | 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 28 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
+| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 29 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
 
 ### What it covers
 
 - **What a thesis is and is not** — what examiners actually look for, and a
   three-question test for whether your scope is realistic.
-- **Finding a topic by three routes** — a **shared task or challenge**
+- **Finding a topic** — check the supervisor's advertised topics first and do
+  a small piece of research before the first meeting; if you are free to
+  choose, three routes: a **shared task or challenge**
   (SemEval, workshop tasks at \*ACL venues, WMT, CoNLL, BabyLM, CLEF labs,
   TREC tracks, Kaggle and the competition platforms), an **application thesis**
   (a working method taken carefully to a new language, domain or deployment
@@ -139,7 +141,7 @@ To build a single document by hand: `latexmk -pdf <file>.tex`.
 
 > **Note on the one-pagers:** both are tuned to fill exactly one A4 page. If you
 > add material, drop the base font size at the top of the document body
-> (`\fontsize{6.35}{7.45}` for the PhD sheet, `\fontsize{6.15}{7.25}` for the
+> (`\fontsize{6.35}{7.45}` for the PhD sheet, `\fontsize{6.10}{7.20}` for the
 > thesis sheet) by a tenth of a point or two and recompile.
 
 ---
