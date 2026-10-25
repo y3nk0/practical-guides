@@ -1,22 +1,20 @@
-# Build and publish the practical guides.
+# Build the practical guides.
 #
 #   make            build any PDF whose source changed
 #   make check      build, then verify the one-pagers still fit on one page
-#   make publish    check, then copy all six PDFs into the website repository
 #   make clean      remove LaTeX build artefacts (the PDFs are kept)
 #
-# The website is assumed to be a sibling checkout. Override if yours is
-# elsewhere:  make publish SITE=/path/to/y3nk0.github.io/files/guides
+# The website (https://y3nk0.github.io/guides/) links straight to the PDFs in
+# this repository, so pushing a rebuilt PDF here is all it takes to publish it.
 
 # Builds are reproducible: the PDF timestamp is pinned (SOURCE_DATE_EPOCH), so
 # the same sources always produce byte-identical PDFs - on any machine, and
-# after any fresh clone - and `make publish` only touches what really changed.
+# after any fresh clone - and git sees no change after a rebuild.
 # A file mtime would not do: git does not preserve mtimes, so a checkout alone
 # would change every PDF.
 SOURCE_DATE_EPOCH ?= 1767225600   # 2026-01-01T00:00:00Z
 LATEXMK      ?= latexmk
 LATEXMKFLAGS ?= -pdf -interaction=nonstopmode -halt-on-error
-SITE         ?= ../y3nk0.github.io/files/guides
 
 PHD       := phd-ml-nlp-starter-guide phd-ml-nlp-onepager phd-ml-nlp-slides
 UG        := undergrad-thesis-ml-nlp-guide undergrad-thesis-onepager undergrad-thesis-slides
@@ -24,7 +22,7 @@ DOCS      := $(PHD) $(UG)
 ONEPAGERS := phd-ml-nlp-onepager undergrad-thesis-onepager
 PDFS      := $(addsuffix .pdf,$(DOCS))
 
-.PHONY: all check publish clean help
+.PHONY: all check clean help
 
 all: $(PDFS)
 
@@ -55,15 +53,6 @@ check: all
 	done; \
 	exit $$status
 
-publish: check
-	@test -d "$(SITE)" || { \
-	  echo "site directory not found: $(SITE)"; \
-	  echo "pass it explicitly: make publish SITE=/path/to/y3nk0.github.io/files/guides"; \
-	  exit 1; }
-	@cp $(PDFS) "$(SITE)/"
-	@echo "copied $(words $(PDFS)) PDFs to $(SITE)"
-	@echo "next: commit and push the website repository"
-
 clean:
 	@$(LATEXMK) -c $(addsuffix .tex,$(DOCS)) >/dev/null 2>&1 || true
 	@rm -f *.build.log *.nav *.snm *.vrb
@@ -72,5 +61,4 @@ clean:
 help:
 	@echo 'make          build changed PDFs'
 	@echo 'make check    build and verify the one-pagers are one page'
-	@echo 'make publish  check, then copy the PDFs into $(SITE)'
 	@echo 'make clean    remove build artefacts'

@@ -123,19 +123,17 @@ The deck uses `beamer` and `tikz`; everything else is standard.
 ```bash
 make            # build any PDF whose source changed
 make check      # build, then verify the one-pagers still fit on one page
-make publish    # check, then copy all six PDFs into the website repository
 make clean      # remove build artefacts (the PDFs are kept)
 ```
 
-`make publish` assumes the website is a sibling checkout
-(`../y3nk0.github.io/files/guides`); point it elsewhere with
-`make publish SITE=/path/to/files/guides`. It refuses to copy anything if a
-one-pager has grown to two pages, and warns about any line that runs past the
-margin.
+`make check` fails if a one-pager has grown to two pages, and warns about any
+line that runs past the margin. The website at <https://y3nk0.github.io/guides/>
+links straight to the PDFs in this repository, so pushing a rebuilt PDF here is
+all it takes to publish it.
 
-Builds are reproducible — the PDF timestamp comes from the source file's mtime
-(`SOURCE_DATE_EPOCH`), so rebuilding an unchanged document gives a
-byte-identical file and `make publish` only touches what actually changed.
+Builds are reproducible — the PDF timestamp is pinned (`SOURCE_DATE_EPOCH` in
+the Makefile), so the same sources give byte-identical PDFs on any machine and
+after any fresh clone, and git sees no change after a rebuild.
 
 To build a single document by hand: `latexmk -pdf <file>.tex`.
 
