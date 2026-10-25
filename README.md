@@ -123,13 +123,15 @@ The deck uses `beamer` and `tikz`; everything else is standard.
 ```bash
 make            # build any PDF whose source changed
 make check      # build, then verify the one-pagers still fit on one page
+make purge      # after a push: ask the CDN to refetch the PDFs right away
 make clean      # remove build artefacts (the PDFs are kept)
 ```
 
 `make check` fails if a one-pager has grown to two pages, and warns about any
 line that runs past the margin. The website at <https://y3nk0.github.io/guides/>
-links straight to the PDFs in this repository, so pushing a rebuilt PDF here is
-all it takes to publish it.
+serves these PDFs from this repository through [jsDelivr](https://www.jsdelivr.com),
+which refreshes a branch within about 12 hours; after pushing a rebuilt PDF, run
+`make purge` to make it pick up the new build at once.
 
 Builds are reproducible — the PDF timestamp is pinned (`SOURCE_DATE_EPOCH` in
 the Makefile), so the same sources give byte-identical PDFs on any machine and

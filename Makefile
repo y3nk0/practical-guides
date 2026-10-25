@@ -2,10 +2,12 @@
 #
 #   make            build any PDF whose source changed
 #   make check      build, then verify the one-pagers still fit on one page
+#   make purge      after a push: ask the CDN to refetch the PDFs right away
 #   make clean      remove LaTeX build artefacts (the PDFs are kept)
 #
-# The website (https://y3nk0.github.io/guides/) links straight to the PDFs in
-# this repository, so pushing a rebuilt PDF here is all it takes to publish it.
+# The website (https://y3nk0.github.io/guides/) serves these PDFs from this
+# repository through jsDelivr, which refreshes a branch within about 12 hours.
+# After pushing a rebuilt PDF, `make purge` makes the CDN pick it up at once.
 
 # Builds are reproducible: the PDF timestamp is pinned (SOURCE_DATE_EPOCH), so
 # the same sources always produce byte-identical PDFs - on any machine, and
@@ -22,7 +24,7 @@ DOCS      := $(PHD) $(UG)
 ONEPAGERS := phd-ml-nlp-onepager undergrad-thesis-onepager
 PDFS      := $(addsuffix .pdf,$(DOCS))
 
-.PHONY: all check clean help
+.PHONY: all check purge clean help
 
 all: $(PDFS)
 
@@ -53,6 +55,14 @@ check: all
 	done; \
 	exit $$status
 
+# jsDelivr caches a branch for about 12 hours; this asks it to refetch now.
+# Run it after `git push`, not before: it fetches whatever GitHub serves.
+purge:
+	@for d in $(DOCS); do \
+	  printf 'purging %-34s' "$$d.pdf"; \
+	  curl -sf "https://purge.jsdelivr.net/gh/y3nk0/practical_guides@main/$$d.pdf" >/dev/null && echo ok || echo FAILED; \
+	done
+
 clean:
 	@$(LATEXMK) -c $(addsuffix .tex,$(DOCS)) >/dev/null 2>&1 || true
 	@rm -f *.build.log *.nav *.snm *.vrb
@@ -61,4 +71,5 @@ clean:
 help:
 	@echo 'make          build changed PDFs'
 	@echo 'make check    build and verify the one-pagers are one page'
+	@echo 'make purge    after a push, ask the CDN to refetch the PDFs'
 	@echo 'make clean    remove build artefacts'
