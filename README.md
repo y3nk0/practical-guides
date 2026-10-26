@@ -15,9 +15,9 @@ content at three levels of detail.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd/phd-ml-nlp-starter-guide.pdf) | 20 pages, A4 | The full guide — read it through in week one |
-| 📄 | [`phd-ml-nlp-onepager.pdf`](phd/phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`phd-ml-nlp-slides.pdf`](phd/phd-ml-nlp-slides.pdf) | 46 slides, 16:9 | A lab induction talk or a first-year seminar |
+| 📘 | [`phd/phd-ml-nlp-starter-guide.pdf`](phd/phd-ml-nlp-starter-guide.pdf) | 20 pages, A4 | The full guide — read it through in week one |
+| 📄 | [`phd/phd-ml-nlp-onepager.pdf`](phd/phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`phd/phd-ml-nlp-slides.pdf`](phd/phd-ml-nlp-slides.pdf) | 46 slides, 16:9 | A lab induction talk or a first-year seminar |
 
 ### What they cover
 
@@ -82,9 +82,9 @@ supervision meeting.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis/undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
-| 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis/undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis/undergrad-thesis-slides.pdf) | 31 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
+| 🎓 | [`undergrad-thesis/undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis/undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
+| 📄 | [`undergrad-thesis/undergrad-thesis-onepager.pdf`](undergrad-thesis/undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`undergrad-thesis/undergrad-thesis-slides.pdf`](undergrad-thesis/undergrad-thesis-slides.pdf) | 31 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
 
 ### What it covers
 
