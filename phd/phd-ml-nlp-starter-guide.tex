@@ -165,7 +165,7 @@ is the short version.
         plugin (\S\ref{sec:zotero}).
   \item Create a \tool{Google Scholar} profile and set up three alerts
         (\S\ref{sec:scholar}).
-  \item Create accounts: \tool{Overleaf}, \tool{Prism}, \tool{OpenReview},
+  \item Create accounts: \tool{Overleaf}, \tool{OpenReview},
         \tool{GitHub}, \tool{Hugging Face}, \tool{arXiv}, \tool{ORCID}
         (\S\ref{sec:writing}).
   \item Bookmark the AI deadlines countdown and subscribe the relevant
@@ -411,7 +411,7 @@ your thesis contribution will come from.
 \end{wbox}
 
 %==============================================================================
-\section{Writing and sharing: LaTeX, Overleaf, Prism}
+\section{Writing and sharing: LaTeX and Overleaf}
 \label{sec:writing}
 
 Every paper you write in this field will be LaTeX. Learn it properly once ---
@@ -433,8 +433,8 @@ no venue template accepts it, so papers stay in LaTeX.)
   \item Rich comments and a chat panel; useful for advisor feedback.
   \item Overleaf now ships its own \textbf{AI Assistant} inside the editor:
         LaTeX-aware, and metered by plan --- a handful of uses a day on the
-        free tier, more on paid ones, unmetered at the top. The cautions below
-        for Prism apply to it word for word.
+        free tier, more on paid ones, unmetered at the top. The cautions
+        below apply to it word for word.
   \item Many universities have institutional licences --- check before paying.
         The free tier is limited on collaborator count, compile time, full
         version history, Git/Dropbox sync, and track changes.
@@ -442,22 +442,32 @@ no venue template accepts it, so papers stay in LaTeX.)
         receive a draft.
 \end{itemize}
 
-\subsection{Prism --- an AI-native LaTeX workspace}
+\subsection{Prism --- closing on 1 January 2027}
 
-\url{https://prism.openai.com} \quad (OpenAI, launched January 2026)
+\begin{wbox}{Do not start anything in Prism}
+OpenAI's AI-native LaTeX workspace (\url{https://prism.openai.com}, launched
+January 2026) \textbf{shuts down on 1 January 2027}. It was free and genuinely
+good --- a frontier model that saw the whole manuscript rather than isolated
+snippets --- and it lasted under a year.
 
 \begin{itemize}
-  \item A LaTeX-native collaborative workspace with a frontier model wired
-        into the manuscript: it sees the whole document --- sections,
-        equations, citations, the argument --- rather than isolated snippets.
-  \item Free at the time of writing, with unlimited projects, collaborators, and compile
-        time, which makes it an attractive alternative to Overleaf's free
-        tier.
-  \item Genuinely good at: tightening prose, fixing LaTeX errors you cannot
-        find, reformatting tables, restructuring a paragraph that reviewers
-        will stumble over, and helping non-native English writers put the
-        emphasis where the science is.
+  \item \textbf{If you have projects there, export them now.} The site carries
+        an export link; do not leave it to the last week.
+  \item \textbf{What exports do \emph{not} carry:} comments, version history,
+        collaborators and linked integrations. If a co-author's comments
+        matter, copy them out by hand before the date.
+  \item \textbf{Land somewhere boring:} Overleaf for collaboration, or
+        \code{git} + \code{latexmk} locally. Both will outlive your PhD.
 \end{itemize}
+\end{wbox}
+
+\begin{cbox}{The transferable lesson}
+A free cloud tool can disappear with a quarter's notice, and your thesis
+cannot. Keep every manuscript in \textbf{plain \code{.tex} files under git}
+that you can compile offline, and treat any editor --- Overleaf included ---
+as a convenient window onto that repository rather than as the place your work
+lives.
+\end{cbox}
 
 \begin{wbox}{Two cautions before you move your thesis into any AI editor}
 \textbf{Policy:} most venues now have an explicit policy on AI-assisted
@@ -662,7 +672,7 @@ primaryClass=\{cs.LG\}\}}. And pick \emph{one} source per venue family:
 DBLP's long booktitles next to the Anthology's short ones look careless.
 \end{wbox}
 
-\begin{cbox}{Zotero $\times$ Overleaf / Prism}
+\begin{cbox}{Zotero $\times$ Overleaf}
 Overleaf's paid tiers can link a Zotero library directly. On a free plan, the
 Better BibTeX auto-export route is better anyway: your \code{.bib} lives in
 git, so it is versioned, diffable, and identical for every co-author. Commit it.
@@ -1288,7 +1298,7 @@ actually consumes your time: experiments.
   \item Zotero + connector + Better BibTeX installed; auto-export configured.
   \item Google Scholar profile created; 3 alerts live.
   \item ORCID, arXiv, OpenReview, GitHub, Hugging Face accounts.
-  \item Overleaf and Prism accounts; institutional licence checked.
+  \item Overleaf account; institutional licence checked.
   \item Deadline tracker bookmarked; target venues in the calendar.
   \item AI assistant set up with a project memory file.
   \item Project repository created with \code{notes/} and a README.
@@ -1375,7 +1385,7 @@ Scholar venue metrics & \url{https://scholar.google.com/citations?view_op=top_ve
 \midrule
 \multicolumn{2}{l}{\textbf{\color{brand}Writing and sharing}}\\
 Overleaf & \url{https://www.overleaf.com} \\
-Prism (AI LaTeX editor) & \url{https://prism.openai.com} \\
+Prism (closes 1 Jan 2027) & \url{https://prism.openai.com} \\
 Deep Review (Google) & \url{https://research.google/deepreview/} \\
 arXiv & \url{https://arxiv.org} \\
 arxiv-latex-cleaner & \url{https://github.com/google-research/arxiv-latex-cleaner} \\

@@ -154,7 +154,7 @@ The first 90 days decide how much friction every later month carries:
 \scriptsize
 Zotero + Better BibTeX\\
 Scholar profile + 3 alerts\\
-Accounts: Overleaf, Prism, OpenReview, GitHub, HF, arXiv, ORCID\\
+Accounts: Overleaf, OpenReview, GitHub, HF, arXiv, ORCID\\
 Deadlines in the calendar\\
 AI assistant + memory file\\
 One repo per project, with \code{notes/}
@@ -410,24 +410,29 @@ contribution comes from.
   \item Official venue templates in the gallery: \emph{start from them}, not
         from last year's copy.
   \item Comments and chat for advisor feedback.
-  \item Now has its own metered AI assistant --- same rules as for Prism.
+  \item Now has its own metered AI assistant --- same rules as any AI editor.
   \item Check for an institutional licence before paying; the free tier limits
         collaborators, compile time, history, Git sync.
 \end{itemize}
 \end{block}
 \end{column}
 \begin{column}{0.48\textwidth}
-\begin{block}{Prism \quad\footnotesize\lnk{https://prism.openai.com}{prism.openai.com}}
+\begin{alertblock}{Prism closes on 1 January 2027}
 \footnotesize
+OpenAI's AI-native LaTeX workspace launched in January 2026, was free and
+genuinely good, and lasted under a year.
 \begin{itemize}
-  \item OpenAI's AI-native LaTeX workspace (January 2026).
-  \item Free at the time of writing: unlimited projects, collaborators, compile
-        time.
-  \item The model sees the \emph{whole} manuscript --- sections, equations,
-        citations, the argument.
-  \item Strong at prose, tables, LaTeX errors you cannot find, and levelling
-        the field for non-native English writers.
+  \item \key{Do not start anything there.}
+  \item \key{Export existing projects now} --- exports drop comments, version
+        history, collaborators and integrations.
+  \item Land on Overleaf, or \code{git} + \code{latexmk} locally.
 \end{itemize}
+\end{alertblock}
+\begin{block}{The transferable lesson}
+\footnotesize
+A free cloud tool can disappear with a quarter's notice; your thesis cannot.
+Keep manuscripts as plain \code{.tex} under git that you can compile offline,
+and treat any editor as a window onto that repository.
 \end{block}
 \end{column}
 \end{columns}
@@ -1088,7 +1093,7 @@ has worked, and talk to people when it gets heavy.
   \item Zotero + connector + Better BibTeX, auto-export configured
   \item Scholar profile; 3 alerts live
   \item ORCID, arXiv, OpenReview, GitHub, Hugging Face
-  \item Overleaf and Prism; institutional licence checked
+  \item Overleaf; institutional licence checked
   \item Deadline boards bookmarked; target venues in the calendar
   \item AI assistant with a project memory file
   \item Project repo with \code{notes/} and a README

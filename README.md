@@ -29,7 +29,7 @@ content at three levels of detail.
 - **Deadlines** — the two countdown boards worth bookmarking, the AoE trap, and
   a calendar workflow that backward-plans from camera-ready.
 - **Writing and sharing** — Overleaf (now with its own metered AI assistant),
-  Prism, a local `git` + `latexmk` workflow, one-sentence-per-line diffs,
+  a local `git` + `latexmk` workflow, one-sentence-per-line diffs,
   `\citet` vs `\citep`, `latexdiff`, `arxiv-latex-cleaner`, anonymity
   periods, releasing code and checkpoints, and making the code citable with
   `CITATION.cff` and a Zenodo DOI.
@@ -68,7 +68,8 @@ content at three levels of detail.
 - Zotero <https://www.zotero.org> · Better BibTeX
   <https://retorque.re/zotero-better-bibtex/> · bibtex-tidy
   <https://github.com/FlamingTempura/bibtex-tidy>
-- Overleaf <https://www.overleaf.com> · Prism <https://prism.openai.com>
+- Overleaf <https://www.overleaf.com> · Prism (closes 1 Jan 2027)
+  <https://prism.openai.com>
 - ACL Anthology <https://aclanthology.org> · OpenReview
   <https://openreview.net> · DBLP <https://dblp.org>
 - AcademicPages <https://github.com/academicpages/academicpages.github.io>
