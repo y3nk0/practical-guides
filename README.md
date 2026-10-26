@@ -15,9 +15,9 @@ content at three levels of detail.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd-ml-nlp-starter-guide.pdf) | 20 pages, A4 | The full guide — read it through in week one |
-| 📄 | [`phd-ml-nlp-onepager.pdf`](phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`phd-ml-nlp-slides.pdf`](phd-ml-nlp-slides.pdf) | 45 slides, 16:9 | A lab induction talk or a first-year seminar |
+| 📘 | [`phd-ml-nlp-starter-guide.pdf`](phd/phd-ml-nlp-starter-guide.pdf) | 20 pages, A4 | The full guide — read it through in week one |
+| 📄 | [`phd-ml-nlp-onepager.pdf`](phd/phd-ml-nlp-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`phd-ml-nlp-slides.pdf`](phd/phd-ml-nlp-slides.pdf) | 46 slides, 16:9 | A lab induction talk or a first-year seminar |
 
 ### What they cover
 
@@ -82,9 +82,9 @@ supervision meeting.
 
 | | File | Format | Use it for |
 |---|---|---|---|
-| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
-| 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
-| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis-slides.pdf) | 30 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
+| 🎓 | [`undergrad-thesis-ml-nlp-guide.pdf`](undergrad-thesis/undergrad-thesis-ml-nlp-guide.pdf) | 15 pages, A4 | The full guide — hand it out at the first supervision meeting |
+| 📄 | [`undergrad-thesis-onepager.pdf`](undergrad-thesis/undergrad-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`undergrad-thesis-slides.pdf`](undergrad-thesis/undergrad-thesis-slides.pdf) | 31 slides, 16:9 | A thesis-kickoff talk for a whole cohort |
 
 ### What it covers
 
@@ -117,6 +117,15 @@ supervision meeting.
 
 ---
 
+## Layout
+
+```
+phd/                 the PhD starter kit: full guide, one-pager, slides
+undergrad-thesis/    the thesis guide: full guide, one-pager, slides
+```
+
+Each directory holds the `.tex` sources and the built PDFs side by side.
+
 ## Building
 
 Needs a TeX distribution (TeX Live, MacTeX or TinyTeX) with `latexmk`.
@@ -139,7 +148,7 @@ Builds are reproducible — the PDF timestamp is pinned (`SOURCE_DATE_EPOCH` in
 the Makefile), so the same sources give byte-identical PDFs on any machine and
 after any fresh clone, and git sees no change after a rebuild.
 
-To build a single document by hand: `latexmk -pdf <file>.tex`.
+To build a single document by hand: `latexmk -cd -pdf phd/<file>.tex`.
 
 > **Note on the one-pagers:** both are tuned to fill exactly one A4 page. If you
 > add material, drop the base font size at the top of the document body

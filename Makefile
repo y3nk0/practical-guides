@@ -1,5 +1,7 @@
 # Build the practical guides.
 #
+# Sources and PDFs live in phd/ and undergrad-thesis/.
+#
 #   make            build any PDF whose source changed
 #   make check      build, then verify the one-pagers still fit on one page
 #   make purge      after a push: ask the CDN to refetch the PDFs right away
@@ -16,12 +18,14 @@
 # would change every PDF.
 SOURCE_DATE_EPOCH ?= 1767225600   # 2026-01-01T00:00:00Z
 LATEXMK      ?= latexmk
-LATEXMKFLAGS ?= -pdf -interaction=nonstopmode -halt-on-error
+# -cd: build inside each document's own directory, so the PDF and the LaTeX
+# artefacts land next to their source rather than in the repository root.
+LATEXMKFLAGS ?= -cd -pdf -interaction=nonstopmode -halt-on-error
 
-PHD       := phd-ml-nlp-starter-guide phd-ml-nlp-onepager phd-ml-nlp-slides
-UG        := undergrad-thesis-ml-nlp-guide undergrad-thesis-onepager undergrad-thesis-slides
+PHD       := $(addprefix phd/,phd-ml-nlp-starter-guide phd-ml-nlp-onepager phd-ml-nlp-slides)
+UG        := $(addprefix undergrad-thesis/,undergrad-thesis-ml-nlp-guide undergrad-thesis-onepager undergrad-thesis-slides)
 DOCS      := $(PHD) $(UG)
-ONEPAGERS := phd-ml-nlp-onepager undergrad-thesis-onepager
+ONEPAGERS := phd/phd-ml-nlp-onepager undergrad-thesis/undergrad-thesis-onepager
 PDFS      := $(addsuffix .pdf,$(DOCS))
 
 .PHONY: all check purge clean help
@@ -29,7 +33,7 @@ PDFS      := $(addsuffix .pdf,$(DOCS))
 all: $(PDFS)
 
 %.pdf: %.tex
-	@printf 'building %-34s' '$@'
+	@printf 'building %-52s' '$@'
 	@export SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1; \
 	$(LATEXMK) $(LATEXMKFLAGS) $< >$*.build.log 2>&1 || { echo FAILED; tail -40 $*.build.log; exit 1; }
 	@grep -oE '\([0-9]+ pages?' $*.log | tail -1 | tr -d '(' || echo 'up to date'
@@ -59,7 +63,7 @@ check: all
 # Run it after `git push`, not before: it fetches whatever GitHub serves.
 purge:
 	@for d in $(DOCS); do \
-	  printf 'purging %-34s' "$$d.pdf"; \
+	  printf 'purging %-52s' "$$d.pdf"; \
 	  curl -sf "https://purge.jsdelivr.net/gh/y3nk0/practical_guides@main/$$d.pdf" >/dev/null && echo ok || echo FAILED; \
 	done
 
