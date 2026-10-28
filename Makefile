@@ -1,6 +1,7 @@
 # Build the practical guides.
 #
-# Sources and PDFs live in phd/ and undergrad-thesis/.
+# Each guide is a directory of sources and built PDFs; common/ holds the
+# shared LaTeX styles, so a look-and-feel change lands in every guide at once.
 #
 #   make            build any PDF whose source changed
 #   make check      build, then verify the one-pagers still fit on one page
@@ -22,19 +23,23 @@ LATEXMK      ?= latexmk
 # artefacts land next to their source rather than in the repository root.
 LATEXMKFLAGS ?= -cd -pdf -interaction=nonstopmode -halt-on-error
 
-PHD       := $(addprefix phd/,phd-ml-nlp-starter-guide phd-ml-nlp-onepager phd-ml-nlp-slides)
-UG        := $(addprefix undergrad-thesis/,undergrad-thesis-ml-nlp-guide undergrad-thesis-onepager undergrad-thesis-slides)
-DOCS      := $(PHD) $(UG)
-ONEPAGERS := phd/phd-ml-nlp-onepager undergrad-thesis/undergrad-thesis-onepager
+# Documents are discovered, not listed: every <kit>/<name>.tex is a document.
+# Adding a guide means adding a directory - no edit here. Shared style files
+# live in common/ and are not documents, so they are excluded.
+DOCS      := $(filter-out common/%,$(basename $(wildcard */*.tex)))
+ONEPAGERS := $(filter %-onepager,$(DOCS))
 PDFS      := $(addsuffix .pdf,$(DOCS))
 
 .PHONY: all check purge clean help
 
 all: $(PDFS)
 
-%.pdf: %.tex
+STYLES := $(wildcard common/*.sty)
+
+%.pdf: %.tex $(STYLES)
 	@printf 'building %-52s' '$@'
 	@export SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH) FORCE_SOURCE_DATE=1; \
+	export TEXINPUTS="$(CURDIR)/common:$$TEXINPUTS"; \
 	$(LATEXMK) $(LATEXMKFLAGS) $< >$*.build.log 2>&1 || { echo FAILED; tail -40 $*.build.log; exit 1; }
 	@grep -oE '\([0-9]+ pages?' $*.log | tail -1 | tr -d '(' || echo 'up to date'
 

@@ -1,61 +1,11 @@
 %==============================================================================
 %  Undergraduate thesis in ML / NLP -- one-page cheat sheet
 %  Konstantinos Skianis, University of Ioannina
-%  Compile: latexmk -pdf undergrad-thesis-onepager.tex
+%  Compile: latexmk -cd -pdf undergrad-thesis-onepager.tex
 %==============================================================================
 \documentclass[10pt,a4paper]{article}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage[a4paper,margin=0.8cm,top=0.8cm,bottom=0.6cm]{geometry}
-\usepackage{xcolor}
-\usepackage{amsmath,amssymb}
-\usepackage{multicol}
-\usepackage{enumitem}
-\usepackage{array,tabularx,colortbl}
-\usepackage{framed}
-\usepackage{hyperref}
-
-\definecolor{brand}{HTML}{1F4E79}
-\definecolor{brandlight}{HTML}{2E7BB8}
-\definecolor{accent}{HTML}{B5451B}
-\definecolor{ink}{HTML}{22262B}
-\definecolor{mutegray}{HTML}{5A6472}
-\definecolor{rowtint}{HTML}{EFF4F9}
-
-\hypersetup{colorlinks=true,urlcolor=brandlight,linkcolor=brand,
-  pdftitle={Undergraduate thesis in ML/NLP - one-page cheat sheet},
-  pdfauthor={Konstantinos Skianis}}
-\urlstyle{sf}
-\makeatletter
-\g@addto@macro\UrlBreaks{\do\/\do\-\do\.\do\_\do\?\do\&\do\=\do\:\do\,}
-\makeatother
-\Urlmuskip=0mu plus 2mu\relax
-
-\pagestyle{empty}
-\setlength{\columnsep}{0.62cm}
-\setlength{\columnseprule}{0.3pt}
-\def\columnseprulecolor{\color{brandlight!40}}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{2.2pt}
-\setlist[itemize]{leftmargin=0.85em,topsep=1pt,itemsep=1.1pt,parsep=0pt,
-                  label=\textcolor{brandlight}{\tiny$\bullet$}}
-\setlist[enumerate]{leftmargin=1.1em,topsep=1pt,itemsep=1.1pt,parsep=0pt}
-
-\newcommand{\head}[1]{%
-  \vspace{4.5pt}{\color{brand}\rule{\linewidth}{0.9pt}}\par\vspace{1.5pt}%
-  {\bfseries\color{brand}\MakeUppercase{#1}}\par\vspace{2pt}}
-\newcommand{\sub}[1]{\par\addvspace{2.6pt}\noindent{\bfseries\color{ink}#1}\ \ignorespaces}
-\newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\lnk}[2]{\href{#1}{\color{brandlight}#2}}
-\newcommand{\dt}{\,\textperiodcentered\,\allowbreak}
-
-\newenvironment{flag}
- {\par\addvspace{2pt}\setlength{\FrameSep}{3pt}%
-  \def\FrameCommand{{\color{accent}\vrule width 1.4pt}\hspace{4pt}}%
-  \MakeFramed{\advance\hsize-\width \FrameRestore}\parindent=0pt\ignorespaces}
- {\par\endMakeFramed\addvspace{2pt}}
+\usepackage{onepager-style}
+\onepagermeta{Undergraduate thesis in ML/NLP - one-page cheat sheet}
 
 \begin{document}
 \fontsize{6.05}{7.15}\selectfont

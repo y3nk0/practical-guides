@@ -1,0 +1,101 @@
+% guide-style.sty - the shared look of the A4 practical guides.
+% Usage:  \documentclass[11pt,a4paper]{article}
+%         \usepackage{guide-style}
+%         \guidemeta{<running head>}{<pdf title>}{<pdf subject>}
+\ProvidesPackage{guide-style}[2026/10/28 Practical guides: A4 guide style]
+
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage[a4paper,margin=2.3cm,top=2.4cm,bottom=2.4cm]{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{array,booktabs,tabularx,longtable,colortbl}
+\RequirePackage{enumitem}
+\RequirePackage{framed}
+\RequirePackage{multicol}
+\RequirePackage{fancyhdr}
+\RequirePackage{caption}
+\RequirePackage{url}
+\RequirePackage{hyperref}
+\RequirePackage{bookmark}
+
+\RequirePackage{guide-palette}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=brand,
+  urlcolor=brandlight,
+  citecolor=brand,
+  pdfauthor={Konstantinos Skianis},
+  bookmarksnumbered=true
+}
+\urlstyle{sf}
+% allow long URLs to break at punctuation instead of running into the margin
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\/\do\-\do\.\do\_\do\?\do\&\do\=\do\:}
+\makeatother
+\Urlmuskip=0mu plus 2mu\relax
+
+%----------------------------------------------------------------- headings ---
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.2ex \@plus -1ex \@minus -.2ex}{1.6ex \@plus.2ex}%
+  {\normalfont\Large\bfseries\color{brand}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-2.6ex\@plus -1ex \@minus -.2ex}{0.9ex \@plus .2ex}%
+  {\normalfont\large\bfseries\color{brandlight}}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-2.0ex\@plus -1ex \@minus -.2ex}{0.6ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries\color{ink}}}
+\makeatother
+
+%-------------------------------------------------------------------- boxes ---
+\newenvironment{cbox}[1]
+ {\par\addvspace{\medskipamount}%
+  \setlength{\FrameSep}{7pt}%
+  \def\FrameCommand{{\color{brandlight}\vrule width 2.2pt}\hspace{9pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}%
+  \small\parindent=0pt\noindent{\bfseries\color{brand}#1}\par\nobreak\smallskip
+  \normalcolor\ignorespaces}
+ {\par\endMakeFramed\addvspace{\medskipamount}}
+
+\newenvironment{wbox}[1]
+ {\par\addvspace{\medskipamount}%
+  \setlength{\FrameSep}{7pt}%
+  \def\FrameCommand{{\color{accent}\vrule width 2.2pt}\hspace{9pt}}%
+  \MakeFramed{\advance\hsize-\width \FrameRestore}%
+  \small\parindent=0pt\noindent{\bfseries\color{accent}#1}\par\nobreak\smallskip
+  \normalcolor\ignorespaces}
+ {\par\endMakeFramed\addvspace{\medskipamount}}
+
+%------------------------------------------------------------------- tables ---
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.22}
+\newcommand{\thead}[1]{\textbf{\color{brand}#1}}
+
+%-------------------------------------------------------------------- lists ---
+\setlist[itemize]{leftmargin=1.25em,topsep=3pt,itemsep=2.5pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.5em,topsep=3pt,itemsep=2.5pt,parsep=0pt}
+\setlist[description]{leftmargin=1.25em,topsep=3pt,itemsep=3pt,style=unboxed,
+                      font=\normalfont\bfseries\color{ink}}
+
+%------------------------------------------------------------------ headers ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancyhead[L]{\footnotesize\color{mutegray}\guiderunninghead{} \quad\textbullet\quad K. Skianis}
+\fancyhead[R]{\footnotesize\color{mutegray}\thepage}
+
+\newcommand{\tool}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{\small #1}}
+
+% \guidemeta{running head}{pdftitle}{pdfsubject}
+\newcommand{\guiderunninghead}{}
+\newcommand{\guidemeta}[3]{%
+  \renewcommand{\guiderunninghead}{#1}%
+  \hypersetup{pdftitle={#2},pdfsubject={#3}}}
+

@@ -1,0 +1,19 @@
+% guide-palette.sty - colours and small macros shared by every guide format.
+% Loaded by guide-style, onepager-style and slides-style; edit here once.
+\ProvidesPackage{guide-palette}[2026/10/28 Practical guides: shared palette]
+\RequirePackage{xcolor}
+
+\definecolor{brand}{HTML}{1F4E79}      % deep blue
+\definecolor{brandlight}{HTML}{2E7BB8}
+\definecolor{accent}{HTML}{B5451B}     % rust
+\definecolor{ink}{HTML}{22262B}
+\definecolor{mutegray}{HTML}{5A6472}
+\definecolor{rowtint}{HTML}{EFF4F9}
+\definecolor{boxtint}{HTML}{F6F8FA}
+
+% The author block, in one place: every document's title page and metadata.
+\newcommand{\guideauthor}{Konstantinos Skianis}
+\newcommand{\guideaffiliation}{Assistant Professor of Natural Language Processing\\[2pt]
+Department of Computer Science and Engineering\\[2pt]
+University of Ioannina}
+\newcommand{\guidesite}{https://y3nk0.github.io}

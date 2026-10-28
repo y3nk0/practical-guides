@@ -1,87 +1,11 @@
 %==============================================================================
 %  Undergraduate thesis in ML / NLP -- slide deck
 %  Konstantinos Skianis, University of Ioannina
-%  Compile: latexmk -pdf undergrad-thesis-slides.tex
+%  Compile: latexmk -cd -pdf undergrad-thesis-slides.tex
 %==============================================================================
 \documentclass[aspectratio=169,11pt]{beamer}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{microtype}
-\usepackage{xcolor}
-\usepackage{booktabs,array,tabularx,colortbl}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
-\usepackage{amsmath,amssymb}
-
-%--------------------------------------------------------------- appearance ---
-\usetheme{default}
-\usefonttheme{professionalfonts}
-\setbeamertemplate{navigation symbols}{}
-
-\definecolor{brand}{HTML}{1F4E79}
-\definecolor{brandlight}{HTML}{2E7BB8}
-\definecolor{accent}{HTML}{B5451B}
-\definecolor{ink}{HTML}{22262B}
-\definecolor{mutegray}{HTML}{5A6472}
-\definecolor{rowtint}{HTML}{EFF4F9}
-\definecolor{boxtint}{HTML}{F3F7FB}
-
-\setbeamercolor{structure}{fg=brand}
-\setbeamercolor{normal text}{fg=ink}
-\setbeamercolor{frametitle}{fg=brand}
-\setbeamercolor{itemize item}{fg=brandlight}
-\setbeamercolor{itemize subitem}{fg=brandlight}
-\setbeamercolor{enumerate item}{fg=brandlight}
-\setbeamerfont{frametitle}{size=\large,series=\bfseries}
-\setbeamertemplate{itemize item}{\small\raise0.5pt\hbox{\textbullet}}
-\setbeamertemplate{itemize subitem}{\footnotesize\raise0.5pt\hbox{--}}
-\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
-
-% frame title with rule
-\setbeamertemplate{frametitle}{%
-  \vspace{6pt}%
-  \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.9cm,rightskip=0.9cm]{frametitle}%
-    \usebeamerfont{frametitle}\insertframetitle%
-    \ifx\insertframesubtitle\empty\else
-      \\[1pt]{\small\normalfont\color{mutegray}\insertframesubtitle}%
-    \fi
-    \par\vspace{3pt}{\color{brandlight}\rule{\dimexpr\paperwidth-1.8cm\relax}{1pt}}%
-  \end{beamercolorbox}%
-}
-
-% footline
-\setbeamertemplate{footline}{%
-  \hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=2.6ex,dp=1.4ex,leftskip=0.9cm,rightskip=0.9cm]{}%
-  \tiny\color{mutegray}Undergraduate thesis in ML / NLP \quad\textbullet\quad K. Skianis, Univ.\ of Ioannina
-  \hfill\insertframenumber/\inserttotalframenumber
-  \end{beamercolorbox}}%
-}
-
-\setbeamercolor{block title}{bg=boxtint,fg=brand}
-\setbeamercolor{block body}{bg=boxtint,fg=ink}
-\setbeamercolor{block title alerted}{bg=accent!10,fg=accent}
-\setbeamercolor{block body alerted}{bg=accent!10,fg=ink}
-\setbeamertemplate{blocks}[rounded][shadow=false]
-
-\newcommand{\code}[1]{\texttt{\small #1}}
-\newcommand{\lnk}[2]{\href{#1}{\color{brandlight}\underline{#2}}}
-\newcommand{\key}[1]{\textbf{\color{brand}#1}}
-\renewcommand{\arraystretch}{1.15}
-
-% section divider slides
-\AtBeginSection[]{%
-  \begin{frame}[plain,noframenumbering]
-    \vfill
-    \begin{center}
-      {\color{brandlight}\rule{0.72\textwidth}{1.4pt}}\\[10pt]
-      {\small\color{mutegray}Part \insertsectionnumber}\\[4pt]
-      {\LARGE\bfseries\color{brand}\insertsectionhead}\\[10pt]
-      {\color{brandlight}\rule{0.72\textwidth}{1.4pt}}
-    \end{center}
-    \vfill
-  \end{frame}}
+\usepackage{slides-style}
+\slidesmeta{Undergraduate thesis in ML / NLP}
 
 %------------------------------------------------------------------ titles ----
 \title{\bfseries Doing an Undergraduate Thesis in Machine Learning or NLP}
