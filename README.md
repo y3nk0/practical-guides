@@ -76,6 +76,40 @@ content at three levels of detail.
 
 ---
 
+## Doing a Master's Thesis in Machine Learning or NLP
+
+For the project between the two: a contribution, but a bounded one.
+
+| | File | Format | Use it for |
+|---|---|---|---|
+| 🧭 | [`masters-thesis/masters-thesis-ml-nlp-guide.pdf`](masters-thesis/masters-thesis-ml-nlp-guide.pdf) | 12 pages, A4 | The full guide — agree it at the first meeting |
+| 📄 | [`masters-thesis/masters-thesis-onepager.pdf`](masters-thesis/masters-thesis-onepager.pdf) | 1 page, 3 columns | Print it and pin it above the desk |
+| 🖥️ | [`masters-thesis/masters-thesis-slides.pdf`](masters-thesis/masters-thesis-slides.pdf) | 22 slides, 16:9 | A kickoff talk for a master's cohort |
+
+### What it covers
+
+- **The bar, against the other two degrees** — what changes from an
+  undergraduate project (a contribution, a positioned related-work chapter,
+  significance where claimed) and what a PhD asks that you do not owe.
+- **The one-claim test** — the sentence your thesis exists to defend, and what
+  an empty slot in it tells you to work on next.
+- **Five routes to a contribution** — extend one paper, reproduce and
+  interrogate, a shared task with an angle, an applied or industry thesis, or
+  analysis and theory — plus the six places open questions are written down.
+- **The two-page proposal**, and the scope test that catches the way theses
+  actually fail.
+- **Industry and NDA theses** — the six questions to settle in writing before
+  you start, and how to write around confidential data.
+- **Evidence that survives an examiner** — baselines first, seeds and spread,
+  paired bootstrap or permutation tests, reporting compute, and the mistakes
+  that cost a grade.
+- **Supervision** — what to decide yourself, what to bring to the meeting,
+  what to escalate the same day.
+- **Writing, the defence, and turning the thesis into a paper** — what to cut,
+  where to send it, authorship, and timing against the thesis deadline.
+
+---
+
 ## Doing an Undergraduate Thesis in Machine Learning or NLP
 
 A guide for final-year students, written to be handed out at the first

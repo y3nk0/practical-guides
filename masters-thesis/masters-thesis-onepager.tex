@@ -1,0 +1,202 @@
+%==============================================================================
+%  Master's thesis in ML / NLP -- one-page cheat sheet
+%  Konstantinos Skianis, University of Ioannina
+%  Compile: latexmk -cd -pdf masters-thesis-onepager.tex
+%==============================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage{onepager-style}
+\onepagermeta{Master's thesis in ML/NLP - one-page cheat sheet}
+
+\begin{document}
+\fontsize{6.75}{7.9}\selectfont
+
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[2pt]
+\begin{minipage}[b]{0.63\textwidth}
+{\fontsize{17}{18}\selectfont\bfseries\color{brand} Master's Thesis in ML / NLP}\\[2pt]
+{\fontsize{8}{9}\selectfont\color{ink} The one-page version --- contribution, evidence, writing, what it becomes}
+\end{minipage}%
+\hfill
+\begin{minipage}[b]{0.36\textwidth}\raggedleft
+{\fontsize{8}{9}\selectfont\bfseries\color{ink} \guideauthor}\\[1pt]
+{\color{mutegray} Assistant Professor of NLP\dt Dept.\ of Computer Science \& Engineering\\
+University of Ioannina\dt \lnk{https://y3nk0.github.io}{y3nk0.github.io}}
+\end{minipage}\\[2pt]
+{\color{brandlight}\rule{\textwidth}{2pt}}
+
+\vspace{2pt}
+\begin{multicols}{3}
+\raggedright
+
+%============================================================== COLUMN 1 ======
+\head{The bar}
+Between an undergraduate project and a PhD chapter: a \textbf{contribution},
+but a bounded one, finished in two semesters. Expected beyond the undergrad
+standard: a \emph{positioned} related-work chapter, ablations, several seeds,
+significance where claimed, and an output that could become a workshop paper
+with a month's work.
+\begin{flag}
+\textbf{The one-claim test.} \emph{For \textbf{[setting]}, \textbf{[what you
+did]} achieves \textbf{[effect]} compared with \textbf{[baseline]}, because
+\textbf{[mechanism]} --- shown by \textbf{[the experiment]}.} Cannot fill every
+slot by month two? You have a project, not a thesis. The empty slot is your
+next task --- usually \emph{because} (numbers, no explanation) or
+\emph{compared with} (no honest baseline).
+\end{flag}
+
+\head{Finding a contribution}
+Pick a question that is \textbf{open}, \textbf{answerable with your compute},
+and \textbf{interesting whichever way it falls} --- then a failure is still a
+finding.
+\sub{1 Extend one paper}Most reliable. Push \emph{one} dimension: new language
+or domain, distribution shift, a tenth of the compute or labels, longer
+inputs, different evaluation. The contribution is where it breaks and why.
+\sub{2 Reproduce and interrogate}Rebuild a published result, then ask what the
+authors did not: other seeds, datasets, scales, prompts.
+\sub{3 Shared task with an angle}\lnk{https://semeval.github.io}{SemEval} and
+workshop tasks give data, metric, leaderboard. The thesis is the analysis of
+\emph{why} systems place where they do.
+\sub{4 Applied / industry}A real problem --- read the NDA column first.
+\sub{5 Analysis or theory}Probing, robustness, efficiency measured honestly, a
+metric critique with a small human evaluation, a bounded proof.
+\sub{Where gaps are written down}Limitations sections\dt task overview
+papers\dt survey taxonomies (thin boxes)\dt workshop CFPs\dt plateaued
+leaderboards\dt \textbf{your supervisor's grant} (funded, data exists,
+attentive supervision).
+
+\head{Two-page proposal, before any code}
+Question\dt \textbf{claim} (the sentence above)\dt why now (2--3 refs)\dt data
+(name, size, licence, in hand?)\dt baselines (trivial + published + source of
+its numbers)\dt method (3 bullets + the knob you vary)\dt evaluation (metric,
+splits, seeds, significance test)\dt \textbf{compute budget}\dt milestones
+(data, baseline, first result, freeze, draft)\dt risks\dt \textbf{fallback}
+(the thesis you still have if the idea fails).
+\begin{flag}
+\textbf{Scope sinks theses, not difficulty.} Can you name the dataset and
+metric today? Run one baseline end to end in three weeks? If the idea fails
+completely, is there still a thesis? Any ``no'' --- narrow it now.
+\end{flag}
+
+%============================================================== COLUMN 2 ======
+\head{Industry / NDA theses}
+Settle \textbf{in writing, before you start}, with your academic supervisor in
+the room: can the thesis be published and defended openly\dt is there an
+embargo (6--12 months is common)\dt what may appear (method yes; raw data
+often no; relative results usually negotiable when absolutes are not)\dt who
+owns code and IP, and what may go on GitHub\dt who supervises what (degree
+requirements win)\dt \textbf{fallback if access is withdrawn}.
+\sub{Writing around confidential data}Describe data by statistics and
+structure, not content, and reproduce the core experiment on a public dataset
+so an examiner can check your reasoning. Do it from the start. GDPR and ethics
+approval: ask in week one, it takes weeks.
+
+\head{Related work: the chapter that separates degrees}
+Undergrad summarises; master's \textbf{positions}. By theme, not by paper,
+with a taxonomy figure, ending where nobody has been.
+\begin{itemize}
+  \item 5--10 anchor papers from your supervisor; steal their vocabulary.
+  \item Same queries across Scholar, Semantic Scholar, Anthology, OpenReview,
+        DBLP --- \textbf{log query, date, hits}.
+  \item Snowball backward (references) + forward (cited-by, \emph{search
+        within citing articles}).
+  \item Screen 200--400, keep 60--100; extract into a table.
+  \item Cluster rows until groups stop changing $=$ your taxonomy.
+\end{itemize}
+Read in 3 passes: 5 min decide $\to$ 1 h figures+method $\to$ hours for the
+five papers the thesis depends on.
+
+\head{Tools, week one}
+\lnk{https://www.zotero.org}{Zotero} + connector +
+\lnk{https://retorque.re/zotero-better-bibtex/}{Better BibTeX} (pinned keys,
+auto-export to \code{refs.bib})\dt fastest entry: Scholar \emph{Settings} $\to$
+\emph{Bibliography manager} $\to$ BibTeX links, then \textbf{Cite} $\to$
+\textbf{BibTeX} --- \textbf{check it}; cleaner from
+\lnk{https://aclanthology.org}{Anthology} / \lnk{https://dblp.org}{DBLP} or
+\code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}\dt
+\lnk{https://www.overleaf.com}{Overleaf} + \code{git}/\code{latexmk} locally,
+one sentence per line, \code{latexdiff} for drafts
+(\textbf{Prism closes 1 Jan 2027})\dt one git repo, commit daily\dt compute
+sorted in week one\dt track every run (config, metrics, commit).
+
+%============================================================== COLUMN 3 ======
+\head{Evidence that survives an examiner}
+\begin{enumerate}
+  \item Read 50 examples by hand; look for leakage between splits.
+  \item \textbf{Trivial baseline} first --- it anchors everything.
+  \item \textbf{Reproduce the published baseline}; if you cannot, finding out
+        why is itself a result.
+  \item Your method, one change at a time, each measured.
+  \item \textbf{Ablate} --- start early, they always take longer.
+  \item Error analysis, 50--100 cases by hand $=$ your \emph{because}.
+\end{enumerate}
+\sub{Claiming a difference}3+ seeds, \textbf{mean $\pm$ std}\dt
+\textbf{paired bootstrap or permutation test} on test predictions\dt many
+systems on one dataset inflates false positives --- say so\dt report compute
+and the size of the hyperparameter search (a win after 100 trials against a
+baseline tuned once is not a win)\dt splits fixed before you look; test set
+touched once.
+\begin{flag}
+\textbf{Costs a grade:} leakage\dt unfair tuning\dt one seed\dt accuracy on
+imbalanced data\dt a method chapter nobody could reimplement\dt a related-work
+chapter that is a list\dt writing started in the last month\dt results you
+cannot regenerate.
+\end{flag}
+\textbf{Negative results count} --- if the comparison was fair and you verified
+your implementation reproduces a known number first.
+
+\columnbreak
+\head{AI assistant: five rules}
+\begin{flag}
+\textbf{1} Explain every line you submit --- the defence tests exactly this.
+\textbf{2} Never cite a paper you have not opened. \textbf{3} Never let it
+write your results or analysis. \textbf{4} Follow your university's policy and
+declare use. \textbf{5} Nothing confidential into a cloud tool.
+\end{flag}
+
+\head{Writing \& supervision}
+Start month one. Chapters: abstract 1\dt intro 4--6 (contributions as a
+numbered list)\dt background 6--12\dt related work 8--12\dt method 8--12\dt
+experiments 10--18\dt analysis 6--10\dt conclusion 2--4. Figures and tables
+first, then the text. Captions self-contained. Limitations honest. Complete
+draft to your supervisor \textbf{three weeks} before the deadline.
+\sub{Supervision}Decide yourself: libraries, code structure, plots\dt bring to
+the meeting: anything that changes the claim or scope\dt \textbf{escalate
+immediately}: lost data or compute, ethics/NDA trouble, a deadline you will
+miss. Five bullets the evening before: did\,/\,found\,/\,blocked\,/\,propose\,/\,need.
+
+\head{Into a paper}
+Plan it in month five, not after the defence. Cut background and most related
+work; keep claim, method, key experiments, analysis. Target a workshop,
+\textbf{Findings}, the Student Research Workshop, or a system paper. Agree
+authorship early. Submit after the thesis, using examiner comments as free
+reviews. Release code + checkpoints + \code{CITATION.cff}.
+
+\head{The defence}
+20--30 min + questions, before a committee that has read unevenly. Problem
+(2 slides) $\to$ why it is hard + what exists (2--3) $\to$ \textbf{your claim}
+(1) $\to$ method (3--5) $\to$ results (4--5) $\to$ analysis + limitations
+(2--3) $\to$ conclusion. One idea per slide. Rehearse out loud, timed, twice.
+Know your numbers: data sizes, your result, the baseline, spread across seeds,
+training cost. \textbf{Expect:} why this baseline? is it significant? what
+under distribution shift? why does it fail on class X? six more months?
+``I do not know, but here is how I would find out'' is a fine answer; guessing
+is not.
+
+\head{What it becomes next}
+\sub{A PhD application}The thesis is your evidence that you can do research.
+Give referees the abstract, results and plans --- ask while it is fresh. A
+workshop paper moves you from ``promising'' to ``has published''.
+\sub{A job}The repository is the portfolio: a README that reproduces your main
+table, honest limitations, clean code. Interviews ask what examiners ask.
+\sub{Both}Not exclusive --- an industry year before a PhD is a good path.
+
+\head{Nine months}
+\textbf{M1} proposal signed, data in hand, 15--20 papers, trivial baseline.
+\textbf{M2} published baseline reproduced, tracking, taxonomy drafted.
+\textbf{M3--4} method, first results, claim sentence complete.
+\textbf{M5} ablations, seeds, significance, publication plan.
+\textbf{M6--7} error analysis, results frozen, tables by script.
+\textbf{M8} \textbf{complete draft}, artefacts released.
+\textbf{M9} revisions, citations checked, two rehearsals, submit.
+
+\end{multicols}
+\end{document}

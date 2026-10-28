@@ -1,0 +1,751 @@
+%==============================================================================
+%  Doing a master's thesis in ML / NLP -- a practical guide
+%  Konstantinos Skianis, University of Ioannina
+%  Compile:  latexmk -cd -pdf masters-thesis-ml-nlp-guide.tex
+%==============================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage{guide-style}
+\guidemeta{Master's thesis in ML / NLP}{Doing a Master's Thesis in Machine Learning or NLP}{Master's thesis supervision, ML/NLP research practice}
+
+\begin{document}
+
+%==============================================================================
+\begin{titlepage}
+\centering
+\vspace*{2.0cm}
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[0.8cm]
+{\Huge\bfseries\color{brand} Doing a Master's Thesis\\[0.25cm] in Machine Learning or NLP\par}
+\vspace{0.7cm}
+{\LARGE\color{ink} A Practical Guide\par}
+\vspace{0.5cm}
+{\large\color{mutegray} Finding a contribution, defending it, and what it becomes next\par}
+\vspace{0.6cm}
+{\color{brandlight}\rule{\textwidth}{2pt}}\\[1.1cm]
+
+{\large\bfseries\color{ink} \guideauthor\par}
+\vspace{0.18cm}
+{\normalsize\color{mutegray} \guideaffiliation\par}
+\vspace{0.25cm}
+{\footnotesize\color{brandlight}\url{https://y3nk0.github.io}\par}
+\vspace{1.1cm}
+
+\begin{minipage}{0.85\textwidth}
+\small\color{ink}
+A master's thesis sits between an undergraduate project and a PhD chapter, and
+it is judged by a different standard than either. You are expected to make a
+\emph{contribution} --- something the reader did not know before --- but a
+bounded one, finished inside two semesters. This guide is about choosing that
+contribution, running experiments that survive scrutiny, writing it up, and
+turning it into a paper, a PhD application, or a job.
+\end{minipage}
+
+\vfill
+{\color{mutegray} October 2026}\\[0.3cm]
+{\footnotesize\color{mutegray} Your department's own regulations --- length,
+format, deadlines, ECTS, grading --- always take precedence over anything here.}
+\end{titlepage}
+
+%==============================================================================
+\tableofcontents
+\thispagestyle{fancy}
+\clearpage
+
+%==============================================================================
+\section{What a master's thesis has to be}
+
+Three projects, three standards. It helps to see them side by side, because
+students routinely aim at the wrong one.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.6cm} X X}
+\toprule
+ & \thead{Undergraduate} & \thead{Master's} \\
+\midrule
+\rowcolor{rowtint}
+Question & Given, or chosen from a menu & \textbf{Yours}, argued for and scoped
+with your supervisor \\
+Bar & Done correctly, understood completely & Correct \emph{and} tells the
+field something it did not know \\
+\rowcolor{rowtint}
+Related work & A summary of what exists & A \textbf{positioned} chapter: a
+taxonomy, and where your work sits in it \\
+Evidence & Baselines, a fair comparison, error analysis & All of that, plus
+ablations, several seeds, and significance where it is claimed \\
+\rowcolor{rowtint}
+Typical output & A working system and a report & A report that could become a
+\textbf{workshop paper} with a month's extra work \\
+Length & 30--50 pages & 40--80 pages, by department rule \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{cbox}{The one-claim test}
+Write the sentence your thesis exists to defend, in this shape:
+
+\begin{quote}\small
+\emph{For \textbf{[task/setting]}, \textbf{[what you did]} achieves
+\textbf{[effect]} compared with \textbf{[baseline]}, because
+\textbf{[mechanism]} --- shown by \textbf{[the experiment]}.}
+\end{quote}
+
+If you cannot fill every slot by the end of month two, you have a project, not
+a thesis. The missing slot tells you what to work on next: usually
+\emph{because} (you have numbers but no explanation) or \emph{compared with}
+(you never built the honest baseline).
+\end{cbox}
+
+\begin{wbox}{What a PhD requires that you do not}
+Novelty at the level of a main-conference paper, a programme of work spanning
+years, and a survey of a whole subfield. Aiming there will cost you the
+deadline. A master's contribution can be: a method applied somewhere it has
+not been and evaluated properly; a careful reproduction that finds the limits
+of a published claim; an ablation that identifies which component actually
+matters; a new resource or benchmark for an under-served language or domain.
+Each of those is publishable at a workshop and finishable in a semester.
+\end{wbox}
+
+%==============================================================================
+\section{Finding a contribution}
+\label{sec:contribution}
+
+You need a question that is \emph{open}, \emph{answerable with your compute},
+and \emph{interesting whichever way the answer falls}. That last property is
+what protects you: if your idea works you have a result, and if it fails you
+have a finding, provided the experiment was fair.
+
+\subsection{Five routes that work}
+
+\begin{description}
+  \item[1. Extend one paper.] The most reliable route. Take a recent method
+        you admire and push exactly one dimension: a new language or domain, a
+        harder distribution shift, a tenth of the compute, a tenth of the
+        labels, longer inputs, a different evaluation. The baseline is the
+        paper; the contribution is where it breaks and why.
+  \item[2. Reproduce and interrogate.] Rebuild a published result, then ask
+        the question the authors did not: does it hold across seeds, datasets,
+        model scales, prompts? Reproducibility work is publishable in its own
+        right and teaches you more about experimental rigour than any course.
+  \item[3. A shared task, with an angle.] SemEval and the workshop tasks at
+        \mbox{*ACL} venues hand you data, a metric and a leaderboard
+        (\S\ref{sec:tools} has the links). A master's thesis does not stop at
+        the ranking: the thesis is the analysis of \emph{why} systems place
+        where they do, which the system paper has no room for.
+  \item[4. An applied or industry thesis.] A real problem from a company, a
+        lab in another department, or a public body. The research question has
+        to survive contact with the deployment constraint ---
+        see \S\ref{sec:industry} before you sign anything.
+  \item[5. Analysis or theory.] Probing what a representation encodes, a
+        robustness study, an efficiency comparison measured honestly, a
+        critique of a metric with a small human evaluation, or a bounded
+        theoretical result. Keep the claim small and complete.
+\end{description}
+
+\subsection{Where the open questions are written down}
+
+\begin{cbox}{Six places to look, in order of yield}
+\begin{enumerate}
+  \item \textbf{Limitations sections.} Mandatory at ACL venues: authors list
+        what their method cannot do. It is a menu of theses.
+  \item \textbf{Task overview papers.} The closing section says exactly what
+        nobody solved this year.
+  \item \textbf{Survey taxonomies.} Find the most recent survey and look for
+        the boxes with one or two entries.
+  \item \textbf{Workshop calls for papers.} This year's open problems, in
+        bullet form, written by the people who will review you.
+  \item \textbf{Leaderboards that have plateaued}, or where a simple baseline
+        sits suspiciously close to the top --- a sign the task, metric or data
+        deserves a second look.
+  \item \textbf{Your supervisor's current grant.} Unglamorous and effective:
+        the open questions are already funded, the data already exists, and
+        the supervision will be attentive because the work matters to them.
+\end{enumerate}
+\end{cbox}
+
+\subsection{The two-page proposal}
+
+Before you write code, write two pages and get them signed off. This is longer
+than the undergraduate version because the risks are larger.
+
+\begin{center}
+\small
+\begin{tabularx}{0.97\textwidth}{L{3.6cm} X}
+\toprule
+\thead{Section} & \thead{What goes in it} \\
+\midrule
+\rowcolor{rowtint} Question & One sentence, open, answerable \\
+Claim & The one-claim sentence above, with the slots filled as far as you can \\
+\rowcolor{rowtint} Why now & Two or three references showing the gap is real
+and current \\
+Data & Name, size, licence, access route, and whether you already have it \\
+\rowcolor{rowtint} Baselines & The trivial one, the published one, and where
+its numbers come from \\
+Method & What you will try, in three bullets, with the one knob you will vary \\
+\rowcolor{rowtint} Evaluation & Metric, splits, how many seeds, and the test
+you will use to claim a difference \\
+Compute budget & GPU hours you can actually get, and the largest model that
+fits \\
+\rowcolor{rowtint} Milestones & Five dates: data, baseline, first result,
+freeze, full draft \\
+Risks & The three most likely ways this stalls \\
+\rowcolor{rowtint} Fallback & The thesis you still have if the main idea fails
+--- usually the comparison and the analysis \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{wbox}{Scope, the thing that actually sinks theses}
+Not difficulty --- scope. Three questions, honestly: can you name the dataset
+and metric today? Can you run one baseline end to end within three weeks? If
+the main idea fails completely, is there still a thesis? Any ``no'' means
+narrow it now, while narrowing is free.
+\end{wbox}
+
+%==============================================================================
+\section{Industry, external and NDA-bound theses}
+\label{sec:industry}
+
+A thesis done inside a company can be excellent --- real data, real
+constraints, a mentor who cares. It can also become unexaminable. Settle these
+\emph{in writing, before you start}, with your academic supervisor in the
+conversation.
+
+\begin{cbox}{The six questions to ask on day one}
+\begin{enumerate}
+  \item \textbf{Can the thesis be published and defended openly?} A thesis is
+        an examined document; most universities require it to be readable by
+        examiners and often archived publicly.
+  \item \textbf{Is there an embargo?} Many departments allow a delay of six or
+        twelve months. Find out the rule and whether the company needs it.
+  \item \textbf{What may appear?} Method, yes; raw data, often no; absolute
+        numbers, sometimes no. Relative results (``+3.1 F1 over the internal
+        baseline'') are usually negotiable when absolutes are not.
+  \item \textbf{Who owns the code and the IP?} Say explicitly what you may put
+        on GitHub. Agree it before you write it.
+  \item \textbf{Who supervises what?} You need an academic supervisor
+        responsible for the research standard and a company mentor for the
+        problem. When they disagree, the degree requirements win.
+  \item \textbf{What is the fallback if access is withdrawn?} Reorganisations
+        and policy changes happen mid-thesis. A public dataset you can fall
+        back to turns a catastrophe into a chapter.
+\end{enumerate}
+\end{cbox}
+
+\begin{wbox}{Writing around confidential data}
+If the data cannot be described, the thesis has to stand on the method and the
+protocol: describe the data by its \emph{statistics and structure} (size,
+label distribution, domain, annotation process) rather than its content, and
+reproduce the core experiment on a public dataset so an examiner can check
+your reasoning against something they can see. Do this from the start --- it
+is painful to retrofit in month eight.
+\end{wbox}
+
+Personal data brings its own duties: GDPR applies to scraped social media,
+user logs, recordings and surveys. Ask about ethics approval early; in some
+departments it is required and takes weeks.
+
+%==============================================================================
+\section{Related work, the chapter that separates degrees}
+
+The undergraduate version summarises papers. The master's version
+\emph{positions} your work. Organise by theme, not by paper, and end by saying
+what nobody has done --- which is, conveniently, what you are about to do.
+
+\begin{cbox}{A bounded search you can finish in three weeks}
+\begin{enumerate}
+  \item \textbf{Seed set:} 5--10 anchor papers from your supervisor. Read them
+        properly; their vocabulary becomes your queries.
+  \item \textbf{Search systematically} across Google Scholar, Semantic
+        Scholar, the ACL Anthology, OpenReview and DBLP --- and
+        \textbf{log every query, date and hit count} in a spreadsheet. That
+        log is what makes the chapter defensible rather than anecdotal.
+  \item \textbf{Snowball both ways:} backward through reference lists,
+        forward through ``cited by'' and \emph{search within citing articles}.
+        Forward snowballing is how you find the last six months.
+  \item \textbf{Screen in two passes:} title and abstract, then full text.
+        Expect to screen 200--400 and keep 60--100.
+  \item \textbf{Extract into a table}, one row per paper: key, venue, problem,
+        method family, data, metric, headline result, compute, code, and
+        whether it reproduces.
+  \item \textbf{Cluster the rows} until the groups stop changing. That is your
+        taxonomy, and it becomes one figure and the chapter's skeleton.
+\end{enumerate}
+\end{cbox}
+
+Read in three passes (Keshav): five minutes to decide, an hour for figures and
+method, several hours only for the five papers your thesis depends on.
+
+%==============================================================================
+\section{Tools, set up in week one}
+\label{sec:tools}
+
+The same stack as every other guide in this series; set it up once and stop
+thinking about it.
+
+\begin{itemize}
+  \item \textbf{Zotero} (\url{https://www.zotero.org}) with the browser
+        connector and \textbf{Better BibTeX}
+        (\url{https://retorque.re/zotero-better-bibtex/}): pinned citation
+        keys and auto-export into your thesis \code{refs.bib}.
+        The quickest way to fill it: enable Scholar's BibTeX links
+        (\emph{Settings} $\rightarrow$ \emph{Bibliography manager}), then
+        \textbf{Cite} $\rightarrow$ \textbf{BibTeX}. Check every entry --- a
+        bibliography full of ``arXiv preprint'' for published papers is the
+        clearest sign nobody looked. Cleaner sources: the \textbf{ACL
+        Anthology} (\url{https://aclanthology.org}), \textbf{DBLP}
+        (\url{https://dblp.org}), or any DOI from the terminal with
+        \code{curl -LH "Accept: application/x-bibtex" https://doi.org/<DOI>}.
+  \item \textbf{LaTeX}, in \textbf{Overleaf}
+        (\url{https://www.overleaf.com}) for supervisor comments, and
+        \code{git} + \code{latexmk} locally. One sentence per line makes diffs
+        readable; \code{latexdiff} shows your supervisor exactly what changed
+        between drafts. \emph{Prism shuts down on 1 January 2027 --- do not
+        start a thesis there, and export anything you have.}
+  \item \textbf{One git repository} for code, configs, notes and the thesis.
+        Commit daily.
+  \item \textbf{Compute:} your lab's cluster or Slurm queue, department GPUs,
+        or Colab and Kaggle notebooks for smaller runs. Ask in week one ---
+        accounts take time, and the largest model you can train is a design
+        constraint, not a detail.
+  \item \textbf{Experiment tracking} from the first run (Weights \& Biases,
+        MLflow, TensorBoard): config, metrics and the git commit, every time.
+  \item \textbf{Shared tasks and deadlines:}
+        \url{https://semeval.github.io},
+        \url{https://paperswithcode.co/ai-deadlines} and
+        \url{http://aideadlines.org/?sub=ML,CV,NLP}.
+\end{itemize}
+
+%==============================================================================
+\section{Experiments that survive an examiner}
+
+\subsection{The order that works}
+
+\begin{enumerate}
+  \item Get the data and read fifty examples by hand. Count labels, find
+        duplicates, look for leakage between splits.
+  \item Build the \textbf{trivial baseline} --- majority class, TF-IDF plus
+        logistic regression, a rule --- and measure it. It anchors everything.
+  \item Reproduce the \textbf{published baseline}. If you cannot match it,
+        nothing downstream is interpretable, and finding out why is itself a
+        result.
+  \item Only then your method, one change at a time, each measured.
+  \item \textbf{Ablate}: remove each component and show what it was worth.
+        Start early; ablations always take longer than the headline run.
+  \item \textbf{Error analysis}: categorise 50--100 mistakes by hand. This is
+        where the \emph{because} in your one-claim sentence comes from.
+\end{enumerate}
+
+\subsection{Claiming a difference honestly}
+
+\begin{cbox}{Seeds, spread and significance}
+\begin{itemize}
+  \item Run every configuration with at least \textbf{three seeds} --- five if
+        the budget allows --- and report \textbf{mean $\pm$ standard
+        deviation}. A single run that improves by 0.4 is noise, and an
+        examiner will say so.
+  \item When you claim a system is better, test it: a \textbf{paired bootstrap}
+        or \textbf{permutation test} on the test predictions is standard in
+        NLP, easy to implement, and makes no distributional assumptions.
+  \item Comparing many systems on the same data inflates false positives ---
+        say so, or correct for it.
+  \item \textbf{Report compute}: GPU type, hours, parameters, and the cost of
+        the hyperparameter search. A method that wins only after a hundred
+        trials against a baseline tuned for one is not winning.
+  \item Fix the splits \emph{before} you look at results, and touch the test
+        set once.
+\end{itemize}
+\end{cbox}
+
+\begin{wbox}{Negative results, handled properly}
+``I tried X, it did not beat the baseline, here is the evidence and here is
+why'' is a legitimate master's thesis --- provided the comparison was fair,
+the implementation was checked against a reference, and the analysis explains
+the failure. Many strong theses are exactly this. What is not acceptable is a
+negative result from a bug you never looked for: before concluding, verify
+your implementation reproduces a known number on a known dataset.
+\end{wbox}
+
+\subsection{The mistakes that cost a grade}
+
+\begin{wbox}{Seen every year}
+\begin{itemize}
+  \item \textbf{Leakage.} Tuning on test, duplicates shared between splits, or
+        preprocessing and feature selection fitted on the full dataset before
+        splitting. It invalidates everything downstream.
+  \item \textbf{An unfair comparison.} Your method tuned for a week, the
+        baseline run on defaults for an hour. Examiners spot it immediately,
+        and it is the fastest way to lose their trust in the rest.
+  \item \textbf{A difference claimed from one seed.}
+  \item \textbf{Accuracy on imbalanced data.} Report macro-F1, per-class
+        results, or a confusion matrix.
+  \item \textbf{The method chapter that cannot be reimplemented} because the
+        details live only in the code.
+  \item \textbf{A related-work chapter that is a list.} Paragraph per paper,
+        no taxonomy, no positioning --- the clearest marker of an
+        undergraduate thesis wearing a master's cover.
+  \item \textbf{Writing started in the last month.} It shows, and it is the
+        single strongest predictor of a mediocre grade.
+  \item \textbf{Results that cannot be regenerated} because the configuration
+        lived in your shell history.
+\end{itemize}
+\end{wbox}
+
+\subsection{Keep a results table from day one}
+
+One CSV or spreadsheet: date, commit, config, seed, dev score, test score
+(only when you finally run it), and a one-line note on what changed and why.
+Every table and figure in the thesis should regenerate from logged results
+with one script. In month eight, ``which run produced Table 4?'' must have an
+answer.
+
+%==============================================================================
+\section{Using an AI assistant}
+
+An assistant removes mechanical work and can quietly remove your degree. Both
+are true.
+
+\begin{itemize}
+  \item \textbf{Good uses:} explaining unfamiliar notation, getting someone
+        else's repository to run, boilerplate and plotting code, refactoring,
+        LaTeX debugging, tightening prose you wrote, and acting as a hostile
+        examiner on your draft.
+  \item \textbf{Set it up} in the thesis repository with a short memory file
+        of your conventions, connected to your files and your Zotero library,
+        and keep a dated \code{notes/} log it can read.
+\end{itemize}
+
+\begin{wbox}{Five rules}
+\begin{enumerate}
+  \item \textbf{You must be able to explain every line you submit.} The
+        defence tests precisely this.
+  \item \textbf{Never cite a paper you have not opened.} Models invent
+        plausible references; fabricated citations end theses.
+  \item \textbf{Never let it write your results or your analysis.} Numbers
+        come from runs you did; interpretation is the degree.
+  \item \textbf{Follow your university's policy} and declare assistance where
+        a declaration is required. Ask your supervisor; do not guess.
+  \item \textbf{Nothing confidential into a cloud tool} --- company data under
+        NDA, personal data, or someone else's unpublished manuscript.
+\end{enumerate}
+\end{wbox}
+
+%==============================================================================
+\section{Writing it}
+
+Start in month one. Writing is how you discover the hole in the argument, and
+holes are cheap to fix early and ruinous to find in the last fortnight.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{L{3.3cm} X L{1.9cm}}
+\toprule
+\thead{Chapter} & \thead{What goes in it} & \thead{Pages} \\
+\midrule
+\rowcolor{rowtint}
+Abstract & Problem, what you did, headline result, in one paragraph & 1 \\
+Introduction & Context, the question, your contributions as a numbered list,
+thesis outline & 4--6 \\
+\rowcolor{rowtint}
+Background & Only the concepts your chapters actually use & 6--12 \\
+Related work & By theme, with a taxonomy figure; ends by positioning your work
+& 8--12 \\
+\rowcolor{rowtint}
+Method & Precise enough to reimplement from the text alone & 8--12 \\
+Experiments & Data, splits, metrics, baselines, protocol, then results &
+10--18 \\
+\rowcolor{rowtint}
+Analysis & Ablations, error analysis, significance, what surprised you & 6--10 \\
+Conclusion & Findings, limitations, future work & 2--4 \\
+\rowcolor{rowtint}
+References, appendix & Bibliography; hyperparameters, prompts, extra tables &
+--- \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\emph{Sizes are a sane default for a 40--80 page thesis; your department's
+rules win.}
+
+\begin{itemize}
+  \item \textbf{Write the figures and tables first}, then the text explaining
+        them. A table that needs three paragraphs of excuses means the
+        experiment is wrong, not the prose.
+  \item \textbf{Every chapter} opens with a sentence saying what it does and
+        closes with one saying what it showed.
+  \item \textbf{Contributions as a numbered list} in the introduction, each
+        one checkable against a chapter.
+  \item \textbf{Captions are self-contained}: a reader who looks only at your
+        figures should still follow the thesis.
+  \item \textbf{Cite properly, quote almost never.} Copying sentences --- from
+        papers, from the web, or from a model --- without quotation marks and
+        a citation is plagiarism, and it is checked.
+  \item \textbf{Limitations, written honestly}, are a sign of maturity.
+        Examiners find them anyway; better that you found them first.
+  \item \textbf{A complete draft to your supervisor three weeks before the
+        deadline.} Feedback on a partial draft is feedback on the wrong
+        problem.
+\end{itemize}
+
+%==============================================================================
+\section{Turning the thesis into a paper}
+
+This is the step that makes a master's thesis count twice --- as a degree and
+as a publication --- and most students skip it because they are exhausted.
+Talk to your supervisor about it in month five, not after the defence.
+
+\begin{itemize}
+  \item \textbf{What to cut:} the background chapter, most of the related
+        work, the narrative of what you tried. A paper keeps the claim, the
+        method, the key experiments and the analysis --- eight pages, not
+        sixty.
+  \item \textbf{Where to send it:} a workshop at an \mbox{*ACL} or ML venue is
+        the realistic first target; \textbf{Findings} and the \textbf{Student
+        Research Workshop} are real, citable venues; a shared-task
+        \textbf{system paper} if you took that route. The PhD guide in this
+        series covers the venue landscape and the ACL Rolling Review.
+  \item \textbf{Authorship:} agree the order early, in conversation, not by
+        assumption. Typically you are first author and your supervisor last.
+  \item \textbf{Timing:} the thesis deadline and the venue deadline rarely
+        align. Submit the paper after you submit the thesis, using the
+        examiners' comments as free reviews.
+  \item \textbf{Release the artefacts:} code with a licence and a README that
+        reproduces your main table, checkpoints on Hugging Face, and a
+        \code{CITATION.cff} so people can cite it.
+\end{itemize}
+
+%==============================================================================
+\section{The defence}
+
+Usually 20--30 minutes plus questions, before a committee that has read the
+thesis unevenly.
+
+\begin{itemize}
+  \item \textbf{Structure:} problem (2 slides) $\rightarrow$ why it is hard
+        and what exists (2--3) $\rightarrow$ your claim (1) $\rightarrow$
+        method (3--5) $\rightarrow$ results (4--5) $\rightarrow$ analysis and
+        limitations (2--3) $\rightarrow$ conclusion (1). One idea per slide.
+  \item \textbf{Rehearse out loud, timed, twice}, at least once to a person.
+  \item \textbf{Know your numbers:} dataset sizes, your result, the baseline,
+        the spread across seeds, training cost.
+  \item \textbf{Expect:} why this baseline? is the improvement significant?
+        what happens under distribution shift? why does it fail on class X?
+        what would you do with six more months? what did you find hardest?
+  \item \textbf{``I do not know''} is a fine answer when followed by ``here is
+        how I would find out''. Guessing is not.
+\end{itemize}
+
+%==============================================================================
+\section{Working with your supervisor}
+
+At master's level the division of labour shifts: your supervisor sets the
+direction and the standard, and you own the execution. The students who get
+the most from supervision are not the ones who need the least help --- they
+are the ones who ask precise questions.
+
+\begin{cbox}{Decide yourself, bring to the meeting, escalate immediately}
+\textbf{Decide yourself:} library and framework choices, code structure,
+plotting, which of two equivalent baselines to run first, how to organise your
+notes. Bringing these to a meeting wastes the half hour you have.\\[4pt]
+\textbf{Bring to the meeting:} anything that changes the claim or the scope ---
+a result that contradicts the plan, a baseline you cannot reproduce, a
+dataset that turns out to be unusable, an idea that would add a month.\\[4pt]
+\textbf{Escalate immediately, do not wait for the meeting:} losing data or
+compute access, an ethics or NDA problem, a deadline you are going to miss,
+and anything about your health or circumstances that affects the timeline.
+Supervisors can nearly always help with these \emph{if told early} and almost
+never at the end.
+\end{cbox}
+
+\begin{itemize}
+  \item \textbf{Send the agenda the evening before} --- five bullets, as
+        below. A supervisor who has seen your numbers before the meeting gives
+        you an hour of thinking instead of ten minutes of catching up.
+  \item \textbf{Disagree in writing, with evidence.} ``I ran the experiment
+        you suggested; here is why I think the other route is better'' is a
+        good conversation. Silently doing something else is not.
+  \item \textbf{Ask for the standard explicitly}: ask to see a thesis they
+        considered excellent, and what separated it from an average one.
+  \item \textbf{Say when you are stuck.} Two days stuck is normal; two weeks
+        stuck and silent is a supervision failure that is half yours.
+  \item \textbf{What a supervisor cannot do:} write it for you, guarantee a
+        result, or rescue a thesis in the final fortnight. Plan accordingly.
+\end{itemize}
+
+%==============================================================================
+\section{A timetable}
+
+A nine-month plan; compress to six by halving months 2--4, and put every
+milestone in a calendar.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{L{2.0cm} X}
+\toprule
+\thead{Month} & \thead{Done by the end of it} \\
+\midrule
+\rowcolor{rowtint}
+\textbf{1} & Topic agreed; two-page proposal signed off; tools installed; data
+in hand and inspected; 15--20 papers read; trivial baseline running. \\
+\textbf{2} & Published baseline reproduced; experiment tracking in place;
+search log running; related-work taxonomy drafted. \\
+\rowcolor{rowtint}
+\textbf{3--4} & Method implemented; first real results; method chapter
+drafted; one-claim sentence filled in completely. \\
+\textbf{5} & Ablations and seeds; significance tests; publication plan agreed
+with your supervisor; experiments chapter drafted. \\
+\rowcolor{rowtint}
+\textbf{6--7} & Error analysis; analysis chapter; results frozen; all tables
+regenerated by script. \\
+\textbf{8} & \textbf{Complete draft} to your supervisor; artefacts cleaned and
+released. \\
+\rowcolor{rowtint}
+\textbf{9} & Revisions; every citation checked; defence slides; two
+rehearsals; submission. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{cbox}{Weekly rhythm}
+Meet weekly, and send five bullets the evening before: \textbf{what I did}
+$\cdot$ \textbf{what I found} $\cdot$ \textbf{what is blocked} $\cdot$
+\textbf{what I propose next} $\cdot$ \textbf{what I need from you}. Keep a
+shared running document. ``I am stuck'' sent on Tuesday is worth three weeks
+of silence.
+\end{cbox}
+
+%==============================================================================
+\section{What it becomes next}
+
+\begin{description}
+  \item[A PhD application.] Your thesis is the main evidence that you can do
+        research. Give your referees the abstract, the results and your plans;
+        ask while the work is fresh. A workshop paper from the thesis moves
+        you from ``promising'' to ``has published''.
+  \item[A job.] The repository is the portfolio: a README that reproduces your
+        main table, honest limitations, and clean code say more than any
+        bullet point on a CV. Expect to be asked, in interviews, exactly what
+        your examiners asked.
+  \item[Both.] They are not exclusive, and an industry year before a PhD is
+        a perfectly good path.
+\end{description}
+
+%==============================================================================
+\section{Checklists}
+
+\subsection*{Month 1}
+\begin{multicols}{2}
+\begin{itemize}
+  \item Supervisor meeting slot fixed; agenda format agreed
+  \item Two-page proposal signed off
+  \item Zotero + Better BibTeX; auto-export into \code{refs.bib}
+  \item Git repository with \code{notes/} and a README
+  \item Data obtained; licence and ethics checked
+  \item Compute access working; a real job submitted
+  \item Trivial baseline measured
+  \item If industry: the six questions answered \emph{in writing}
+\end{itemize}
+\end{multicols}
+
+\subsection*{Before freezing results}
+\begin{itemize}
+  \item Trivial baseline, published baseline and your method on identical
+        splits
+  \item Three or more seeds; mean $\pm$ std reported everywhere
+  \item Significance test for every comparison you claim
+  \item Compute and hyperparameter search reported for all systems
+  \item Test set used once; no tuning on it
+  \item Ablations complete; errors categorised by hand
+  \item Every table and figure regenerated by script from logged results
+  \item Code runs from a clean clone, following your own README
+\end{itemize}
+
+\subsection*{Before submitting}
+\begin{itemize}
+  \item One-claim sentence appears, in plain words, in the abstract and the
+        conclusion
+  \item Contributions list in the introduction, each checkable against a
+        chapter
+  \item Every citation checked against the real paper --- no invented
+        references
+  \item Limitations written honestly
+  \item Department format, length and declaration requirements met
+  \item Complete draft seen by your supervisor at least three weeks earlier
+  \item Slides rehearsed twice, timed; demo recorded as a fallback
+  \item Publication plan agreed: venue, authorship, timing
+\end{itemize}
+
+%==============================================================================
+\appendix
+\section{Link directory}
+
+\begin{longtable}{L{4.3cm} L{10.5cm}}
+\toprule
+\thead{What} & \thead{Where} \\
+\midrule
+\endfirsthead
+\toprule
+\thead{What} & \thead{Where} \\
+\midrule
+\endhead
+\multicolumn{2}{l}{\textbf{\color{brand}Literature}}\\
+Google Scholar & \url{https://scholar.google.com} \\
+Semantic Scholar & \url{https://www.semanticscholar.org} \\
+ACL Anthology & \url{https://aclanthology.org} \\
+DBLP & \url{https://dblp.org} \\
+OpenReview & \url{https://openreview.net} \\
+Connected Papers & \url{https://www.connectedpapers.com} \\
+Papers with Code & \url{https://paperswithcode.co} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}Tasks and deadlines}}\\
+SemEval & \url{https://semeval.github.io} \\
+Conference deadlines & \url{https://paperswithcode.co/ai-deadlines} \\
+ & \url{http://aideadlines.org/?sub=ML,CV,NLP} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}Tools}}\\
+Zotero & \url{https://www.zotero.org} \\
+Better BibTeX & \url{https://retorque.re/zotero-better-bibtex/} \\
+Overleaf & \url{https://www.overleaf.com} \\
+Hugging Face & \url{https://huggingface.co} \\
+Weights \& Biases & \url{https://wandb.ai} \\
+\midrule
+\multicolumn{2}{l}{\textbf{\color{brand}The companion guides}}\\
+Undergraduate thesis, PhD & \url{https://y3nk0.github.io/guides/} \\
+\bottomrule
+\end{longtable}
+
+\section{The two-page proposal, as a form}
+
+\begin{quote}\small
+\textbf{Title.} Working title.\\[3pt]
+\textbf{Question.} The one sentence this thesis answers.\\[3pt]
+\textbf{Claim.} \emph{For \rule{2.2cm}{0.4pt}, \rule{2.2cm}{0.4pt} achieves
+\rule{2cm}{0.4pt} compared with \rule{2cm}{0.4pt}, because
+\rule{2cm}{0.4pt} --- shown by \rule{2.4cm}{0.4pt}.}\\[3pt]
+\textbf{Why now.} Two or three references showing the gap.\\[3pt]
+\textbf{Route.} Extend a paper / reproduce / shared task / applied /
+analysis (\S\ref{sec:contribution}).\\[3pt]
+\textbf{Data.} Name, size, licence, access, already in hand?\\[3pt]
+\textbf{Baselines.} Trivial; published; source of its numbers.\\[3pt]
+\textbf{Method.} Three bullets, and the one knob you vary.\\[3pt]
+\textbf{Evaluation.} Metric, splits, seeds, significance test.\\[3pt]
+\textbf{Compute.} Hardware, hours, largest model that fits.\\[3pt]
+\textbf{Milestones.} Data \rule{1.4cm}{0.4pt}; baseline
+\rule{1.4cm}{0.4pt}; first result \rule{1.4cm}{0.4pt}; freeze
+\rule{1.4cm}{0.4pt}; draft \rule{1.4cm}{0.4pt}.\\[3pt]
+\textbf{Risks.} Three ways this stalls.\\[3pt]
+\textbf{Fallback.} The thesis you still have if the idea fails.\\[3pt]
+\textbf{If industry.} Publication, embargo, what may appear, IP, supervision,
+fallback access.
+\end{quote}
+
+\vspace{0.5cm}
+\begin{cbox}{The shortest version of all of this}
+Write the one-claim sentence in month one and let it tell you what is missing.
+Reproduce the baseline before you innovate. Change one thing at a time, with
+enough seeds to know it is real. Write from the first month, release what you
+built, and plan the paper before you are exhausted. A bounded contribution,
+finished and defended, beats an ambitious one abandoned in month eight.
+\end{cbox}
+
+\end{document}
