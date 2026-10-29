@@ -69,7 +69,7 @@ check: all
 purge:
 	@for d in $(DOCS); do \
 	  printf 'purging %-52s' "$$d.pdf"; \
-	  curl -sf "https://purge.jsdelivr.net/gh/y3nk0/practical_guides@main/$$d.pdf" >/dev/null && echo ok || echo FAILED; \
+	  curl -sf "https://purge.jsdelivr.net/gh/y3nk0/practical-guides@main/$$d.pdf" >/dev/null && echo ok || echo FAILED; \
 	done
 
 clean:
